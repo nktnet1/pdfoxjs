@@ -1,0 +1,46 @@
+{
+  "name": "pdfjs-standalone",
+  "version": "0.0.0",
+  "description": "An Electron application with React and TypeScript",
+  "main": "./out/main/index.js",
+  "author": "Khiet Tam Nguyen",
+  "homepage": "https://www.electronjs.org",
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "npm run typecheck && electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:win": "npm run build && electron-builder --win --config",
+    "build:mac": "electron-vite build && electron-builder --mac --config",
+    "build:linux": "electron-vite build && electron-builder --linux --config"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^2.0.0",
+    "@electron-toolkit/utils": "^2.0.1",
+    "canvas": "^2.11.2",
+    "electron-context-menu": "^3.6.1",
+    "path2d-polyfill": "^2.0.1",
+    "pdfjs-viewer-element": "^2.5.3"
+  },
+  "devDependencies": {
+    "@electron-toolkit/eslint-config-ts": "^1.0.0",
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.1.1",
+    "electron": "^27.0.4",
+    "electron-builder": "^24.6.4",
+    "electron-vite": "^1.0.28",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react": "^7.33.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0"
+  }
+}

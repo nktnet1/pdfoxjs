@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+}
+
+.centered-element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box {
+  display: flex;
+  flex-direction: 'column';
+  align-items: 'center';
+  justify-content: 'center';
+}
+
+.upload-button {
+  background-color: rgb(70, 70, 75);
+  color: lightgray;
+  padding: 20px 20px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: rgb(90, 90, 95); /* Adjust the color as desired */
+}
+
+.help-image {
+  height: 500px
+}

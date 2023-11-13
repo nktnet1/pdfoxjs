@@ -1,0 +1,5 @@
+node_modules
+dist
+src/renderer/**/*pdfjs*-dist
+out
+.gitignore
