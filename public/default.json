@@ -1,0 +1,214 @@
+{
+  "mergeDefaults": true,
+  "settings": {
+    "enableCustomShortcutKeys": true,
+    "globalScrollAmount": 50,
+    "globalScrollBehavior": "instant",
+    "globalZoomAmount": 0.1,
+    "keysSeparator": "|",
+    "maxCommandKeysLength": 5,
+    "hideToolbar": false
+  },
+  "keys": {
+    "H": {
+      "command": "toggle-help"
+    },
+
+    "j": {
+      "command": "scroll-down",
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "smooth-continuous"
+      }
+    },
+    "k": {
+      "command": "scroll-up",
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "smooth-continuous"
+      }
+    },
+    "l": {
+      "command": "scroll-left",
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "smooth-continuous"
+      }
+    },
+    "h": {
+      "command": "scroll-right",
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "smooth-continuous"
+      }
+    },
+    "g|g": {
+      "command": "scroll-to-top",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
+    "G": {
+      "command": "scroll-to-bottom",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
+    "<NUMBER_PREFIX>G": {
+      "command": "scroll-to-page",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
+    "u": {
+      "command": "scroll-half-page-up",
+      "settings": {
+        "scrollBehavior": "instant"
+      }
+    },
+    "d": {
+      "command": "scroll-half-page-down",
+      "settings": {
+        "scrollBehavior": "instant"
+      }
+    },
+
+    "t": {
+      "command": "toggle-toolbar"
+    },
+    "b": {
+      "command": "toggle-sidebar"
+    },
+    "/": {
+      "command": "trigger-search"
+    },
+    "L": {
+      "command": "focus-page-number"
+    },
+    "+": {
+      "command": "zoom-in",
+      "settings": {
+        "zoomAmount": 0.1
+      }
+    },
+    "-": {
+      "command": "zoom-out",
+      "settings": {
+        "zoomAmount": 0.1
+      }
+    },
+    "=": {
+      "command": "zoom-reset"
+    },
+    "o": {
+      "command": "open-file"
+    },
+    "P": {
+      "command": "print-pdf"
+    },
+    "S": {
+      "command": "save-pdf"
+    },
+    "n": {
+      "command": "next-page"
+    },
+    "p": {
+      "command": "previous-page"
+    },
+    "i": {
+      "command": "toggle-insert-text"
+    },
+    "D": {
+      "command": "toggle-insert-draw"
+    },
+    "U": {
+      "command": "toggle-insert-image"
+    },
+    "T": {
+      "command": "toggle-secondary-toolbar"
+    },
+
+    "F": {
+      "command": "presentation-mode"
+    },
+    "K": {
+      "command": "first-page"
+    },
+    "J": {
+      "command": "last-page"
+    },
+    ">": {
+      "command": "rotate-clockwise"
+    },
+    "<": {
+      "command": "rotate-counterclockwise"
+    },
+    "s": {
+      "command": "text-selection-tool"
+    },
+    "e": {
+      "command": "hand-tool"
+    },
+    "y": {
+      "command": "enable-page-scrolling"
+    },
+    "v": {
+      "command": "enable-vertical-scrolling"
+    },
+    "m": {
+      "command": "enable-horizontal-scrolling"
+    },
+    "w": {
+      "command": "enable-wrapped-scrolling"
+    },
+    "N": {
+      "command": "no-spread"
+    },
+    "O": {
+      "command": "odd-spread"
+    },
+    "E": {
+      "command": "even-spread"
+    },
+    "?": {
+      "command": "show-document-info"
+    },
+
+    ";|t": {
+      "command": "sidebar-document-thumbnail"
+    },
+    ";|o": {
+      "command": "sidebar-document-outline"
+    },
+    ";|a": {
+      "command": "sidebar-document-attachments"
+    },
+    ";|l": {
+      "command": "sidebar-document-layers"
+    },
+
+    "c": {
+      "command": "cycle-sidebar-view"
+    },
+    "<CTRL>c": {
+      "command": "cycle-cursor-tool"
+    },
+    "<CTRL>C": {
+      "command": "cycle-scrolling-mode"
+    },
+    "<CTRL><ALT>c": {
+      "command": "cycle-spread-mode"
+    },
+
+    "\"": {
+      "command": "load-demo-document"
+    },
+    "g|i": {
+      "command": "focus-input"
+    },
+
+    "|": {
+      "command": "no-action"
+    }
+  }
+}
