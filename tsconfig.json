@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "outDir": "out",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+  },
+  "include": [
+    "src/**/*",
+    "package.json"
+  ],
+  "exclude": [
+    "src/server.ts"
+  ]
+}

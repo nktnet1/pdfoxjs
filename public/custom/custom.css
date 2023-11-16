@@ -1,0 +1,69 @@
+.centered-element {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.upload-button {
+  background-color: rgb(70, 70, 75);
+  color: lightgray;
+  padding: 20px 20px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  opacity: 0.6;
+}
+
+#popup-container {
+  z-index: 2;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.7
+}
+
+#popup-container:hover {
+  opacity: 1
+}
+
+#help-button {
+  padding: 20px;
+  background-color: teal;
+  font-size: 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#help-button:hover {
+  opacity: 0.6;
+}
+
+#help-image {
+  max-height: 85vh;
+  max-width: 90vw;
+}
+
+.close-button {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 8px;
+  background-color: #e74c3c;
+  border: '1px solid black';
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-button:hover {
+  background-color: #c0392b;
+}
