@@ -50,6 +50,19 @@ window.onload = () => {
     }
   };
 
+  document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+      case '?':
+        isOpen() ? closePopup() : openPopup();
+        break;
+      case 'Escape':
+        closePopup();
+        break;
+      default:
+        break;
+    }
+  });
+
   // Remove floating button if PDF renders
   PDFViewerApplication.eventBus?.on('pagesloaded', () => {
     const floatingUploadDiv = document.getElementById('floating-upload-a-document');
@@ -65,9 +78,6 @@ window.onload = () => {
   let prevKeyTracker = null;
   container.addEventListener('keydown', (event) => {
     switch (event.key) {
-      case '?':
-        isOpen() ? closePopup() : openPopup();
-        break;
       case 'j':
         scroll(event, 0, SCROLL_AMOUNT);
         break;
@@ -93,9 +103,6 @@ window.onload = () => {
           top: container.scrollHeight,
           behavior: 'smooth',
         });
-        break;
-      case 'Escape':
-        closePopup();
         break;
       default:
         break;
