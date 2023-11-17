@@ -50,6 +50,19 @@ window.onload = () => {
     }
   };
 
+  // Remove floating button if PDF renders
+  PDFViewerApplication.eventBus?.on('pagesloaded', () => {
+    const floatingUploadDiv = document.getElementById('floating-upload-a-document');
+    if (floatingUploadDiv !== null) {
+      floatingUploadDiv.style.display = 'none';
+    }
+  });
+
+  // ======================================================================= //
+  // Shortcuts
+  // ======================================================================= //
+
+  let prevKeyTracker = null;
   document.addEventListener('keydown', (event) => {
     switch (event.key) {
       case '?':
@@ -67,8 +80,19 @@ window.onload = () => {
       case 'h':
         scroll(event, -SCROLL_AMOUNT, 0);
         break;
+      case 'g':
+        if (prevKeyTracker === 'g' && !event.repeat) {
+          container.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        }
+        break;
       case 'G':
-        console.log(PDFViewerApplication);
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: 'smooth',
+        });
         break;
       case 'Escape':
         closePopup();
@@ -76,6 +100,7 @@ window.onload = () => {
       default:
         break;
     }
+    prevKeyTracker = event.key;
 
     document.addEventListener('keyup', () => {
       switch (event.key) {
@@ -83,6 +108,7 @@ window.onload = () => {
         case 'k':
         case 'h':
         case 'l':
+        case 'G':
           clearInterval(scrollInterval);
           scrollInterval = null;
           break;
@@ -90,13 +116,5 @@ window.onload = () => {
           break;
       }
     });
-  });
-
-  // Remove floating button if PDF renders
-  PDFViewerApplication.eventBus?.on('pagesloaded', () => {
-    const floatingUploadDiv = document.getElementById('floating-upload-a-document');
-    if (floatingUploadDiv !== null) {
-      floatingUploadDiv.style.display = 'none';
-    }
   });
 };

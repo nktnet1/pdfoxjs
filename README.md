@@ -65,14 +65,34 @@ Please refer to the original documentation of [pdf.js](https://github.com/mozill
 
 ### Shortcuts
 
-See Mozilla's documentation here:
-- https://support.mozilla.org/en-US/kb/view-pdf-files-firefox-or-choose-another-viewer#w_pdf-viewer-keyboard-shortcuts
+#### Original Shortcuts
 
-Below are additional shortcuts added by pdfoxjs
+Below are the default [PDF Viewer keyboard shortcuts](https://support.mozilla.org/en-US/kb/view-pdf-files-firefox-or-choose-another-viewer#w_pdf-viewer-keyboard-shortcuts):
+| Command |  Shortcut |
+|---------------|-------|
+| Next page | `N` or `J` or `ArrowRight` |
+| Previous page | `P` or `K` or `ArrowLeft[]` |
+| Zoomm in | `Ctrl` + `+` |
+| Zoom out | `Ctrl` + `-` |
+| Automatic zoom | `Ctrl` + `0` |
+| Rotate clockwise | `r` |
+| Rotate counterclockwise | `R` (`Shift` + `r`) |
+| Switch to Presentation Mode | `s` |
+| Choose Text Selection Tool | `gg` |
+| ~~Choose Hand Tool~~ | ~~`h`~~ (Note: this is overridden by vim bindings) |
+| Focus the Page Number input box | `CTRL` + `ALT` + `G` |
+
+#### Additional Shortcuts (Vim Bindings)
 
 | Command |  Shortcut |
 |---------------|-------|
-| Toggle Help | ``?` (`SHIFT` + `/`) |
+| Toggle Help | `?` (`SHIFT` + `/`) |
+| Scroll Down | `j` |
+| Scroll Up | `k` |
+| Scroll Right | `h` |
+| Scroll Left | `l` |
+| Scroll to Bottom | `G` |
+| Scroll to Top | `gg` |
 
 
 ## Project Setup (Development)
