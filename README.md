@@ -72,7 +72,7 @@ Below are additional shortcuts added by pdfoxjs
 
 | Command |  Shortcut |
 |---------------|-------|
-| Toggle Help | `h` or `?` (`SHIFT` + `/`) |
+| Toggle Help | ``?` (`SHIFT` + `/`) |
 
 
 ## Project Setup (Development)
