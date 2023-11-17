@@ -92,7 +92,7 @@ Below are the default [PDF Viewer keyboard shortcuts](https://support.mozilla.or
 | Scroll Right | `h` |
 | Scroll Left | `l` |
 | Scroll to Bottom | `G` |
-| Scroll to Top | `gg` |
+| Scroll to Top | `gg` (press `g` twice) |
 
 
 ## Project Setup (Development)

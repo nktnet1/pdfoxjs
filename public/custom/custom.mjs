@@ -63,7 +63,7 @@ window.onload = () => {
   // ======================================================================= //
 
   let prevKeyTracker = null;
-  document.addEventListener('keydown', (event) => {
+  container.addEventListener('keydown', (event) => {
     switch (event.key) {
       case '?':
         isOpen() ? closePopup() : openPopup();
@@ -102,7 +102,7 @@ window.onload = () => {
     }
     prevKeyTracker = event.key;
 
-    document.addEventListener('keyup', () => {
+    container.addEventListener('keyup', () => {
       switch (event.key) {
         case 'j':
         case 'k':
