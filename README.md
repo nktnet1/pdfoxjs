@@ -53,7 +53,6 @@ Please refer to the original documentation of [pdf.js](https://github.com/mozill
 - Show Layers
 
 ### Viewer
-
 - Select Text
     - Copy
     - Search with Google
@@ -64,29 +63,33 @@ Please refer to the original documentation of [pdf.js](https://github.com/mozill
     - `<SPACE>` inside checkbox to toggle selection
     - `<ENTER>` in multi-lines input box for new lines
 
+### Shortcuts
+
+See Mozilla's documentation here:
+- https://support.mozilla.org/en-US/kb/view-pdf-files-firefox-or-choose-another-viewer#w_pdf-viewer-keyboard-shortcuts
+
+Below are additional shortcuts added by pdfoxjs
+
+| Command |  Shortcut |
+|---------------|-------|
+| Toggle Help | `h` or `?` (`SHIFT` + `/`) |
+
 
 ## Project Setup (Development)
-
-This project is built using
-
-- [electron-vite](https://electron-vite.org)
-- [react](https://react.dev)
-- [typescript](https://www.typescriptlang.org)
-
-The main packages used are
-- [pdfjs-dist](https://github.com/mozilla/pdfjs-dist) (prebuilt binary embedded in src/renderer)
-- [pdfjs-viewer-element](https://github.com/alekswebnet/pdfjs-viewer-element)
-- [electron-context-menu](https://github.com/sindresorhus/electron-context-menu)
 
 ### Install
 
 ```bash
-$ yarn
+$ yarn install
 ```
 
 ### Development
 
 ```bash
+# Transpile and run electron app
+$ yarn start
+
+# Simple express server
 $ yarn dev
 ```
 

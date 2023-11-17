@@ -3,6 +3,8 @@ import { createHelpButton } from './helpButton.mjs';
 import { createUploadButton } from './uploadButton.mjs';
 import { createAndAppendElement } from './utils.mjs';
 
+const SCROLL_AMOUNT = 200;
+
 const createFloatingDiv = () => {
   return createAndAppendElement(
     document.body,
@@ -30,14 +32,55 @@ window.onload = () => {
   createUploadButton(floatingDiv);
 
   const { isOpen, openPopup, closePopup } = createHelpButton(floatingDiv);
-  document.addEventListener('keydown', (event) => {
-    if (['h', '?', 'Escape'].includes(event.key)) {
-      if (isOpen()) {
-        closePopup();
-      } else if (event.key !== 'Escape') {
-        openPopup();
-      }
+
+  const container = PDFViewerApplication.pdfViewer.container;
+
+  let scrollInterval = null;
+  const scrollY = (scrollAmount) => {
+    if (scrollInterval === null) {
+      scrollInterval = setInterval(() => {
+        container.scrollBy({
+          behavior: 'smooth',
+          top: scrollAmount,
+        });
+      });
     }
+  };
+
+  document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+      case 'h':
+      case '?':
+        isOpen() ? closePopup() : openPopup();
+        break;
+      case 'k':
+        event.stopPropagation();
+        event.preventDefault();
+        scrollY(-SCROLL_AMOUNT);
+        break;
+      case 'j':
+        event.stopPropagation();
+        event.preventDefault();
+        scrollY(SCROLL_AMOUNT);
+        break;
+      case 'Escape':
+        closePopup();
+        break;
+      default:
+        break;
+    }
+
+    document.addEventListener('keyup', () => {
+      switch (event.key) {
+        case 'j':
+        case 'k':
+          clearInterval(scrollInterval);
+          scrollInterval = null;
+          break;
+        default:
+          break;
+      }
+    });
   });
 
   // Remove floating button if PDF renders
