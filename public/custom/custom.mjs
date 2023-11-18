@@ -3,7 +3,7 @@ import { createHelpButton } from './helpButton.mjs';
 import { createUploadButton } from './uploadButton.mjs';
 import { createAndAppendElement } from './utils.mjs';
 
-const SCROLL_AMOUNT = 200;
+const SCROLL_AMOUNT = 50;
 
 const createFloatingDiv = () => {
   return createAndAppendElement(
@@ -72,7 +72,7 @@ window.onload = () => {
       const step = (timestamp) => {
         const elapsed = timestamp - start;
         container.scrollBy({
-          behavior: 'smooth',
+          behavior: 'auto',
           left: x,
           top: y,
         });
@@ -122,22 +122,22 @@ window.onload = () => {
         break;
     }
     prevKeyTracker = event.key;
+  });
 
-    container.addEventListener('keyup', () => {
-      switch (event.key) {
-        case 'j':
-        case 'k':
-        case 'h':
-        case 'l':
-        case 'G':
-          if (scrollRequestId !== null) {
-            window.cancelAnimationFrame(scrollRequestId);
-            scrollRequestId = null;
-          }
-          break;
-        default:
-          break;
-      }
-    });
+  container.addEventListener('keyup', (event) => {
+    switch (event.key) {
+      case 'j':
+      case 'k':
+      case 'h':
+      case 'l':
+      case 'G':
+        if (scrollRequestId !== null) {
+          window.cancelAnimationFrame(scrollRequestId);
+          scrollRequestId = null;
+        }
+        break;
+      default:
+        break;
+    }
   });
 };
