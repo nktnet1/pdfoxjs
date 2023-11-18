@@ -33,23 +33,6 @@ window.onload = () => {
 
   const { isOpen, openPopup, closePopup } = createHelpButton(floatingDiv);
 
-  const container = PDFViewerApplication.pdfViewer.container;
-
-  let scrollInterval = null;
-  const scroll = (event, x, y) => {
-    event.stopPropagation();
-    event.preventDefault();
-    if (scrollInterval === null) {
-      scrollInterval = setInterval(() => {
-        container.scrollBy({
-          behavior: 'smooth',
-          left: x,
-          top: y,
-        });
-      }, 10);
-    }
-  };
-
   document.addEventListener('keydown', (event) => {
     switch (event.key) {
       case '?':
@@ -75,8 +58,39 @@ window.onload = () => {
   // Shortcuts
   // ======================================================================= //
 
+  const container = PDFViewerApplication.pdfViewer.container;
+
+  let scrollRequestId = null;
+
+  const scroll = (event, x, y) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (scrollRequestId === null) {
+      const start = performance.now();
+
+      const step = (timestamp) => {
+        const elapsed = timestamp - start;
+        container.scrollBy({
+          behavior: 'smooth',
+          left: x,
+          top: y,
+        });
+
+        if (elapsed < 2000) {
+          scrollRequestId = window.requestAnimationFrame(step);
+        } else {
+          scrollRequestId = null;
+        }
+      };
+
+      scrollRequestId = window.requestAnimationFrame(step);
+    }
+  };
+
   let prevKeyTracker = null;
   container.addEventListener('keydown', (event) => {
+    console.log(event.key, Math.random());
     switch (event.key) {
       case 'j':
         scroll(event, 0, SCROLL_AMOUNT);
@@ -116,8 +130,10 @@ window.onload = () => {
         case 'h':
         case 'l':
         case 'G':
-          clearInterval(scrollInterval);
-          scrollInterval = null;
+          if (scrollRequestId !== null) {
+            window.cancelAnimationFrame(scrollRequestId);
+            scrollRequestId = null;
+          }
           break;
         default:
           break;
