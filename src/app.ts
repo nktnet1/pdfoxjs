@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 
-const viewerPath = 'pdfjs-4.0.189-dist/web/viewer.html';
+const viewerPath = 'viewer/web/viewer.html';
 
 export interface Options {
   resourcesPath: string;

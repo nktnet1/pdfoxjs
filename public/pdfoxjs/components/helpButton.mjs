@@ -1,4 +1,4 @@
-import { createAndAppendElement } from './utils.mjs';
+import { createChildElement } from '../utils/creation.mjs';
 
 export const createHelpButton = (parent) => {
   const closeOnOutsideClick = (event, ignoreTarget) => {
@@ -12,7 +12,7 @@ export const createHelpButton = (parent) => {
     document.addEventListener('click', (event) => closeOnOutsideClick(event, helpButton));
   };
 
-  const helpButton = createAndAppendElement(
+  const helpButton = createChildElement(
     parent,
     'button',
     {
@@ -22,7 +22,7 @@ export const createHelpButton = (parent) => {
     }
   );
 
-  const popupContainer = createAndAppendElement(
+  const popupContainer = createChildElement(
     document.body,
     'div', {
       id: 'popup-container'
@@ -30,7 +30,7 @@ export const createHelpButton = (parent) => {
   );
 
   // Help Image
-  createAndAppendElement(
+  createChildElement(
     popupContainer,
     'img',
     {
@@ -46,7 +46,7 @@ export const createHelpButton = (parent) => {
   };
 
   // Close Button
-  createAndAppendElement(
+  createChildElement(
     popupContainer,
     'button',
     {

@@ -1,12 +1,12 @@
-import { PDFViewerApplication } from '../pdfjs-4.0.189-dist/web/viewer.mjs';
-import { createHelpButton } from './helpButton.mjs';
-import { createUploadButton } from './uploadButton.mjs';
-import { createAndAppendElement } from './utils.mjs';
+import { PDFViewerApplication } from './config/application.mjs';
+import { createHelpButton } from './components/helpButton.mjs';
+import { createUploadButton } from './components/uploadButton.mjs';
+import { createChildElement } from './utils/creation.mjs';
 
-const SCROLL_AMOUNT = 50;
+const SCROLL_AMOUNT = 30;
 
 const createFloatingDiv = () => {
-  return createAndAppendElement(
+  return createChildElement(
     document.body,
     'div',
     {
@@ -18,13 +18,13 @@ const createFloatingDiv = () => {
 
 window.onload = () => {
   // stylesheet
-  createAndAppendElement(
+  createChildElement(
     document.head,
     'link',
     {
       rel: 'stylesheet',
       type: 'text/css',
-      href: '../../custom/custom.css',
+      href: '../../pdfoxjs/index.css',
     }
   );
 
@@ -74,18 +74,13 @@ window.onload = () => {
           left: x,
           top: y,
         });
-        scrollRequestId = elapsed < 2000 ? window.requestAnimationFrame(step) : null;
+        scrollRequestId = elapsed < 1000 ? window.requestAnimationFrame(step) : null;
       };
       scrollRequestId = window.requestAnimationFrame(step);
     }
   };
 
-  const scrollTo = (top) => {
-    container.scrollTo({
-      behavior: 'smooth',
-      top,
-    });
-  };
+  const scrollTo = (top) => container.scrollTo({ behavior: 'smooth', top });
 
   let prevKeyTracker = null;
   container.addEventListener('keydown', (event) => {

@@ -1,8 +1,8 @@
-import { PDFViewerApplication } from '../pdfjs-4.0.189-dist/web/viewer.mjs';
-import { createAndAppendElement } from './utils.mjs';
+import { PDFViewerApplication } from '../config/application.mjs';
+import { createChildElement } from '../utils/creation.mjs';
 
 export const createUploadButton = (parent) => {
-  return createAndAppendElement(
+  return createChildElement(
     parent,
     'button',
     {
