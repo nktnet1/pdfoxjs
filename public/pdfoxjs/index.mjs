@@ -1,22 +1,10 @@
 import { PDFViewerApplication } from './components/application.mjs';
+import { createFloatingDiv } from './components/floatingDiv.mjs';
 import { createHelpButton } from './components/helpButton.mjs';
 import { createUploadButton } from './components/uploadButton.mjs';
 import { createChildElement } from './utils/creation.mjs';
 
-const SCROLL_AMOUNT = 30;
-
-const createFloatingDiv = () => {
-  return createChildElement(
-    document.body,
-    'div',
-    {
-      id: 'floating-upload-a-document',
-      className: 'centered-element',
-    }
-  );
-};
-
-window.onload = () => {
+const createCustomElements = () => {
   // stylesheet
   createChildElement(
     document.head,
@@ -30,7 +18,6 @@ window.onload = () => {
 
   const floatingDiv = createFloatingDiv();
   createUploadButton(floatingDiv);
-
   const { isOpen, openPopup, closePopup } = createHelpButton(floatingDiv);
 
   document.addEventListener('keydown', (event) => {
@@ -53,10 +40,10 @@ window.onload = () => {
       floatingUploadDiv.style.display = 'none';
     }
   });
+};
 
-  // ======================================================================= //
-  // Shortcuts
-  // ======================================================================= //
+const handleShortcuts = (config) => {
+  const SCROLL_AMOUNT = config.settings.scrollAmount;
 
   const container = PDFViewerApplication.pdfViewer.container;
 
@@ -125,4 +112,11 @@ window.onload = () => {
         break;
     }
   });
+};
+
+window.onload = async () => {
+  const config = await fetch('/config.json').then(data => data.json());
+
+  createCustomElements();
+  handleShortcuts(config);
 };
