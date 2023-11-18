@@ -67,22 +67,24 @@ Please refer to the original documentation of [pdf.js](https://github.com/mozill
 
 #### Original Shortcuts
 
-Below are the default [PDF Viewer keyboard shortcuts](https://support.mozilla.org/en-US/kb/view-pdf-files-firefox-or-choose-another-viewer#w_pdf-viewer-keyboard-shortcuts):
+Below are the default [PDF Viewer keyboard shortcuts](https://support.mozilla.org/en-US/kb/view-pdf-files-firefox-or-choose-another-viewer#w_pdf-viewer-keyboard-shortcuts).
 | Command |  Shortcut |
 |---------------|-------|
-| Next page | `N` or `J` or `ArrowRight` |
-| Previous page | `P` or `K` or `ArrowLeft[]` |
+| Next page | `n` or `j` or `ArrowRight` |
+| Previous page | `p` or `k` or `ArrowLeft[]` |
 | Zoomm in | `Ctrl` + `+` |
 | Zoom out | `Ctrl` + `-` |
 | Automatic zoom | `Ctrl` + `0` |
 | Rotate clockwise | `r` |
 | Rotate counterclockwise | `R` (`Shift` + `r`) |
-| Switch to Presentation Mode | `s` |
-| Choose Text Selection Tool | `gg` |
+| Switch to Presentation Mode | `CTRL` + `ALT` + `p` |
+| Choose Text Selection Tool | `s` |
 | ~~Choose Hand Tool~~ | ~~`h`~~ (Note: this is overridden by vim bindings) |
-| Focus the Page Number input box | `CTRL` + `ALT` + `G` |
+| Focus the Page Number input box | `CTRL` + `ALT` + `g` |
 
 #### Additional Shortcuts (Vim Bindings)
+
+These will override any default PDF Viewer keyboard shortcuts.
 
 | Command |  Shortcut |
 |---------------|-------|

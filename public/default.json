@@ -1,0 +1,15 @@
+{
+  "commands": {
+    "j": "scroll-down",
+    "k": "scroll-up",
+    "l": "scroll-left",
+    "h": "scroll-right",
+    "gg": "scroll-to-top",
+    "G": "scroll-to-bottom",
+    "toggle-help": "?",
+    "quit-help": "Escape"
+  },
+  "settings": {
+    "scrollAmount": 50
+  }
+}

@@ -3,8 +3,9 @@ import { createFloatingDiv } from './components/floatingDiv.mjs';
 import { createHelpButton } from './components/helpButton.mjs';
 import { createUploadButton } from './components/uploadButton.mjs';
 import { createChildElement } from './utils/creation.mjs';
+import { getActionFromKey } from './utils/handleShortcuts.mjs';
 
-const createCustomElements = () => {
+const createCustomElements = (config) => {
   // stylesheet
   createChildElement(
     document.head,
@@ -22,10 +23,10 @@ const createCustomElements = () => {
 
   document.addEventListener('keydown', (event) => {
     switch (event.key) {
-      case '?':
+      case config.commands['toggle-help']:
         isOpen() ? closePopup() : openPopup();
         break;
-      case 'Escape':
+      case config.commands['quit-help']:
         closePopup();
         break;
       default:
@@ -49,9 +50,7 @@ const handleShortcuts = (config) => {
 
   let scrollRequestId = null;
 
-  const scrollBy = (event, x, y) => {
-    event.stopPropagation();
-    event.preventDefault();
+  const scrollBy = (x, y) => {
     if (scrollRequestId === null) {
       const start = performance.now();
       const step = (timestamp) => {
@@ -69,54 +68,51 @@ const handleShortcuts = (config) => {
 
   const scrollTo = (top) => container.scrollTo({ behavior: 'smooth', top });
 
-  let prevKeyTracker = null;
+  const actionMap = {
+    'scroll-down': () => scrollBy(0, SCROLL_AMOUNT),
+    'scroll-up': () => scrollBy(0, -SCROLL_AMOUNT),
+    'scroll-left': () => scrollBy(SCROLL_AMOUNT, 0),
+    'scroll-right': () => scrollBy(-SCROLL_AMOUNT, 0),
+    'scroll-to-top': () => scrollTo(0),
+    'scroll-to-bottom': () => scrollTo(container.scrollHeight),
+  };
+
+  const keys = [];
+  const commands = Object.keys(config.commands).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
-    switch (event.key) {
-      case 'j':
-        scrollBy(event, 0, SCROLL_AMOUNT);
-        break;
-      case 'k':
-        scrollBy(event, 0, -SCROLL_AMOUNT);
-        break;
-      case 'l':
-        scrollBy(event, SCROLL_AMOUNT, 0);
-        break;
-      case 'h':
-        scrollBy(event, -SCROLL_AMOUNT, 0);
-        break;
-      case 'g':
-        prevKeyTracker === 'g' && !event.repeat && scrollTo(0);
-        break;
-      case 'G':
-        scrollTo(container.scrollHeight);
-        break;
-      default:
-        break;
+    keys.push(event.key);
+    const action = getActionFromKey(keys, commands, config.commands);
+    if (action !== null) {
+      event.stopPropagation();
+      event.preventDefault();
+      actionMap[action]();
+      keys.length = 0;
     }
-    prevKeyTracker = event.key;
   });
 
   container.addEventListener('keyup', (event) => {
-    switch (event.key) {
-      case 'j':
-      case 'k':
-      case 'h':
-      case 'l':
-      case 'G':
-        if (scrollRequestId !== null) {
-          window.cancelAnimationFrame(scrollRequestId);
-          scrollRequestId = null;
-        }
-        break;
-      default:
-        break;
+    if (scrollRequestId !== null) {
+      window.cancelAnimationFrame(scrollRequestId);
+      scrollRequestId = null;
     }
   });
 };
 
-window.onload = async () => {
-  const config = await fetch('/config.json').then(data => data.json());
+const getConfig = async () => {
+  try {
+    const response = await fetch('/config.json');
+    if (!response.ok) {
+      throw new Error('No config provided... Using /default.json');
+    }
+    return response.json();
+  } catch {
+    return fetch('/default.json').then(data => data.json());
+  }
+};
 
-  createCustomElements();
+window.onload = async () => {
+  const config = await getConfig();
+  console.log('Config', config);
+  createCustomElements(config);
   handleShortcuts(config);
 };
