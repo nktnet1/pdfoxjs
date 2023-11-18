@@ -62,13 +62,11 @@ window.onload = () => {
 
   let scrollRequestId = null;
 
-  const scroll = (event, x, y) => {
+  const scrollBy = (event, x, y) => {
     event.stopPropagation();
     event.preventDefault();
-
     if (scrollRequestId === null) {
       const start = performance.now();
-
       const step = (timestamp) => {
         const elapsed = timestamp - start;
         container.scrollBy({
@@ -76,47 +74,39 @@ window.onload = () => {
           left: x,
           top: y,
         });
-
-        if (elapsed < 2000) {
-          scrollRequestId = window.requestAnimationFrame(step);
-        } else {
-          scrollRequestId = null;
-        }
+        scrollRequestId = elapsed < 2000 ? window.requestAnimationFrame(step) : null;
       };
-
       scrollRequestId = window.requestAnimationFrame(step);
     }
   };
 
+  const scrollTo = (top) => {
+    container.scrollTo({
+      behavior: 'smooth',
+      top,
+    });
+  };
+
   let prevKeyTracker = null;
   container.addEventListener('keydown', (event) => {
-    console.log(event.key, Math.random());
     switch (event.key) {
       case 'j':
-        scroll(event, 0, SCROLL_AMOUNT);
+        scrollBy(event, 0, SCROLL_AMOUNT);
         break;
       case 'k':
-        scroll(event, 0, -SCROLL_AMOUNT);
+        scrollBy(event, 0, -SCROLL_AMOUNT);
         break;
       case 'l':
-        scroll(event, SCROLL_AMOUNT, 0);
+        scrollBy(event, SCROLL_AMOUNT, 0);
         break;
       case 'h':
-        scroll(event, -SCROLL_AMOUNT, 0);
+        scrollBy(event, -SCROLL_AMOUNT, 0);
         break;
       case 'g':
-        if (prevKeyTracker === 'g' && !event.repeat) {
-          container.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          });
-        }
+        prevKeyTracker === 'g' && !event.repeat && scrollTo(0);
         break;
       case 'G':
-        container.scrollTo({
-          top: container.scrollHeight,
-          behavior: 'smooth',
-        });
+        scrollTo(container.scrollHeight);
         break;
       default:
         break;
