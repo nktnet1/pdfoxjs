@@ -1,4 +1,4 @@
-import { PDFViewerApplication } from './config/application.mjs';
+import { PDFViewerApplication } from './components/application.mjs';
 import { createHelpButton } from './components/helpButton.mjs';
 import { createUploadButton } from './components/uploadButton.mjs';
 import { createChildElement } from './utils/creation.mjs';
