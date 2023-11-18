@@ -6,10 +6,12 @@
     "h": "scroll-right",
     "gg": "scroll-to-top",
     "G": "scroll-to-bottom",
-    "toggle-help": "?",
-    "quit-help": "Escape"
+    "/": "trigger-search",
+    "b": "toggle-sidebar",
+    "?": "toggle-help"
   },
   "settings": {
-    "scrollAmount": 50
+    "scrollAmount": 50,
+    "maxCommandLength": 3
   }
 }

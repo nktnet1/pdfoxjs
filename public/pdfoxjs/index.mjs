@@ -5,7 +5,7 @@ import { createUploadButton } from './components/uploadButton.mjs';
 import { createChildElement } from './utils/creation.mjs';
 import { getActionFromKey } from './utils/handleShortcuts.mjs';
 
-const createCustomElements = (config) => {
+const createCustomElements = () => {
   // stylesheet
   createChildElement(
     document.head,
@@ -18,32 +18,25 @@ const createCustomElements = (config) => {
   );
 
   const floatingDiv = createFloatingDiv();
+  PDFViewerApplication.eventBus?.on('pagesloaded', () => {
+    floatingDiv.style.display = 'none';
+  });
+
   createUploadButton(floatingDiv);
   const { isOpen, openPopup, closePopup } = createHelpButton(floatingDiv);
 
   document.addEventListener('keydown', (event) => {
-    switch (event.key) {
-      case config.commands['toggle-help']:
-        isOpen() ? closePopup() : openPopup();
-        break;
-      case config.commands['quit-help']:
-        closePopup();
-        break;
-      default:
-        break;
+    if (event.key === 'Escape') {
+      PDFViewerApplication.pdfViewer.container.focus();
+      isOpen() && closePopup();
     }
   });
 
-  // Remove floating button if PDF renders
-  PDFViewerApplication.eventBus?.on('pagesloaded', () => {
-    const floatingUploadDiv = document.getElementById('floating-upload-a-document');
-    if (floatingUploadDiv !== null) {
-      floatingUploadDiv.style.display = 'none';
-    }
-  });
+  const toggleHelp = () => isOpen() ? closePopup() : openPopup();
+  return { toggleHelp };
 };
 
-const handleShortcuts = (config) => {
+const handleShortcuts = (config, { toggleHelp }) => {
   const SCROLL_AMOUNT = config.settings.scrollAmount;
 
   const container = PDFViewerApplication.pdfViewer.container;
@@ -75,12 +68,20 @@ const handleShortcuts = (config) => {
     'scroll-right': () => scrollBy(-SCROLL_AMOUNT, 0),
     'scroll-to-top': () => scrollTo(0),
     'scroll-to-bottom': () => scrollTo(container.scrollHeight),
+    'trigger-search': () => PDFViewerApplication.findBar.open(),
+    'toggle-help': toggleHelp,
   };
 
   const keys = [];
+  const append = (key) => {
+    keys.push(key);
+    if (keys.length > config.settings.maxCommandLength) {
+      keys.shift();
+    }
+  };
   const commands = Object.keys(config.commands).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
-    keys.push(event.key);
+    append(event.key);
     const action = getActionFromKey(keys, commands, config.commands);
     if (action !== null) {
       event.stopPropagation();
@@ -90,7 +91,7 @@ const handleShortcuts = (config) => {
     }
   });
 
-  container.addEventListener('keyup', (event) => {
+  container.addEventListener('keyup', () => {
     if (scrollRequestId !== null) {
       window.cancelAnimationFrame(scrollRequestId);
       scrollRequestId = null;
@@ -102,7 +103,7 @@ const getConfig = async () => {
   try {
     const response = await fetch('/config.json');
     if (!response.ok) {
-      throw new Error('No config provided... Using /default.json');
+      throw new Error('No config.json available. Using default.json');
     }
     return response.json();
   } catch {
@@ -113,6 +114,7 @@ const getConfig = async () => {
 window.onload = async () => {
   const config = await getConfig();
   console.log('Config', config);
-  createCustomElements(config);
-  handleShortcuts(config);
+  const { toggleHelp } = createCustomElements(config);
+  handleShortcuts(config, { toggleHelp });
+  console.log(PDFViewerApplication);
 };

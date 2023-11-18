@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["build", "dist", "out", "public/pdfjs-*-dist"],
+  "ignorePatterns": ["build", "dist", "out", "public/viewer"],
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint"
