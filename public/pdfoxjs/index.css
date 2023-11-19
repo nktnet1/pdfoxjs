@@ -72,3 +72,11 @@
   inset: 0!important;
   inset-block: 0!important;
 }
+
+#viewer .page:first-child {
+  border-top: 0!important;
+}
+
+#viewer .page:not(:first-child) {
+  border-top: 1px solid transparent;
+}

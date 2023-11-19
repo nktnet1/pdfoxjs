@@ -71,6 +71,7 @@ export const handleShortcuts = (config, { toggleHelp }) => {
   };
 
   const commandMap = {
+    'toggle-help': toggleHelp,
     'scroll-down': (settings) => scrollBy(makeScrollConfig(settings)),
     'scroll-up': (settings) => scrollBy(makeScrollConfig(settings, -1)),
     'scroll-left': (settings) => scrollBy(makeScrollConfig(settings, 1, 'left')),
@@ -82,8 +83,8 @@ export const handleShortcuts = (config, { toggleHelp }) => {
     'toggle-toolbar': toggleToolbar,
     'zoom-in': (settings) => (PDFViewerApplication.pdfViewer.currentScale += settings.zoomAmount ?? config.settings.globalZoomAmount),
     'zoom-out': (settings) => (PDFViewerApplication.pdfViewer.currentScale -= settings.zoomAmount ?? config.settings.globalZoomAmount),
-    'zoom-reset': () => { PDFViewerApplication.pdfViewer.currentScale = 1; console.log('resetted'); },
-    'toggle-help': toggleHelp,
+    'zoom-reset': () => (PDFViewerApplication.pdfViewer.currentScale = 1),
+    'no-action': () => { /* nothing to do */ },
   };
 
   const inputKeys = [];
