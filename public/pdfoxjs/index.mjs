@@ -61,6 +61,30 @@ const handleShortcuts = (config, { toggleHelp }) => {
 
   const scrollTo = (top) => container.scrollTo({ behavior: 'smooth', top });
 
+  const toolbar = document.getElementById('toolbarContainer');
+  const viewerContainer = document.getElementById('viewerContainer');
+
+  const toggleToolbar = () => {
+    const result = toolbar.classList.toggle('hidden');
+    if (result) {
+      viewerContainer.classList.add('noInset');
+      PDFViewerApplication.pdfSidebar.close();
+    } else {
+      viewerContainer.classList.remove('noInset');
+    }
+  };
+
+  const toggleSidebar = () => {
+    if (!toolbar.classList.contains('hidden')) {
+      PDFViewerApplication.pdfSidebar.toggle();
+    } else {
+      // Open toolbar before sidebar
+      toolbar.classList.remove('hidden');
+      viewerContainer.classList.remove('noInset');
+      PDFViewerApplication.pdfSidebar.open();
+    }
+  };
+
   const actionMap = {
     'scroll-down': () => scrollBy(0, SCROLL_AMOUNT),
     'scroll-up': () => scrollBy(0, -SCROLL_AMOUNT),
@@ -69,6 +93,8 @@ const handleShortcuts = (config, { toggleHelp }) => {
     'scroll-to-top': () => scrollTo(0),
     'scroll-to-bottom': () => scrollTo(container.scrollHeight),
     'trigger-search': () => PDFViewerApplication.findBar.open(),
+    'toggle-sidebar': toggleSidebar,
+    'toggle-toolbar': toggleToolbar,
     'toggle-help': toggleHelp,
   };
 
@@ -82,7 +108,7 @@ const handleShortcuts = (config, { toggleHelp }) => {
   const commands = Object.keys(config.commands).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     append(event.key);
-    const action = getActionFromKey(keys, commands, config.commands);
+    const action = getActionFromKey(keys, commands, config);
     if (action !== null) {
       event.stopPropagation();
       event.preventDefault();
@@ -113,7 +139,6 @@ const getConfig = async () => {
 
 window.onload = async () => {
   const config = await getConfig();
-  console.log('Config', config);
   const { toggleHelp } = createCustomElements(config);
   handleShortcuts(config, { toggleHelp });
   console.log(PDFViewerApplication);

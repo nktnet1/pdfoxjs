@@ -1,1 +1,5 @@
-export { PDFViewerApplication } from '../../viewer/web/viewer.mjs';
+export {
+  PDFViewerApplicationOptions,
+  PDFViewerApplication,
+  PDFViewerApplicationConstants,
+} from '../../viewer/web/viewer.mjs';

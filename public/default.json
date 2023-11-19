@@ -4,13 +4,15 @@
     "k": "scroll-up",
     "l": "scroll-left",
     "h": "scroll-right",
-    "gg": "scroll-to-top",
+    "g|g": "scroll-to-top",
     "G": "scroll-to-bottom",
     "/": "trigger-search",
     "b": "toggle-sidebar",
+    "t": "toggle-toolbar",
     "?": "toggle-help"
   },
   "settings": {
+    "commandSeparator": "|",
     "scrollAmount": 50,
     "maxCommandLength": 3
   }

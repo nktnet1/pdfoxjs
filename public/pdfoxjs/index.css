@@ -67,3 +67,8 @@
 .close-button:hover {
   background-color: #c0392b;
 }
+
+.noInset {
+  inset: 0!important;
+  inset-block: 0!important;
+}
