@@ -2,33 +2,34 @@
   "settings": {
     "globalScrollAmount": 50,
     "globalScrollBehavior": "auto",
+    "globalZoomAmount": 0.1,
     "keysSeparator": "|",
     "maxCommandLength": 3
   },
   "keys": {
     "j": {
-      "command": "scroll-down",      
+      "command": "scroll-down",
       "settings": {
         "scrollAmount": 50,
         "scrollBehavior": "auto"
       }
     },
     "k": {
-      "command": "scroll-up",      
+      "command": "scroll-up",
       "settings": {
         "scrollAmount": 50,
         "scrollBehavior": "auto"
       }
     },
     "l": {
-      "command": "scroll-left",      
+      "command": "scroll-left",
       "settings": {
         "scrollAmount": 50,
         "scrollBehavior": "auto"
       }
     },
     "h": {
-      "command": "scroll-right",      
+      "command": "scroll-right",
       "settings": {
         "scrollAmount": 50,
         "scrollBehavior": "auto"
@@ -47,16 +48,31 @@
       }
     },
     "/": {
-      "command": "trigger-search"      
+      "command": "trigger-search"
     },
     "b": {
-      "command": "toggle-sidebar"      
+      "command": "toggle-sidebar"
     },
     "t": {
-      "command": "toggle-toolbar"      
+      "command": "toggle-toolbar"
+    },
+    "+": {
+      "command": "zoom-in",
+      "settings": {
+        "zoomAmount": 0.1
+      }
+    },
+    "-": {
+      "command": "zoom-out",
+      "settings": {
+        "zoomAmount": 0.1
+      }
+    },
+    "=": {
+      "command": "zoom-reset"
     },
     "?": {
-      "command": "toggle-help"      
+      "command": "toggle-help"
     }
   }
 }

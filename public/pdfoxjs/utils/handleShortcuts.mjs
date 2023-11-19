@@ -64,10 +64,9 @@ export const handleShortcuts = (config, { toggleHelp }) => {
   };
 
   const makeScrollConfig = (settings, multiplier = 1, direction = 'top') => {
-    console.log(settings);
     return {
-      [direction]: (settings.scrollAmount ?? config.settings.globalScrollAmount) * multiplier,
-      behavior: settings.scrollBehavior ?? config.settings.globalScrollBehavior
+      [direction]: (settings?.scrollAmount ?? config.settings.globalScrollAmount) * multiplier,
+      behavior: settings?.scrollBehavior ?? config.settings.globalScrollBehavior
     };
   };
 
@@ -81,6 +80,9 @@ export const handleShortcuts = (config, { toggleHelp }) => {
     'trigger-search': () => PDFViewerApplication.findBar.open(),
     'toggle-sidebar': toggleSidebar,
     'toggle-toolbar': toggleToolbar,
+    'zoom-in': (settings) => (PDFViewerApplication.pdfViewer.currentScale += settings.zoomAmount ?? config.settings.globalZoomAmount),
+    'zoom-out': (settings) => (PDFViewerApplication.pdfViewer.currentScale -= settings.zoomAmount ?? config.settings.globalZoomAmount),
+    'zoom-reset': () => { PDFViewerApplication.pdfViewer.currentScale = 1; console.log('resetted'); },
     'toggle-help': toggleHelp,
   };
 
@@ -98,7 +100,7 @@ export const handleShortcuts = (config, { toggleHelp }) => {
     if (command !== null) {
       event.stopPropagation();
       event.preventDefault();
-      commandMap[command](settings);
+      commandMap[command](settings ?? {});
       inputKeys.length = 0;
     }
   });
