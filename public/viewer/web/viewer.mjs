@@ -1678,7 +1678,6 @@ class AnnotationEditorParams {
     editorStampAddImage
   }) {
     const dispatchEvent = (typeStr, value) => {
-      console.log('TYPE:', typeStr, 'value:', value, this);
       this.eventBus.dispatch("switchannotationeditorparams", {
         source: this,
         type: AnnotationEditorParamsType[typeStr],

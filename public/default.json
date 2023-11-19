@@ -55,6 +55,9 @@
     "/": {
       "command": "trigger-search"
     },
+    "N": {
+      "command": "focus-page-number"
+    },
     "b": {
       "command": "toggle-sidebar"
     },
@@ -82,6 +85,9 @@
     "P": {
       "command": "print-pdf"
     },
+    "Control|s": {
+      "command": "save-pdf"
+    },
     "i": {
       "command": "toggle-insert-text"
     },
@@ -90,6 +96,9 @@
     },
     "I": {
       "command": "toggle-insert-image"
+    },
+    "T": {
+      "command": "toggle-secondary-toolbar"
     },
     "n": {
       "command": "next-page"
