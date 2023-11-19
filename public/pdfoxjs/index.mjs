@@ -47,6 +47,8 @@ window.onload = async () => {
   if (config.settings.hideToolbar) {
     hideToolbar();
   }
-  const { toggleHelp } = createAllCustomElements(config);
-  handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar });
+  const { toggleHelp } = createAllCustomElements();
+  if (config.settings.enableCustomShortcutKeys) {
+    handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar });
+  }
 };

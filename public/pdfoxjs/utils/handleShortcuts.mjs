@@ -62,10 +62,13 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'zoom-reset': () => (PDFViewerApplication.pdfViewer.currentScale = 1),
     'open-file': () => PDFViewerApplication.eventBus.dispatch('openfile'),
     'print-pdf': () => PDFViewerApplication.eventBus.dispatch('print'),
+    '': () => PDFViewerApplication.eventBus.dispatch('print'),
     'next-page': () => PDFViewerApplication.eventBus.dispatch('nextpage'),
     'previous-page': () => PDFViewerApplication.eventBus.dispatch('previouspage'),
     'rotate-clockwise': () => PDFViewerApplication.eventBus.dispatch('rotatecw'),
     'rotate-counterclockwise': () => PDFViewerApplication.eventBus.dispatch('rotateccw'),
+    'first-page': () => PDFViewerApplication.eventBus.dispatch('firstpage'),
+    'last-page': () => PDFViewerApplication.eventBus.dispatch('lastpage'),
     'show-document-info': () => PDFViewerApplication.eventBus.dispatch('documentproperties'),
     'no-action': () => { /* nothing to do */ },
   };
@@ -80,6 +83,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     append(event.key);
+    console.log('inputKeys', inputKeys);
     const { command, settings } = getActionFromKey(inputKeys, commandKeys, config);
     if (command !== null) {
       event.stopPropagation();

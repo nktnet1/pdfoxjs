@@ -5,9 +5,13 @@
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
     "maxCommandLength": 3,
-    "hideToolbar": false
+    "hideToolbar": false,
+    "enableCustomShortcutKeys": true
   },
   "keys": {
+    "H": {
+      "command": "toggle-help"
+    },
     "j": {
       "command": "scroll-down",
       "settings": {
@@ -90,11 +94,14 @@
     "<": {
       "command": "rotate-counterclockwise"
     },
+    "Control|j": {
+      "command": "last-page"
+    },
+    "Control|k": {
+      "command": "first-page"
+    },
     "?": {
       "command": "show-document-info"
-    },
-    "H": {
-      "command": "toggle-help"
     },
     "|": {
       "command": "no-action"
