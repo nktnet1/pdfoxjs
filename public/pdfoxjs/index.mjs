@@ -47,9 +47,17 @@ window.onload = async () => {
   if (config.settings.hideToolbar) {
     hideToolbar();
   }
-  const { toggleHelp } = createAllCustomElements();
+
+  const closeAnnotationEditor = () => {
+    PDFViewerApplication.eventBus.dispatch(
+      'switchannotationeditormode',
+      { mode: globalThis.pdfjsLib.AnnotationEditorType.NONE }
+    );
+  };
+
+  const { toggleHelp } = createAllCustomElements({ closeAnnotationEditor });
   if (config.settings.enableCustomShortcutKeys) {
-    handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar });
+    handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor });
   }
 
   console.log(globalThis.pdfjsLib.AnnotationEditorType);

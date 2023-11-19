@@ -22,7 +22,7 @@ const getActionFromKey = (inputKeys, commandKeys, config) => {
   return { command: null };
 };
 
-export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSidebar }) => {
+export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor }) => {
   const container = PDFViewerApplication.pdfViewer.container;
 
   let scrollRequestId = null;
@@ -50,10 +50,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     if (PDFViewerApplication.pdfViewer.annotationEditorMode !== mode) {
       PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode });
     } else {
-      PDFViewerApplication.eventBus.dispatch(
-        'switchannotationeditormode',
-        { mode: globalThis.pdfjsLib.AnnotationEditorType.NONE }
-      );
+      closeAnnotationEditor();
     }
   };
 

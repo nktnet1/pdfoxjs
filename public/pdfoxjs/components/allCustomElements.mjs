@@ -4,7 +4,7 @@ import { createHelpButton } from './helpButton.mjs';
 import { createUploadButton } from './uploadButton.mjs';
 import { createChildElement } from '../utils/creation.mjs';
 
-export const createAllCustomElements = () => {
+export const createAllCustomElements = ({ closeAnnotationEditor }) => {
   // stylesheet
   createChildElement(
     document.head,
@@ -28,6 +28,7 @@ export const createAllCustomElements = () => {
     if (event.key === 'Escape') {
       PDFViewerApplication.pdfViewer.container.focus();
       isOpen() && closePopup();
+      closeAnnotationEditor();
     }
   });
 
