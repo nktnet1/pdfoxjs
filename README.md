@@ -72,7 +72,7 @@ Below are the default [PDF Viewer keyboard shortcuts](https://support.mozilla.or
 |---------------|-------|
 | Next page | `n` or `j` or `ArrowRight` |
 | Previous page | `p` or `k` or `ArrowLeft[]` |
-| Zoomm in | `Ctrl` + `+` |
+| Zoom in | `Ctrl` + `+` |
 | Zoom out | `Ctrl` + `-` |
 | Automatic zoom | `Ctrl` + `0` |
 | Rotate clockwise | `r` |

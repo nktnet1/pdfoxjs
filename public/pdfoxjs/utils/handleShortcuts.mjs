@@ -22,7 +22,7 @@ const getActionFromKey = (inputKeys, commandKeys, config) => {
   return { command: null };
 };
 
-export const handleShortcuts = (config, { toggleHelp }) => {
+export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSidebar }) => {
   const container = PDFViewerApplication.pdfViewer.container;
 
   let scrollRequestId = null;
@@ -36,30 +36,6 @@ export const handleShortcuts = (config, { toggleHelp }) => {
         scrollRequestId = elapsed < 1000 ? window.requestAnimationFrame(step) : null;
       };
       scrollRequestId = window.requestAnimationFrame(step);
-    }
-  };
-
-  const toolbar = document.getElementById('toolbarContainer');
-  const viewerContainer = document.getElementById('viewerContainer');
-
-  const toggleToolbar = () => {
-    const result = toolbar.classList.toggle('hidden');
-    if (result) {
-      viewerContainer.classList.add('noInset');
-      PDFViewerApplication.pdfSidebar.close();
-    } else {
-      viewerContainer.classList.remove('noInset');
-    }
-  };
-
-  const toggleSidebar = () => {
-    if (!toolbar.classList.contains('hidden')) {
-      PDFViewerApplication.pdfSidebar.toggle();
-    } else {
-      // Open toolbar before sidebar
-      toolbar.classList.remove('hidden');
-      viewerContainer.classList.remove('noInset');
-      PDFViewerApplication.pdfSidebar.open();
     }
   };
 
@@ -84,6 +60,12 @@ export const handleShortcuts = (config, { toggleHelp }) => {
     'zoom-in': (settings) => (PDFViewerApplication.pdfViewer.currentScale += settings.zoomAmount ?? config.settings.globalZoomAmount),
     'zoom-out': (settings) => (PDFViewerApplication.pdfViewer.currentScale -= settings.zoomAmount ?? config.settings.globalZoomAmount),
     'zoom-reset': () => (PDFViewerApplication.pdfViewer.currentScale = 1),
+    'open-file': () => PDFViewerApplication.eventBus.dispatch('openfile'),
+    'print-pdf': () => PDFViewerApplication.eventBus.dispatch('print'),
+    'next-page': () => PDFViewerApplication.eventBus.dispatch('nextpage'),
+    'previous-page': () => PDFViewerApplication.eventBus.dispatch('previouspage'),
+    'rotate-clockwise': () => PDFViewerApplication.eventBus.dispatch('rotatecw'),
+    'rotate-counterclockwise': () => PDFViewerApplication.eventBus.dispatch('rotateccw'),
     'no-action': () => { /* nothing to do */ },
   };
 

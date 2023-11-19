@@ -8,10 +8,7 @@ export const createUploadButton = (parent) => {
     {
       className: 'upload-button',
       textContent: 'Upload a Document',
-      onclick: () => {
-        const fileInput = PDFViewerApplication.appConfig.openFileInput;
-        fileInput.click();
-      }
+      onclick: () => PDFViewerApplication.eventBus.dispatch('openfile'),
     }
   );
 };

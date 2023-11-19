@@ -4,7 +4,8 @@
     "globalScrollBehavior": "auto",
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
-    "maxCommandLength": 3
+    "maxCommandLength": 3,
+    "hideToolbar": true
   },
   "keys": {
     "j": {
@@ -71,8 +72,26 @@
     "=": {
       "command": "zoom-reset"
     },
-    "?": {
-      "command": "toggle-help"
+    "o": {
+      "command": "open-file"
+    },
+    "P": {
+      "command": "print-pdf"
+    },
+    "n": {
+      "command": "next-page"
+    },
+    "p": {
+      "command": "previous-page"
+    },
+    ">": {
+      "command": "rotate-clockwise"
+    },
+    "<": {
+      "command": "rotate-counterclockwise"
+    },
+    "|": {
+      "command": "no-action"
     }
   }
 }
