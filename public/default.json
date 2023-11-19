@@ -1,19 +1,62 @@
 {
-  "commands": {
-    "j": "scroll-down",
-    "k": "scroll-up",
-    "l": "scroll-left",
-    "h": "scroll-right",
-    "g|g": "scroll-to-top",
-    "G": "scroll-to-bottom",
-    "/": "trigger-search",
-    "b": "toggle-sidebar",
-    "t": "toggle-toolbar",
-    "?": "toggle-help"
-  },
   "settings": {
-    "commandSeparator": "|",
-    "scrollAmount": 50,
+    "globalScrollAmount": 50,
+    "globalScrollBehavior": "auto",
+    "keysSeparator": "|",
     "maxCommandLength": 3
+  },
+  "keys": {
+    "j": {
+      "command": "scroll-down",      
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "auto"
+      }
+    },
+    "k": {
+      "command": "scroll-up",      
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "auto"
+      }
+    },
+    "l": {
+      "command": "scroll-left",      
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "auto"
+      }
+    },
+    "h": {
+      "command": "scroll-right",      
+      "settings": {
+        "scrollAmount": 50,
+        "scrollBehavior": "auto"
+      }
+    },
+    "g|g": {
+      "command": "scroll-to-top",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
+    "G": {
+      "command": "scroll-to-bottom",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
+    "/": {
+      "command": "trigger-search"      
+    },
+    "b": {
+      "command": "toggle-sidebar"      
+    },
+    "t": {
+      "command": "toggle-toolbar"      
+    },
+    "?": {
+      "command": "toggle-help"      
+    }
   }
 }

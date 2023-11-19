@@ -1,55 +1,43 @@
 import { PDFViewerApplication } from '../components/application.mjs';
 
-const getActionFromKey = (keys, commands, config) => {
-  for (const command of commands) {
-    if (keys[keys.length - 1] === command) {
-      return config.commands[command];
+const getActionFromKey = (inputKeys, commandKeys, config) => {
+  for (const commandKey of commandKeys) {
+    if (inputKeys[inputKeys.length - 1] === commandKey) {
+      return config.keys[commandKey];
     }
-
-    const cmdKeys = command.split(config.settings.commandSeparator);
-
-    if (keys.length < cmdKeys.length) {
+    const cmdKeys = commandKey.split(config.settings.keysSeparator);
+    if (inputKeys.length < cmdKeys.length) {
       continue;
     }
-
-    for (let i = keys.length - 1; i >= 0; --i) {
+    for (let i = inputKeys.length - 1; i >= 0; --i) {
       const s = cmdKeys.pop();
-      if (keys[i] !== s) {
+      if (inputKeys[i] !== s) {
         break;
       }
-
       if (cmdKeys.length === 0) {
-        return config.commands[command];
+        return config.keys[commandKey];
       }
     }
   }
-  return null;
+  return { command: null };
 };
 
 export const handleShortcuts = (config, { toggleHelp }) => {
-  const SCROLL_AMOUNT = config.settings.scrollAmount;
-
   const container = PDFViewerApplication.pdfViewer.container;
 
   let scrollRequestId = null;
 
-  const scrollBy = (x, y) => {
+  const scrollBy = ({ behavior, left, top }) => {
     if (scrollRequestId === null) {
       const start = performance.now();
       const step = (timestamp) => {
         const elapsed = timestamp - start;
-        container.scrollBy({
-          behavior: 'auto',
-          left: x,
-          top: y,
-        });
+        container.scrollBy({ behavior, left, top });
         scrollRequestId = elapsed < 1000 ? window.requestAnimationFrame(step) : null;
       };
       scrollRequestId = window.requestAnimationFrame(step);
     }
   };
-
-  const scrollTo = (top) => container.scrollTo({ behavior: 'smooth', top });
 
   const toolbar = document.getElementById('toolbarContainer');
   const viewerContainer = document.getElementById('viewerContainer');
@@ -75,35 +63,43 @@ export const handleShortcuts = (config, { toggleHelp }) => {
     }
   };
 
-  const actionMap = {
-    'scroll-down': () => scrollBy(0, SCROLL_AMOUNT),
-    'scroll-up': () => scrollBy(0, -SCROLL_AMOUNT),
-    'scroll-left': () => scrollBy(SCROLL_AMOUNT, 0),
-    'scroll-right': () => scrollBy(-SCROLL_AMOUNT, 0),
-    'scroll-to-top': () => scrollTo(0),
-    'scroll-to-bottom': () => scrollTo(container.scrollHeight),
+  const makeScrollConfig = (settings, multiplier = 1, direction = 'top') => {
+    console.log(settings);
+    return {
+      [direction]: (settings.scrollAmount ?? config.settings.globalScrollAmount) * multiplier,
+      behavior: settings.scrollBehavior ?? config.settings.globalScrollBehavior
+    };
+  };
+
+  const commandMap = {
+    'scroll-down': (settings) => scrollBy(makeScrollConfig(settings)),
+    'scroll-up': (settings) => scrollBy(makeScrollConfig(settings, -1)),
+    'scroll-left': (settings) => scrollBy(makeScrollConfig(settings, 1, 'left')),
+    'scroll-right': (settings) => scrollBy(makeScrollConfig(settings, -1, 'left')),
+    'scroll-to-top': (settings) => container.scrollTo(makeScrollConfig({ ...settings, scrollAmount: 0 })),
+    'scroll-to-bottom': (settings) => container.scrollTo(makeScrollConfig({ ...settings, scrollAmount: container.scrollHeight })),
     'trigger-search': () => PDFViewerApplication.findBar.open(),
     'toggle-sidebar': toggleSidebar,
     'toggle-toolbar': toggleToolbar,
     'toggle-help': toggleHelp,
   };
 
-  const keys = [];
+  const inputKeys = [];
   const append = (key) => {
-    keys.push(key);
-    if (keys.length > config.settings.maxCommandLength) {
-      keys.shift();
+    inputKeys.push(key);
+    if (inputKeys.length > config.settings.maxCommandLength) {
+      inputKeys.shift();
     }
   };
-  const commands = Object.keys(config.commands).sort((a, b) => b.length - a.length);
+  const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     append(event.key);
-    const action = getActionFromKey(keys, commands, config);
-    if (action !== null) {
+    const { command, settings } = getActionFromKey(inputKeys, commandKeys, config);
+    if (command !== null) {
       event.stopPropagation();
       event.preventDefault();
-      actionMap[action]();
-      keys.length = 0;
+      commandMap[command](settings);
+      inputKeys.length = 0;
     }
   });
 
