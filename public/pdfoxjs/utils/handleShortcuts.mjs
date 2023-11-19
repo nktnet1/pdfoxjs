@@ -66,6 +66,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'previous-page': () => PDFViewerApplication.eventBus.dispatch('previouspage'),
     'rotate-clockwise': () => PDFViewerApplication.eventBus.dispatch('rotatecw'),
     'rotate-counterclockwise': () => PDFViewerApplication.eventBus.dispatch('rotateccw'),
+    'show-document-info': () => PDFViewerApplication.eventBus.dispatch('documentproperties'),
     'no-action': () => { /* nothing to do */ },
   };
 

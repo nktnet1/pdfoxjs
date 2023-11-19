@@ -5,7 +5,7 @@
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
     "maxCommandLength": 3,
-    "hideToolbar": true
+    "hideToolbar": false
   },
   "keys": {
     "j": {
@@ -89,6 +89,12 @@
     },
     "<": {
       "command": "rotate-counterclockwise"
+    },
+    "?": {
+      "command": "show-document-info"
+    },
+    "H": {
+      "command": "toggle-help"
     },
     "|": {
       "command": "no-action"
