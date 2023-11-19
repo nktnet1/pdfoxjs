@@ -82,6 +82,15 @@
     "P": {
       "command": "print-pdf"
     },
+    "i": {
+      "command": "toggle-insert-text"
+    },
+    "d": {
+      "command": "toggle-draw"
+    },
+    "I": {
+      "command": "toggle-insert-image"
+    },
     "n": {
       "command": "next-page"
     },

@@ -46,6 +46,17 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     };
   };
 
+  const toggleEditorMode = (mode) => {
+    if (PDFViewerApplication.pdfViewer.annotationEditorMode !== mode) {
+      PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode });
+    } else {
+      PDFViewerApplication.eventBus.dispatch(
+        'switchannotationeditormode',
+        { mode: globalThis.pdfjsLib.AnnotationEditorType.NONE }
+      );
+    }
+  };
+
   const commandMap = {
     'toggle-help': toggleHelp,
     'scroll-down': (settings) => scrollBy(makeScrollConfig(settings)),
@@ -62,7 +73,9 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'zoom-reset': () => (PDFViewerApplication.pdfViewer.currentScale = 1),
     'open-file': () => PDFViewerApplication.eventBus.dispatch('openfile'),
     'print-pdf': () => PDFViewerApplication.eventBus.dispatch('print'),
-    '': () => PDFViewerApplication.eventBus.dispatch('print'),
+    'toggle-insert-text': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.FREETEXT),
+    'toggle-draw': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.INK),
+    'toggle-insert-image': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.STAMP),
     'next-page': () => PDFViewerApplication.eventBus.dispatch('nextpage'),
     'previous-page': () => PDFViewerApplication.eventBus.dispatch('previouspage'),
     'rotate-clockwise': () => PDFViewerApplication.eventBus.dispatch('rotatecw'),
@@ -83,7 +96,6 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     append(event.key);
-    console.log('inputKeys', inputKeys);
     const { command, settings } = getActionFromKey(inputKeys, commandKeys, config);
     if (command !== null) {
       event.stopPropagation();
