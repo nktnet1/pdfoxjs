@@ -70,7 +70,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     const pageView = PDFViewerApplication.pdfViewer.getPageView(0);
     if (pageView) {
       const scrollAmount = (pageView.viewport.height * multiplier) / 2;
-      container.scrollBy({ behavior: settings.behavior, top: scrollAmount });
+      container.scrollBy({ behavior: settings.scrollBehavior, top: scrollAmount });
     }
   };
 
