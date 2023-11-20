@@ -1,13 +1,15 @@
 import { PDFViewerApplication } from '../components/application.mjs';
 
 const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
+const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
+const NUMBER_PREFIX = '<NUMBER_PREFIX>';
 
-const getActionFromKey = (inputKeys, commandKeys, config) => {
+const getCommandKey = (inputKeys, commandKeys, separator) => {
   for (const commandKey of commandKeys) {
     if (inputKeys[inputKeys.length - 1] === commandKey) {
-      return config.keys[commandKey];
+      return commandKey;
     }
-    const cmdKeys = commandKey.split(config.settings.keysSeparator);
+    const cmdKeys = commandKey.split(separator);
     if (inputKeys.length < cmdKeys.length) {
       continue;
     }
@@ -17,17 +19,30 @@ const getActionFromKey = (inputKeys, commandKeys, config) => {
         break;
       }
       if (cmdKeys.length === 0) {
-        return config.keys[commandKey];
+        return commandKey;
       }
     }
   }
-  return { command: null };
+  return null;
+};
+
+const getCommandKeyPrefix = (inputKeys, commandKeys, separator, prefix) => {
+  commandKeys = commandKeys.filter(ck => ck.startsWith(prefix)).map(ck => ck.substring(prefix.length));
+  const commandKey = getCommandKey(inputKeys, commandKeys, separator);
+  return commandKey === null ? null : `${prefix}${commandKey}`;
 };
 
 export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor }) => {
   const container = PDFViewerApplication.pdfViewer.container;
 
   let scrollRequestId = null;
+  container.addEventListener('keyup', () => {
+    if (scrollRequestId === null) {
+      return;
+    }
+    window.cancelAnimationFrame(scrollRequestId);
+    scrollRequestId = null;
+  });
 
   const scrollBy = ({ behavior, left, top }) => {
     if (scrollRequestId === null) {
@@ -41,19 +56,21 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     }
   };
 
-  const makeScrollConfig = (settings, multiplier = 1, direction = 'top') => {
-    return {
-      [direction]: (settings?.scrollAmount ?? config.settings.globalScrollAmount) * multiplier,
-      behavior: settings?.scrollBehavior ?? config.settings.globalScrollBehavior
-    };
-  };
+  const makeScrollConfig = (settings, multiplier = 1, direction = 'top') => ({
+    [direction]: (settings.scrollAmount ?? config.settings.globalScrollAmount) * multiplier,
+    behavior: settings.scrollBehavior ?? config.settings.globalScrollBehavior
+  });
 
-  const toggleEditorMode = (mode) => {
-    if (PDFViewerApplication.pdfViewer.annotationEditorMode !== mode) {
-      PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode });
-    } else {
-      closeAnnotationEditor();
-    }
+  const toggleEditorMode = (mode) =>
+    PDFViewerApplication.pdfViewer.annotationEditorMode !== mode
+      ? PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode })
+      : closeAnnotationEditor();
+
+  const scrollToPage = ({ behavior }, pageNumber) => {
+    const pageIndex = Math.min(PDFViewerApplication.pagesCount, pageNumber) - 1;
+    const pageView = PDFViewerApplication.pdfViewer.getPageView(pageIndex);
+    const element = pageView.div;
+    element.scrollIntoView({ behavior });
   };
 
   const commandMap = {
@@ -64,6 +81,8 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'scroll-right': (settings) => scrollBy(makeScrollConfig(settings, -1, 'left')),
     'scroll-to-top': (settings) => container.scrollTo(makeScrollConfig({ ...settings, scrollAmount: 0 })),
     'scroll-to-bottom': (settings) => container.scrollTo(makeScrollConfig({ ...settings, scrollAmount: container.scrollHeight })),
+    // FIXME: fix hardcode page number
+    'scroll-to-page': (settings, pageNumber) => scrollToPage(makeScrollConfig(settings), pageNumber),
 
     'toggle-toolbar': toggleToolbar,
     'toggle-sidebar': toggleSidebar,
@@ -91,12 +110,11 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   };
 
   const inputKeys = [];
-  const append = (key) => {
-    inputKeys.push(key);
-    if (inputKeys.length > config.settings.maxCommandLength) {
-      inputKeys.shift();
-    }
-  };
+  const numberBuffer = [];
+
+  // Tracks only the last maxCommandkeysLength in the array
+  const append = (key) => inputKeys.push(key) > config.settings.maxCommandKeysLength && inputKeys.shift();
+
   const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     if (PDF_INTERNAL_EDITOR_INPUT_REGEX.test(document.activeElement.id)) {
@@ -104,20 +122,46 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
       return;
     }
 
-    append(event.key);
-    const { command, settings } = getActionFromKey(inputKeys, commandKeys, config);
-    if (command !== null) {
-      event.stopPropagation();
-      event.preventDefault();
-      commandMap[command](settings ?? {});
-      inputKeys.length = 0;
+    if (MODIFIER_KEYS.includes(event.key)) {
+      return;
     }
-  });
 
-  container.addEventListener('keyup', () => {
-    if (scrollRequestId !== null) {
-      window.cancelAnimationFrame(scrollRequestId);
-      scrollRequestId = null;
+    if (/^[0-9]$/.test(event.key)) {
+      numberBuffer.push(event.key);
+      return;
+    }
+
+    append(event.key);
+
+    const commandKey = numberBuffer.length === 0
+      ? getCommandKey(inputKeys, commandKeys, config.settings.keysSeparator)
+      : getCommandKeyPrefix(inputKeys, commandKeys, config.settings.keysSeparator, NUMBER_PREFIX);
+
+    if (commandKey === null) {
+      numberBuffer.length = 0;
+      return;
+    }
+
+    const { command, settings } = config.keys[commandKey];
+
+    event.stopPropagation();
+    event.preventDefault();
+    inputKeys.length = 0;
+
+    if (numberBuffer.length === 0) {
+      return commandMap[command](settings ?? {});
+    }
+
+    const commandRepeat = parseInt(numberBuffer.join('')) || 1;
+    numberBuffer.length = 0;
+
+    if (command === 'scroll-to-page') {
+      console.log('scroll to page');
+      return scrollToPage(makeScrollConfig(settings), commandRepeat);
+    }
+
+    for (let i = 0; i < commandRepeat; ++i) {
+      commandMap[command](settings ?? {});
     }
   });
 };

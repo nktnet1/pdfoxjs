@@ -4,7 +4,7 @@
     "globalScrollBehavior": "auto",
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
-    "maxCommandLength": 3,
+    "maxCommandKeysLength": 5,
     "hideToolbar": false,
     "enableCustomShortcutKeys": true
   },
@@ -42,6 +42,12 @@
     },
     "g|g": {
       "command": "scroll-to-top",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
+    "<NUMBER_PREFIX>G": {
+      "command": "scroll-to-page",
       "settings": {
         "scrollBehavior": "smooth"
       }
@@ -112,10 +118,10 @@
     "<": {
       "command": "rotate-counterclockwise"
     },
-    "Control|j": {
+    "J": {
       "command": "last-page"
     },
-    "Control|k": {
+    "K": {
       "command": "first-page"
     },
     "?": {
