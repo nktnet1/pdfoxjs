@@ -13,6 +13,7 @@
     "H": {
       "command": "toggle-help"
     },
+
     "j": {
       "command": "scroll-down",
       "settings": {
@@ -71,17 +72,18 @@
         "scrollBehavior": "auto"
       }
     },
-    "/": {
-      "command": "trigger-search"
-    },
-    "N": {
-      "command": "focus-page-number"
+
+    "t": {
+      "command": "toggle-toolbar"
     },
     "b": {
       "command": "toggle-sidebar"
     },
-    "t": {
-      "command": "toggle-toolbar"
+    "/": {
+      "command": "trigger-search"
+    },
+    "L": {
+      "command": "focus-page-number"
     },
     "+": {
       "command": "zoom-in",
@@ -107,23 +109,33 @@
     "S": {
       "command": "save-pdf"
     },
-    "i": {
-      "command": "toggle-insert-text"
-    },
-    "D": {
-      "command": "toggle-draw"
-    },
-    "E": {
-      "command": "toggle-insert-image"
-    },
-    "T": {
-      "command": "toggle-secondary-toolbar"
-    },
     "n": {
       "command": "next-page"
     },
     "p": {
       "command": "previous-page"
+    },
+    "i": {
+      "command": "toggle-insert-text"
+    },
+    "D": {
+      "command": "toggle-insert-draw"
+    },
+    "U": {
+      "command": "toggle-insert-image"
+    },
+    "T": {
+      "command": "toggle-secondary-toolbar"
+    },
+
+    "F": {
+      "command": "presentation-mode"
+    },
+    "K": {
+      "command": "first-page"
+    },
+    "J": {
+      "command": "last-page"
     },
     ">": {
       "command": "rotate-clockwise"
@@ -131,15 +143,28 @@
     "<": {
       "command": "rotate-counterclockwise"
     },
-    "J": {
-      "command": "last-page"
+    "s": {
+      "command": "text-selection-tool"
     },
-    "K": {
-      "command": "first-page"
+    "e": {
+      "command": "hand-tool"
+    },
+    "c": {
+      "command": "cycle-cursor-tool"
+    },
+    "N": {
+      "command": "no-spread"
+    },
+    "O": {
+      "command": "odd-spread"
+    },
+    "E": {
+      "command": "even-spread"
     },
     "?": {
       "command": "show-document-info"
     },
+
     "|": {
       "command": "no-action"
     }

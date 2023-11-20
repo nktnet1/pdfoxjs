@@ -3,6 +3,19 @@ import { PDFViewerApplication } from '../components/application.mjs';
 const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
 
+const SpreadMode = {
+  UNKNOWN: -1,
+  NONE: 0,
+  ODD: 1,
+  EVEN: 2
+};
+
+const CursorTool = {
+  SELECT: 0,
+  HAND: 1,
+  // ZOOM: 2, // UNSUPPORTED
+};
+
 const getCommandKey = (inputKeys, commandKeys, separator) => {
   for (const commandKey of commandKeys) {
     if (inputKeys[inputKeys.length - 1] === commandKey) {
@@ -74,8 +87,15 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     }
   };
 
+  const cycleCursorTool = () => {
+    const currTool = PDFViewerApplication.pdfCursorTools.activeTool;
+    const totalTools = Object.keys(CursorTool).length
+    PDFViewerApplication.pdfCursorTools.switchTool((currTool + 1) % totalTools);
+  };
+
   const commandMap = {
     'toggle-help': toggleHelp,
+
     'scroll-down': (settings) => scrollBy(makeScrollConfig(settings)),
     'scroll-up': (settings) => scrollBy(makeScrollConfig(settings, -1)),
     'scroll-left': (settings) => scrollBy(makeScrollConfig(settings, 1, 'left')),
@@ -89,9 +109,9 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'toggle-toolbar': toggleToolbar,
     'toggle-sidebar': toggleSidebar,
     'trigger-search': () => PDFViewerApplication.findBar.open(),
+    'previous-page': () => PDFViewerApplication.eventBus.dispatch('previouspage'),
     'next-page': () => PDFViewerApplication.eventBus.dispatch('nextpage'),
     'focus-page-number': () => PDFViewerApplication.appConfig.toolbar.pageNumber.focus(),
-    'previous-page': () => PDFViewerApplication.eventBus.dispatch('previouspage'),
     'zoom-in': (settings) => (PDFViewerApplication.pdfViewer.currentScale += settings.zoomAmount ?? config.settings.globalZoomAmount),
     'zoom-out': (settings) => (PDFViewerApplication.pdfViewer.currentScale -= settings.zoomAmount ?? config.settings.globalZoomAmount),
     'zoom-reset': () => (PDFViewerApplication.pdfViewer.currentScale = 1),
@@ -99,14 +119,18 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'print-pdf': () => PDFViewerApplication.eventBus.dispatch('print'),
     'save-pdf': () => PDFViewerApplication.save(),
     'toggle-insert-text': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.FREETEXT),
-    'toggle-draw': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.INK),
+    'toggle-insert-draw': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.INK),
     'toggle-insert-image': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.STAMP),
     'toggle-secondary-toolbar': () => PDFViewerApplication.secondaryToolbar.toggle(),
 
-    'rotate-clockwise': () => PDFViewerApplication.eventBus.dispatch('rotatecw'),
-    'rotate-counterclockwise': () => PDFViewerApplication.eventBus.dispatch('rotateccw'),
+    'presentation-mode': () => PDFViewerApplication.requestPresentationMode(),
     'first-page': () => PDFViewerApplication.eventBus.dispatch('firstpage'),
     'last-page': () => PDFViewerApplication.eventBus.dispatch('lastpage'),
+    'rotate-clockwise': () => PDFViewerApplication.eventBus.dispatch('rotatecw'),
+    'rotate-counterclockwise': () => PDFViewerApplication.eventBus.dispatch('rotateccw'),
+    'text-selection-tool': () => PDFViewerApplication.pdfCursorTools.switchTool(CursorTool.SELECT),
+    'hand-tool': () => PDFViewerApplication.pdfCursorTools.switchTool(CursorTool.HAND),
+    'cycle-cursor-tool': cycleCursorTool,
     'show-document-info': () => PDFViewerApplication.eventBus.dispatch('documentproperties'),
     'no-action': () => { /* nothing to do */ },
   };

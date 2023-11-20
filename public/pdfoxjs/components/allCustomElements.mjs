@@ -26,9 +26,9 @@ export const createAllCustomElements = ({ closeAnnotationEditor }) => {
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      PDFViewerApplication.pdfViewer.focus();
       isOpen() && closePopup();
       closeAnnotationEditor();
+      PDFViewerApplication.pdfViewer.focus();
     }
   });
 

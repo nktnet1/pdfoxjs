@@ -60,5 +60,5 @@ window.onload = async () => {
     handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor });
   }
   console.log(PDFViewerApplication);
-  console.log(globalThis.pdfjsLib.AnnotationLayer);
+  console.log(PDFViewerApplication.pdfCursorTools);
 };
