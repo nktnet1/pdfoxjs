@@ -1,5 +1,7 @@
 import { PDFViewerApplication } from '../components/application.mjs';
 
+const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
+
 const getActionFromKey = (inputKeys, commandKeys, config) => {
   for (const commandKey of commandKeys) {
     if (inputKeys[inputKeys.length - 1] === commandKey) {
@@ -75,7 +77,6 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'open-file': () => PDFViewerApplication.eventBus.dispatch('openfile'),
     'print-pdf': () => PDFViewerApplication.eventBus.dispatch('print'),
     'save-pdf': () => PDFViewerApplication.save(),
-    // FIXME: Remove shortcuts when editing text
     'toggle-insert-text': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.FREETEXT),
     'toggle-draw': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.INK),
     'toggle-insert-image': () => toggleEditorMode(globalThis.pdfjsLib.AnnotationEditorType.STAMP),
@@ -98,6 +99,11 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   };
   const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
+    if (PDF_INTERNAL_EDITOR_INPUT_REGEX.test(document.activeElement.id)) {
+      // Inside input box for editor
+      return;
+    }
+
     append(event.key);
     const { command, settings } = getActionFromKey(inputKeys, commandKeys, config);
     if (command !== null) {

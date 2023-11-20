@@ -59,4 +59,6 @@ window.onload = async () => {
   if (config.settings.enableCustomShortcutKeys) {
     handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor });
   }
+  console.log(PDFViewerApplication);
+  console.log(globalThis.pdfjsLib.AnnotationLayer);
 };
