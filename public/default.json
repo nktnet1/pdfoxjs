@@ -6,6 +6,7 @@
     "keysSeparator": "|",
     "maxCommandKeysLength": 5,
     "hideToolbar": false,
+    "numberPrefix": "<NUMBER_PREFIX>",
     "enableCustomShortcutKeys": true
   },
   "keys": {
@@ -46,16 +47,28 @@
         "scrollBehavior": "smooth"
       }
     },
+    "G": {
+      "command": "scroll-to-bottom",
+      "settings": {
+        "scrollBehavior": "smooth"
+      }
+    },
     "<NUMBER_PREFIX>G": {
       "command": "scroll-to-page",
       "settings": {
         "scrollBehavior": "smooth"
       }
     },
-    "G": {
-      "command": "scroll-to-bottom",
+    "u": {
+      "command": "scroll-half-page-up",
       "settings": {
-        "scrollBehavior": "smooth"
+        "scrollBehavior": "auto"
+      }
+    },
+    "d": {
+      "command": "scroll-half-page-down",
+      "settings": {
+        "scrollBehavior": "auto"
       }
     },
     "/": {
@@ -91,16 +104,16 @@
     "P": {
       "command": "print-pdf"
     },
-    "Control|s": {
+    "S": {
       "command": "save-pdf"
     },
     "i": {
       "command": "toggle-insert-text"
     },
-    "d": {
+    "D": {
       "command": "toggle-draw"
     },
-    "I": {
+    "E": {
       "command": "toggle-insert-image"
     },
     "T": {

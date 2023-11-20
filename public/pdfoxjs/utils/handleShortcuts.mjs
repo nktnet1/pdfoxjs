@@ -2,7 +2,6 @@ import { PDFViewerApplication } from '../components/application.mjs';
 
 const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
-const NUMBER_PREFIX = '<NUMBER_PREFIX>';
 
 const getCommandKey = (inputKeys, commandKeys, separator) => {
   for (const commandKey of commandKeys) {
@@ -44,7 +43,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
       const step = (timestamp) => {
         const elapsed = timestamp - start;
         container.scrollBy({ behavior, left, top });
-        scrollRequestId = elapsed < 1000 ? window.requestAnimationFrame(step) : null;
+        scrollRequestId = elapsed < 800 ? window.requestAnimationFrame(step) : null;
       };
       scrollRequestId = window.requestAnimationFrame(step);
     }
@@ -67,6 +66,14 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     element.scrollIntoView({ behavior });
   };
 
+  const scrollHalfPage = (settings, multiplier) => {
+    const pageView = PDFViewerApplication.pdfViewer.getPageView(0);
+    if (pageView) {
+      const scrollAmount = (pageView.viewport.height * multiplier) / 2;
+      container.scrollBy({ behavior: settings.behavior, top: scrollAmount });
+    }
+  };
+
   const commandMap = {
     'toggle-help': toggleHelp,
     'scroll-down': (settings) => scrollBy(makeScrollConfig(settings)),
@@ -75,8 +82,9 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'scroll-right': (settings) => scrollBy(makeScrollConfig(settings, -1, 'left')),
     'scroll-to-top': (settings) => container.scrollTo(makeScrollConfig({ ...settings, scrollAmount: 0 })),
     'scroll-to-bottom': (settings) => container.scrollTo(makeScrollConfig({ ...settings, scrollAmount: container.scrollHeight })),
-    // FIXME: fix hardcode page number
     'scroll-to-page': (settings, pageNumber) => scrollToPage(makeScrollConfig(settings), pageNumber),
+    'scroll-half-page-up': (settings) => scrollHalfPage(settings, -1),
+    'scroll-half-page-down': (settings) => scrollHalfPage(settings, 1),
 
     'toggle-toolbar': toggleToolbar,
     'toggle-sidebar': toggleSidebar,
@@ -127,7 +135,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
 
     append(event.key);
 
-    const prefix = numberBuffer.length > 0 ? NUMBER_PREFIX : '';
+    const prefix = numberBuffer.length > 0 ? config.settings.numberPrefix : '';
     const commandKey = getCommandKey(
       inputKeys,
       commandKeys.map(ck => ck.startsWith(prefix) ? ck.substring(prefix.length) : ck),
