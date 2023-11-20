@@ -98,7 +98,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   const cycleCursorTool = () => {
     const currTool = PDFViewerApplication.pdfCursorTools.activeTool;
     const totalTools = Object.keys(CursorTool).length;
-    PDFViewerApplication.eventBus.switchTool((currTool + 1) % totalTools);
+    PDFViewerApplication.pdfCursorTools.switchTool((currTool + 1) % totalTools);
   };
 
   const cycleScrollingMode = () => {
