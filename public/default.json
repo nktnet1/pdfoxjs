@@ -149,8 +149,17 @@
     "e": {
       "command": "hand-tool"
     },
-    "c": {
-      "command": "cycle-cursor-tool"
+    "y": {
+      "command": "enable-page-scrolling"
+    },
+    "v": {
+      "command": "enable-vertical-scrolling"
+    },
+    "m": {
+      "command": "enable-horizontal-scrolling"
+    },
+    "w": {
+      "command": "enable-wrapped-scrolling"
     },
     "N": {
       "command": "no-spread"
@@ -165,6 +174,12 @@
       "command": "show-document-info"
     },
 
+    "c": {
+      "command": "cycle-cursor-tool"
+    },
+    "C": {
+      "command": "cycle-scrolling-mode"
+    },
     "|": {
       "command": "no-action"
     }

@@ -3,6 +3,14 @@ import { PDFViewerApplication } from '../components/application.mjs';
 const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
 
+const ScrollMode = {
+  // UNKNOWN: -1,
+  VERTICAL: 0,
+  HORIZONTAL: 1,
+  WRAPPED: 2,
+  PAGE: 3
+};
+
 const SpreadMode = {
   UNKNOWN: -1,
   NONE: 0,
@@ -89,8 +97,20 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
 
   const cycleCursorTool = () => {
     const currTool = PDFViewerApplication.pdfCursorTools.activeTool;
-    const totalTools = Object.keys(CursorTool).length
-    PDFViewerApplication.pdfCursorTools.switchTool((currTool + 1) % totalTools);
+    const totalTools = Object.keys(CursorTool).length;
+    PDFViewerApplication.eventBus.switchTool((currTool + 1) % totalTools);
+  };
+
+  const cycleScrollingMode = () => {
+    const scrollMode = PDFViewerApplication.pdfViewer.scrollMode;
+    const totalModes = Object.keys(ScrollMode).length;
+    PDFViewerApplication.eventBus.dispatch('switchscrollmode', { mode: (scrollMode + 1) % totalModes });
+  };
+
+  const cycleSpreadMode = () => {
+    const spreadMode = PDFViewerApplication.pdfViewer.spreadMode;
+    const totalModes = Object.keys(SpreadMode).length;
+    PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: (spreadMode + 1) % totalModes });
   };
 
   const commandMap = {
@@ -130,8 +150,19 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'rotate-counterclockwise': () => PDFViewerApplication.eventBus.dispatch('rotateccw'),
     'text-selection-tool': () => PDFViewerApplication.pdfCursorTools.switchTool(CursorTool.SELECT),
     'hand-tool': () => PDFViewerApplication.pdfCursorTools.switchTool(CursorTool.HAND),
-    'cycle-cursor-tool': cycleCursorTool,
+    'enable-page-scrolling': () => PDFViewerApplication.eventBus.dispatch('switchscrollmode', { mode: ScrollMode.PAGE }),
+    'enable-vertical-scrolling': () => PDFViewerApplication.eventBus.dispatch('switchscrollmode', { mode: ScrollMode.VERTICAL }),
+    'enable-horizontal-scrolling': () => PDFViewerApplication.eventBus.dispatch('switchscrollmode', { mode: ScrollMode.HORIZONTAL }),
+    'enable-wrapped-scrolling': () => PDFViewerApplication.eventBus.dispatch('switchscrollmode', { mode: ScrollMode.WRAPPED }),
+    'no-spread': () => PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: SpreadMode.NONE }),
+    'odd-spread': () => PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: SpreadMode.ODD }),
+    'even-spread': () => PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: SpreadMode.EVEN }),
     'show-document-info': () => PDFViewerApplication.eventBus.dispatch('documentproperties'),
+
+    'cycle-cursor-tool': cycleCursorTool,
+    'cycle-scrolling-mode': cycleScrollingMode,
+    'cycle-spread-mode': cycleSpreadMode,
+
     'no-action': () => { /* nothing to do */ },
   };
 
