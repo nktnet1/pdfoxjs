@@ -26,12 +26,6 @@ const getCommandKey = (inputKeys, commandKeys, separator) => {
   return null;
 };
 
-const getCommandKeyPrefix = (inputKeys, commandKeys, separator, prefix) => {
-  commandKeys = commandKeys.filter(ck => ck.startsWith(prefix)).map(ck => ck.substring(prefix.length));
-  const commandKey = getCommandKey(inputKeys, commandKeys, separator);
-  return commandKey === null ? null : `${prefix}${commandKey}`;
-};
-
 export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor }) => {
   const container = PDFViewerApplication.pdfViewer.container;
 
@@ -133,16 +127,20 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
 
     append(event.key);
 
-    const commandKey = numberBuffer.length === 0
-      ? getCommandKey(inputKeys, commandKeys, config.settings.keysSeparator)
-      : getCommandKeyPrefix(inputKeys, commandKeys, config.settings.keysSeparator, NUMBER_PREFIX);
+    const prefix = numberBuffer.length > 0 ? NUMBER_PREFIX : '';
+    const commandKey = getCommandKey(
+      inputKeys,
+      commandKeys.map(ck => ck.startsWith(prefix) ? ck.substring(prefix.length) : ck),
+      config.settings.keysSeparator
+    );
 
-    if (commandKey === null) {
+    const action = config.keys[prefix + commandKey] ?? config.keys[commandKey];
+    if (action === undefined) {
       numberBuffer.length = 0;
       return;
     }
 
-    const { command, settings } = config.keys[commandKey];
+    const { command, settings } = action;
 
     event.stopPropagation();
     event.preventDefault();
@@ -156,7 +154,6 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     numberBuffer.length = 0;
 
     if (command === 'scroll-to-page') {
-      console.log('scroll to page');
       return scrollToPage(makeScrollConfig(settings), commandRepeat);
     }
 
