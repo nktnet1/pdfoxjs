@@ -180,6 +180,9 @@
     "C": {
       "command": "cycle-scrolling-mode"
     },
+    "Y": {
+      "command": "cycle-spread-mode"
+    },
     "|": {
       "command": "no-action"
     }

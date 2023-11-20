@@ -4,7 +4,6 @@ const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
 
 const ScrollMode = {
-  // UNKNOWN: -1,
   VERTICAL: 0,
   HORIZONTAL: 1,
   WRAPPED: 2,
@@ -12,7 +11,6 @@ const ScrollMode = {
 };
 
 const SpreadMode = {
-  UNKNOWN: -1,
   NONE: 0,
   ODD: 1,
   EVEN: 2
@@ -21,7 +19,6 @@ const SpreadMode = {
 const CursorTool = {
   SELECT: 0,
   HAND: 1,
-  // ZOOM: 2, // UNSUPPORTED
 };
 
 const getCommandKey = (inputKeys, commandKeys, separator) => {
