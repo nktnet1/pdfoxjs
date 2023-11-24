@@ -1,3 +1,4 @@
+import url from 'url';
 import express, { Request, Response } from 'express';
 import { viewerPath } from './config';
 
@@ -17,7 +18,12 @@ const createExpressApp = (
   app.use(express.static(options.resourcesPath));
 
   app.get('/', (_: Request, res: Response) => {
-    res.redirect(viewerPath);
+    res.redirect(url.format({
+      pathname: viewerPath,
+      query: {
+        file: '',
+      }
+    }));
   });
 
   app.get(/^\/pdf(.+)/, (req: Request, res: Response) => {
