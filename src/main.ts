@@ -1,14 +1,18 @@
+import { existsSync, symlinkSync, unlinkSync } from 'fs';
 import path from 'path';
 import { AddressInfo } from 'net';
 import { app, shell, BrowserWindow } from 'electron';
 import contextMenu from 'electron-context-menu';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import createExpressApp from './app.js';
+import createExpressApp from './app';
+import { viewerPath } from './config';
 
 const APP_NAME = 'pdfoxjs';
-let url: string | null = null;
+let appUrl: string | null = null;
 
-if (process.argv.length > 3) {
+const fileArgumentIndex = is.dev ? 2 : 1;
+
+if (process.argv.length > fileArgumentIndex + 1) {
   console.log(`
     Usage:
       ${APP_NAME} [PATH_TO_PDF]
@@ -45,10 +49,10 @@ function createWindow(isMainInstance = true): BrowserWindow {
   });
 
   // Always open links externally in the user's browser
-  mainWindow.webContents.on('will-navigate', (event, url) => {
-    if (!url.startsWith(mainWindow.webContents.getURL())) {
+  mainWindow.webContents.on('will-navigate', (event, linkUrl) => {
+    if (!linkUrl.startsWith(mainWindow.webContents.getURL())) {
       event.preventDefault();
-      shell.openExternal(url);
+      shell.openExternal(linkUrl);
     }
   });
 
@@ -66,8 +70,20 @@ function createWindow(isMainInstance = true): BrowserWindow {
       const expressApp = createExpressApp({ resourcesPath });
       const server = expressApp.listen(port, () => {
         const addresses = server.address() as AddressInfo;
-        url = `http://localhost:${addresses.port}`;
-        mainWindow.loadURL(url);
+        if (process.argv[fileArgumentIndex]) {
+          const absoluteFilePath = path.resolve(process.argv[fileArgumentIndex]);
+          const filename = path.basename(absoluteFilePath);
+          const newPath = path.join(resourcesPath, path.dirname(viewerPath), filename);
+          if (existsSync(newPath)) {
+            unlinkSync(newPath);
+          }
+          symlinkSync(absoluteFilePath, newPath, 'file');
+          appUrl = `http://localhost:${addresses.port}/${viewerPath}?file=${filename}`;
+        } else {
+          appUrl = `http://localhost:${addresses.port}/${viewerPath}`;
+        }
+
+        mainWindow.loadURL(appUrl);
         callback();
       });
     };
@@ -75,16 +91,16 @@ function createWindow(isMainInstance = true): BrowserWindow {
     if (is.dev) {
       startServer(3000, 'public', () => {
         mainWindow.webContents.openDevTools();
-        console.log(`Dev server: ${url}`);
+        console.log(`Dev server: ${appUrl}`);
       });
     } else {
-      startServer(0, path.join(process.resourcesPath, 'public'), () => { console.log(url); });
+      startServer(0, path.join(process.resourcesPath, 'public'), () => { console.log(appUrl); });
     }
   } else {
-    if (url === null) {
+    if (appUrl === null) {
       throw new Error('Error: please close all instances of the application and try again.');
     }
-    mainWindow.loadURL(url);
+    mainWindow.loadURL(appUrl);
   }
   return mainWindow;
 }
@@ -121,5 +137,6 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+    process.exit();
   }
 });

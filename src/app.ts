@@ -1,14 +1,15 @@
 import express, { Request, Response } from 'express';
-
-const viewerPath = 'viewer/web/viewer.html';
+import { viewerPath } from './config';
 
 export interface Options {
   resourcesPath: string;
+  pdfPath?: string;
 }
 
 const createExpressApp = (
   options: Options = {
     resourcesPath: 'public',
+    pdfPath: '',
   }
 ) => {
   const app = express();
@@ -18,6 +19,7 @@ const createExpressApp = (
   app.get('/', (_: Request, res: Response) => {
     res.redirect(viewerPath);
   });
+
   return app;
 };
 
