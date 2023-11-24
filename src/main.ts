@@ -5,7 +5,15 @@ import contextMenu from 'electron-context-menu';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import createExpressApp from './app.js';
 
-function createWindow(): void {
+if (!app.requestSingleInstanceLock({ message: 'Second instance', date: new Date() })) {
+  app.quit();
+  console.log('[NOTE]: Another instance of this App already exists. Closing...');
+  process.exit(0);
+}
+
+let url: string | null = null;
+
+function createWindow(isMainInstance = true): BrowserWindow {
   contextMenu({
     showSaveImageAs: true
   });
@@ -39,24 +47,32 @@ function createWindow(): void {
     return { action: 'deny' };
   });
 
-  const startServer = (port: number, resourcesPath: string, callback: (url: string) => void) => {
-    const expressApp = createExpressApp({ resourcesPath });
-    const server = expressApp.listen(port, () => {
-      const addresses = server.address() as AddressInfo;
-      const url = `http://localhost:${addresses.port}`;
-      mainWindow.loadURL(url);
-      callback(url);
-    });
-  };
+  if (isMainInstance) {
+    const startServer = (port: number, resourcesPath: string, callback: () => void) => {
+      const expressApp = createExpressApp({ resourcesPath });
+      const server = expressApp.listen(port, () => {
+        const addresses = server.address() as AddressInfo;
+        url = `http://localhost:${addresses.port}`;
+        mainWindow.loadURL(url);
+        callback();
+      });
+    };
 
-  if (is.dev) {
-    startServer(3000, 'public', (url) => {
-      mainWindow.webContents.openDevTools();
-      console.log(`Dev server: ${url}`);
-    });
+    if (is.dev) {
+      startServer(3000, 'public', () => {
+        mainWindow.webContents.openDevTools();
+        console.log(`Dev server: ${url}`);
+      });
+    } else {
+      startServer(0, path.join(process.resourcesPath, 'public'), () => { console.log(url); });
+    }
   } else {
-    startServer(0, path.join(process.resourcesPath, 'public'), (url) => { console.log(url); });
+    if (url === null) {
+      throw new Error('Error: please close all instances of the application and try again.');
+    }
+    mainWindow.loadURL(url);
   }
+  return mainWindow;
 }
 
 app.whenReady().then(() => {
@@ -76,6 +92,12 @@ app.whenReady().then(() => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+
+  app.on('second-instance', (_event, _commandLine, _workingDirectory, additionalData) => {
+    // Print out data received from the second instance.
+    console.log(additionalData);
+    createWindow(false);
   });
 });
 
