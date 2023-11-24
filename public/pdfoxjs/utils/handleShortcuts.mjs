@@ -56,7 +56,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   });
 
   const scrollBy = ({ behavior, left, top, holdDelay }) => {
-    if (holdDelay) {
+    if (!holdDelay) {
       container.scrollBy({ behavior, left, top });
     } else if (scrollRequestId === null) {
       const start = performance.now();

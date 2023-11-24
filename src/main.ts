@@ -39,17 +39,24 @@ function createWindow(): void {
     return { action: 'deny' };
   });
 
-  const resourcesPath = is.dev ? 'public' : path.join(process.resourcesPath, 'public');
-  const expressApp = createExpressApp({ resourcesPath });
-  const server = expressApp.listen(3000, () => {
-    const addresses = server.address() as AddressInfo;
-    const url = `http://localhost:${addresses.port}`;
-    mainWindow.loadURL(url);
-    if (is.dev) {
-      console.log(`Dev server is listening at ${url}`);
+  const startServer = (port: number, resourcesPath: string, callback: (url: string) => void) => {
+    const expressApp = createExpressApp({ resourcesPath });
+    const server = expressApp.listen(port, () => {
+      const addresses = server.address() as AddressInfo;
+      const url = `http://localhost:${addresses.port}`;
+      mainWindow.loadURL(url);
+      callback(url);
+    });
+  };
+
+  if (is.dev) {
+    startServer(3000, 'public', (url) => {
       mainWindow.webContents.openDevTools();
-    }
-  });
+      console.log(`Dev server: ${url}`);
+    });
+  } else {
+    startServer(0, path.join(process.resourcesPath, 'public'), (url) => { console.log(url); });
+  }
 }
 
 app.whenReady().then(() => {
