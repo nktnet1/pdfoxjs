@@ -17,7 +17,12 @@ if (!app.requestSingleInstanceLock({ message: 'Second instance', date: new Date(
 if (process.argv.length > 3) {
   console.log(`
     Usage:
-      ${APP_NAME} ${process.argv[1]}
+      ${APP_NAME} [PATH_TO_PDF]
+    Example:
+      ${APP_NAME}
+      ${APP_NAME} current.pdf
+      ${APP_NAME} ../../relative.pdf
+      ${APP_NAME} /path/to/your/absolute.pdf
   `);
   process.exit(0);
 }
