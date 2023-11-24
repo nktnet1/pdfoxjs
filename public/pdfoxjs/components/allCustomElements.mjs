@@ -17,9 +17,15 @@ export const createAllCustomElements = ({ closeAnnotationEditor }) => {
   );
 
   const floatingDiv = createFloatingDiv();
-  PDFViewerApplication.eventBus?.on('pagesloaded', () => {
-    floatingDiv.style.display = 'none';
-  });
+  const hideFloatingDiv = () => (floatingDiv.style.display = 'none');
+  if (PDFViewerApplication.eventBus) {
+    PDFViewerApplication.eventBus.on('pagesloaded', hideFloatingDiv);
+  } else {
+    setTimeout(() => {
+    // In case the button loads before the PDF not hidden
+      PDFViewerApplication.url !== '' && hideFloatingDiv();
+    }, 1000);
+  }
 
   createUploadButton(floatingDiv);
   const { isOpen, openPopup, closePopup } = createHelpButton(floatingDiv);

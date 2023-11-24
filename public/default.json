@@ -1,13 +1,13 @@
 {
   "settings": {
-    "globalScrollAmount": 50,
+    "enableCustomShortcutKeys": true,
+    "globalScrollAmount": 200,
     "globalScrollBehavior": "auto",
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
     "maxCommandKeysLength": 5,
     "hideToolbar": false,
-    "numberPrefix": "<NUMBER_PREFIX>",
-    "enableCustomShortcutKeys": true
+    "numberPrefix": "<NUMBER_PREFIX>"
   },
   "keys": {
     "H": {
@@ -17,28 +17,28 @@
     "j": {
       "command": "scroll-down",
       "settings": {
-        "scrollAmount": 50,
+        "scrollAmount": 200,
         "scrollBehavior": "auto"
       }
     },
     "k": {
       "command": "scroll-up",
       "settings": {
-        "scrollAmount": 50,
+        "scrollAmount": 200,
         "scrollBehavior": "auto"
       }
     },
     "l": {
       "command": "scroll-left",
       "settings": {
-        "scrollAmount": 50,
+        "scrollAmount": 200,
         "scrollBehavior": "auto"
       }
     },
     "h": {
       "command": "scroll-right",
       "settings": {
-        "scrollAmount": 50,
+        "scrollAmount": 200,
         "scrollBehavior": "auto"
       }
     },

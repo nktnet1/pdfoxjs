@@ -56,15 +56,16 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   });
 
   const scrollBy = ({ behavior, left, top }) => {
-    if (scrollRequestId === null) {
-      const start = performance.now();
-      const step = (timestamp) => {
-        const elapsed = timestamp - start;
-        container.scrollBy({ behavior, left, top });
-        scrollRequestId = elapsed < 800 ? window.requestAnimationFrame(step) : null;
-      };
-      scrollRequestId = window.requestAnimationFrame(step);
-    }
+    container.scrollBy({ behavior, left, top });
+    // if (scrollRequestId === null) {
+    //   const start = performance.now();
+    //   const step = (timestamp) => {
+    //     const elapsed = timestamp - start;
+    //     container.scrollBy({ behavior, left, top });
+    //     scrollRequestId = elapsed < 800 ? window.requestAnimationFrame(step) : null;
+    //   };
+    //   scrollRequestId = window.requestAnimationFrame(step);
+    // }
   };
 
   const makeScrollConfig = (settings, multiplier = 1, direction = 'top') => ({
