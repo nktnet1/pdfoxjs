@@ -5,13 +5,22 @@ import contextMenu from 'electron-context-menu';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import createExpressApp from './app.js';
 
+const APP_NAME = 'pdfoxjs';
+let url: string | null = null;
+
 if (!app.requestSingleInstanceLock({ message: 'Second instance', date: new Date() })) {
   app.quit();
   console.log('[NOTE]: Another instance of this App already exists. Closing...');
   process.exit(0);
 }
 
-let url: string | null = null;
+if (process.argv.length > 3) {
+  console.log(`
+    Usage:
+      ${APP_NAME} ${process.argv[1]}
+  `);
+  process.exit(0);
+}
 
 function createWindow(isMainInstance = true): BrowserWindow {
   contextMenu({

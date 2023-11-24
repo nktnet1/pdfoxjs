@@ -15,7 +15,7 @@ const config: Configuration = {
     'public'
   ],
   extraMetadata: {
-    main: 'out/src/main.js'
+    main: 'out/main.js'
   },
 
   win: {

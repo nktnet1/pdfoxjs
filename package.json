@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.0",
   "description": "Standalone electron desktop app for Mozilla's pdfjs.",
-  "main": "./out/src/main.js",
+  "main": "./out/main.js",
   "scripts": {
     "start": "yarn build && electron .",
     "dev": "ts-node-dev -T src/server",
