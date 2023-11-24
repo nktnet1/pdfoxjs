@@ -801,8 +801,6 @@ const defaultOptions = {
 };
 {
   defaultOptions.defaultUrl = {
-    // PDFOXJS
-    // value: "",
     value: "compressed.tracemonkey-pldi-09.pdf",
     kind: OptionKind.VIEWER
   };

@@ -20,6 +20,11 @@ const createExpressApp = (
     res.redirect(viewerPath);
   });
 
+  app.get(/^\/pdf(.+)/, (req: Request, res: Response) => {
+    const absoluteFilePath = decodeURIComponent(req.params[0]);
+    res.sendFile(absoluteFilePath);
+  });
+
   return app;
 };
 

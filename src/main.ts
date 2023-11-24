@@ -1,16 +1,20 @@
-import { existsSync, symlinkSync, unlinkSync } from 'fs';
 import path from 'path';
 import { AddressInfo } from 'net';
 import { app, shell, BrowserWindow } from 'electron';
 import contextMenu from 'electron-context-menu';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import createExpressApp from './app';
-import { viewerPath } from './config';
+import { APP_NAME, viewerPath } from './config';
 
-const APP_NAME = 'pdfoxjs';
+interface WindowSettings {
+  isMainInstance: boolean;
+  pdfPath: string;
+}
+
 let appUrl: string | null = null;
 
 const fileArgumentIndex = is.dev ? 2 : 1;
+const fileArgument = process.argv[fileArgumentIndex];
 
 if (process.argv.length > fileArgumentIndex + 1) {
   console.log(`
@@ -25,13 +29,22 @@ if (process.argv.length > fileArgumentIndex + 1) {
   process.exit(1);
 }
 
-if (!app.requestSingleInstanceLock({ message: 'Second instance', date: new Date() })) {
+if (!app.requestSingleInstanceLock({ pdfPath: fileArgument })) {
   app.quit();
-  console.log('[NOTE]: Another instance of this App already exists. Closing...');
+  const filePrint = fileArgument ? `'${fileArgument}' ` : '';
+  console.log(`[${APP_NAME}]: Opening ${filePrint}in a separate window.`);
   process.exit(0);
 }
 
-function createWindow(isMainInstance = true): BrowserWindow {
+const createPdfPath = (filepath = '') => {
+  if (filepath) {
+    const absoluteFilePath = path.resolve(filepath);
+    filepath = encodeURIComponent(path.join('/pdf', absoluteFilePath));
+  }
+  return `/${viewerPath}?file=${filepath}`;
+};
+
+function createWindow({ isMainInstance, pdfPath }: WindowSettings): BrowserWindow {
   contextMenu({
     showSaveImageAs: true
   });
@@ -70,20 +83,8 @@ function createWindow(isMainInstance = true): BrowserWindow {
       const expressApp = createExpressApp({ resourcesPath });
       const server = expressApp.listen(port, () => {
         const addresses = server.address() as AddressInfo;
-        if (process.argv[fileArgumentIndex]) {
-          const absoluteFilePath = path.resolve(process.argv[fileArgumentIndex]);
-          const filename = path.basename(absoluteFilePath);
-          const newPath = path.join(resourcesPath, path.dirname(viewerPath), filename);
-          if (existsSync(newPath)) {
-            unlinkSync(newPath);
-          }
-          symlinkSync(absoluteFilePath, newPath, 'file');
-          appUrl = `http://localhost:${addresses.port}/${viewerPath}?file=${filename}`;
-        } else {
-          appUrl = `http://localhost:${addresses.port}/${viewerPath}`;
-        }
-
-        mainWindow.loadURL(appUrl);
+        appUrl = `http://localhost:${addresses.port}`;
+        mainWindow.loadURL(path.join(appUrl, pdfPath));
         callback();
       });
     };
@@ -100,7 +101,7 @@ function createWindow(isMainInstance = true): BrowserWindow {
     if (appUrl === null) {
       throw new Error('Error: please close all instances of the application and try again.');
     }
-    mainWindow.loadURL(appUrl);
+    mainWindow.loadURL(path.join(appUrl, pdfPath));
   }
   return mainWindow;
 }
@@ -116,18 +117,19 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  createWindow();
+  createWindow({ isMainInstance: true, pdfPath: createPdfPath(fileArgument) });
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow({ isMainInstance: true, pdfPath: createPdfPath(fileArgument) });
+    }
   });
 
   app.on('second-instance', (_event, _commandLine, _workingDirectory, additionalData) => {
-    // Print out data received from the second instance.
-    console.log(additionalData);
-    createWindow(false);
+    const filepath: string = (additionalData as any).pdfPath;
+    createWindow({ isMainInstance: false, pdfPath: createPdfPath(filepath) });
   });
 });
 
@@ -137,6 +139,5 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
-    process.exit();
   }
 });
