@@ -8,12 +8,6 @@ import createExpressApp from './app.js';
 const APP_NAME = 'pdfoxjs';
 let url: string | null = null;
 
-if (!app.requestSingleInstanceLock({ message: 'Second instance', date: new Date() })) {
-  app.quit();
-  console.log('[NOTE]: Another instance of this App already exists. Closing...');
-  process.exit(0);
-}
-
 if (process.argv.length > 3) {
   console.log(`
     Usage:
@@ -24,6 +18,12 @@ if (process.argv.length > 3) {
       ${APP_NAME} ../../relative.pdf
       ${APP_NAME} /path/to/your/absolute.pdf
   `);
+  process.exit(1);
+}
+
+if (!app.requestSingleInstanceLock({ message: 'Second instance', date: new Date() })) {
+  app.quit();
+  console.log('[NOTE]: Another instance of this App already exists. Closing...');
   process.exit(0);
 }
 
