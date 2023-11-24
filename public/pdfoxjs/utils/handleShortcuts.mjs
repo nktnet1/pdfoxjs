@@ -55,22 +55,24 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     scrollRequestId = null;
   });
 
-  const scrollBy = ({ behavior, left, top }) => {
-    container.scrollBy({ behavior, left, top });
-    // if (scrollRequestId === null) {
-    //   const start = performance.now();
-    //   const step = (timestamp) => {
-    //     const elapsed = timestamp - start;
-    //     container.scrollBy({ behavior, left, top });
-    //     scrollRequestId = elapsed < 800 ? window.requestAnimationFrame(step) : null;
-    //   };
-    //   scrollRequestId = window.requestAnimationFrame(step);
-    // }
+  const scrollBy = ({ behavior, left, top, holdDelay }) => {
+    if (holdDelay) {
+      container.scrollBy({ behavior, left, top });
+    } else if (scrollRequestId === null) {
+      const start = performance.now();
+      const step = (timestamp) => {
+        const elapsed = timestamp - start;
+        container.scrollBy({ behavior, left, top });
+        scrollRequestId = elapsed < 800 ? window.requestAnimationFrame(step) : null;
+      };
+      scrollRequestId = window.requestAnimationFrame(step);
+    }
   };
 
   const makeScrollConfig = (settings, multiplier = 1, direction = 'top') => ({
     [direction]: (settings.scrollAmount ?? config.settings.globalScrollAmount) * multiplier,
-    behavior: settings.scrollBehavior ?? config.settings.globalScrollBehavior
+    holdDelay: settings.scrollHoldDelay ?? config.settings.globalScrollHoldDelay,
+    behavior: settings.scrollBehavior ?? config.settings.globalScrollBehavior,
   });
 
   const toggleEditorMode = (mode) =>

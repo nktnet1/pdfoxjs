@@ -2,7 +2,8 @@
   "settings": {
     "enableCustomShortcutKeys": true,
     "globalScrollAmount": 200,
-    "globalScrollBehavior": "auto",
+    "globalScrollHoldDelay": false,
+    "globalScrollBehavior": "instant",
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
     "maxCommandKeysLength": 5,
@@ -18,28 +19,32 @@
       "command": "scroll-down",
       "settings": {
         "scrollAmount": 200,
-        "scrollBehavior": "auto"
+        "scrollHoldDelay": false,
+        "scrollBehavior": "smooth"
       }
     },
     "k": {
       "command": "scroll-up",
       "settings": {
         "scrollAmount": 200,
-        "scrollBehavior": "auto"
+        "scrollHoldDelay": false,
+        "scrollBehavior": "smooth"
       }
     },
     "l": {
       "command": "scroll-left",
       "settings": {
         "scrollAmount": 200,
-        "scrollBehavior": "auto"
+        "scrollHoldDelay": false,
+        "scrollBehavior": "instant"
       }
     },
     "h": {
       "command": "scroll-right",
       "settings": {
         "scrollAmount": 200,
-        "scrollBehavior": "auto"
+        "scrollHoldDelay": false,
+        "scrollBehavior": "instant"
       }
     },
     "g|g": {
@@ -63,13 +68,13 @@
     "u": {
       "command": "scroll-half-page-up",
       "settings": {
-        "scrollBehavior": "auto"
+        "scrollBehavior": "instant"
       }
     },
     "d": {
       "command": "scroll-half-page-down",
       "settings": {
-        "scrollBehavior": "auto"
+        "scrollBehavior": "instant"
       }
     },
 
