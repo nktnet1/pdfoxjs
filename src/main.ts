@@ -39,7 +39,7 @@ if (!app.requestSingleInstanceLock({ pdfPath: fileArgument })) {
 const createPdfPath = (filepath = '') => {
   if (filepath) {
     const absoluteFilePath = path.resolve(filepath);
-    filepath = encodeURIComponent(path.join('/pdf', absoluteFilePath));
+    filepath = encodeURIComponent(path.join('/pdf?filepath=', absoluteFilePath));
   }
   return `/${viewerPath}?file=${filepath}`;
 };

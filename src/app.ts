@@ -26,8 +26,8 @@ const createExpressApp = (
     }));
   });
 
-  app.get(/^\/pdf(.+)/, (req: Request, res: Response) => {
-    const absoluteFilePath = decodeURIComponent(req.params[0]);
+  app.get('/pdf', (req: Request, res: Response) => {
+    const absoluteFilePath = decodeURIComponent(req.query.filepath as string);
     res.sendFile(absoluteFilePath);
   });
 
