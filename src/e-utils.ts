@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
 import { AddressInfo } from 'net';
@@ -18,8 +19,32 @@ export const exitHelp = () => {
   process.exit(1);
 };
 
+const checkPDF = (filepath: string) => {
+  let buffer: Buffer;
+  try {
+    buffer = fs.readFileSync(filepath);
+  } catch (error: any) {
+    throw new Error(`Failed to read '${filepath}': ${error.message}`);
+  }
+  if (!Buffer.isBuffer(buffer)) {
+    throw new Error(`Failed to read '${filepath}' - invalid buffer.`);
+  }
+  if (buffer.lastIndexOf('%PDF-') !== 0) {
+    throw new Error(`File '${filepath}' does not have the bytes '%PDF-' as the first and only occurence.`);
+  }
+  if (buffer.lastIndexOf('%%EOF') === -1) {
+    throw new Error(`File '${filepath}' does contain the bytes '%%EOF'`);
+  }
+};
+
 export const createPdfPath = (filepath: string) => {
   if (filepath) {
+    try {
+      checkPDF(filepath);
+    } catch (error: any) {
+      console.error(`[${APP_NAME}]: ${error.message}.`);
+      process.exit(1);
+    }
     const absoluteFilePath = path.resolve(filepath);
     filepath = encodeURIComponent(path.join(`${PDF_FETCH_PATH}?filepath=`, absoluteFilePath));
   }
