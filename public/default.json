@@ -184,6 +184,11 @@
     "Y": {
       "command": "cycle-spread-mode"
     },
+
+    "\"": {
+      "command": "load-demo-document"
+    },
+
     "|": {
       "command": "no-action"
     }

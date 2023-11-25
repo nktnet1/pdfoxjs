@@ -171,12 +171,13 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'cycle-scrolling-mode': cycleScrollingMode,
     'cycle-spread-mode': cycleSpreadMode,
 
+    'load-demo-document': () => (PDFViewerApplication.open({ url: '../../demo.pdf' })),
+
     'no-action': () => { /* nothing to do */ },
   };
 
   const inputKeys = [];
   const numberBuffer = [];
-
   // Tracks only the last maxCommandkeysLength in the array
   const append = (key) => inputKeys.push(key) > config.settings.maxCommandKeysLength && inputKeys.shift();
 
