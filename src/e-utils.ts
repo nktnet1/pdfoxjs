@@ -18,7 +18,7 @@ export const exitHelp = () => {
   process.exit(1);
 };
 
-export const createPdfPath = (filepath = '') => {
+export const createPdfPath = (filepath: string) => {
   if (filepath) {
     const absoluteFilePath = path.resolve(filepath);
     filepath = encodeURIComponent(path.join('/pdf?filepath=', absoluteFilePath));
