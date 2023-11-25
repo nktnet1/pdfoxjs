@@ -1,7 +1,7 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import { createBrowserWindow, createPdfPath, startServer } from './e-utils';
+import { createBrowserWindow, createPdfPath, exitHelp, startServer } from './e-utils';
 
 interface WindowSettings {
   pdfPaths: string[];
@@ -11,6 +11,11 @@ let appUrl: string | null = null;
 const setAppUrl = (newUrl: string) => (appUrl = newUrl);
 
 const fileArgumentIndex = is.dev ? 2 : 1;
+
+if (['-h', '--help'].includes(process.argv[fileArgumentIndex])) {
+  exitHelp(0);
+}
+
 const pdfPaths = process.argv.slice(fileArgumentIndex).map(createPdfPath);
 
 if (!app.requestSingleInstanceLock({ pdfPaths })) {
@@ -39,13 +44,13 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
 
   if (is.dev) {
     startServer(3000, 'public', (serverUrl: string) => {
-      loadPDF(serverUrl, pdfPaths[0]);
+      loadPDF(serverUrl, pdfPaths[0] ?? '');
       browserWindow.webContents.openDevTools();
       console.log(`Development: ${appUrl}`);
     });
   } else {
     startServer(0, path.join(process.resourcesPath, 'public'), (serverUrl) => {
-      loadPDF(serverUrl, pdfPaths[0]);
+      loadPDF(serverUrl, pdfPaths[0] ?? '');
       console.log(`Production: ${appUrl}`);
     });
   }

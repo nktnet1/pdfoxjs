@@ -6,31 +6,26 @@ import createExpressApp from './app';
 import contextMenu from 'electron-context-menu';
 import { BrowserWindow, shell } from 'electron';
 
-export const exitHelp = () => {
+export const exitHelp = (exitStatus: number = 1) => {
   console.log(`
-    Usage:
-      ${APP_NAME} [PATH_TO_PDF]
-    Example:
-      ${APP_NAME}
-      ${APP_NAME} current.pdf
-      ${APP_NAME} ../../relative.pdf
-      ${APP_NAME} /path/to/your/absolute.pdf
-  `);
-  process.exit(1);
+Usage:
+    ${APP_NAME} [PATH_TO_PDF]
+Example:
+    ${APP_NAME}
+    ${APP_NAME} current.pdf
+    ${APP_NAME} ../../relative.pdf
+    ${APP_NAME} /path/to/your/absolute.pdf
+`);
+  process.exit(exitStatus);
 };
 
 const checkPDF = (filepath: string) => {
-  let buffer: Buffer;
-  try {
-    buffer = fs.readFileSync(filepath);
-  } catch (error: any) {
-    throw new Error(`Failed to read '${filepath}': ${error.message}`);
-  }
+  const buffer = fs.readFileSync(filepath);
   if (!Buffer.isBuffer(buffer)) {
-    throw new Error(`Failed to read '${filepath}' - invalid buffer.`);
+    throw new Error(`Failed to read '${filepath}' - invalid buffer`);
   }
   if (buffer.lastIndexOf('%PDF-') !== 0) {
-    throw new Error(`File '${filepath}' does not have the bytes '%PDF-' as the first and only occurence.`);
+    throw new Error(`File '${filepath}' does not have the bytes '%PDF-' as the first and only occurence`);
   }
   if (buffer.lastIndexOf('%%EOF') === -1) {
     throw new Error(`File '${filepath}' does contain the bytes '%%EOF'`);
