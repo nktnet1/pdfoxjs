@@ -66,8 +66,8 @@ Please refer to the original documentation of [pdf.js](https://github.com/mozill
 ### Shortcuts
 
 ### Example PDF
-- Form: https://www.pdfill.com/example/pdf_layer_new.pdf
-- Layer: https://royalegroupnyc.com/wp-content/uploads/seating_areas/sample_pdf.pdf
+- Form: https://royalegroupnyc.com/wp-content/uploads/seating_areas/sample_pdf.pdf
+- Layer: https://www.pdfill.com/example/pdf_layer_new.pdf
 - Attachment: https://demos.devexpress.com/OfficeFileAPI/ASP/ContentManipulation/PdfFileAttachment.aspx
 
 ## Project Setup (Development)

@@ -184,6 +184,9 @@
     "Y": {
       "command": "cycle-spread-mode"
     },
+    "a": {
+      "command": "cycle-sidebar-view"
+    },
 
     "\"": {
       "command": "load-demo-document"

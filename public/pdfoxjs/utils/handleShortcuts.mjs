@@ -22,6 +22,14 @@ const CursorTool = {
   HAND: 1,
 };
 
+const SidebarView = {
+  NONE: 0,
+  THUMBS: 1,
+  OUTLINE: 2,
+  ATTACHMENTS: 3,
+  LAYERS: 4
+};
+
 const getCommandKey = (inputKeys, commandKeys, separator) => {
   for (const commandKey of commandKeys) {
     if (inputKeys[inputKeys.length - 1] === commandKey) {
@@ -103,6 +111,10 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     }
   };
 
+  const sidebarSwitchView = (view) => {
+    PDFViewerApplication.pdfSidebar.switchView(view);
+  };
+
   const cycleCursorTool = () => {
     const currTool = PDFViewerApplication.pdfCursorTools.activeTool;
     const totalTools = Object.keys(CursorTool).length;
@@ -119,6 +131,28 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     const spreadMode = PDFViewerApplication.pdfViewer.spreadMode;
     const totalModes = Object.keys(SpreadMode).length;
     PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: (spreadMode + 1) % totalModes });
+  };
+
+  const cycleSidebarView = () => {
+    if (!PDFViewerApplication.pdfSidebar.isOpen) {
+      toggleSidebar();
+    }
+    const cycleMap = {
+      [SidebarView.THUMBS]: 'thumbnailButton',
+      [SidebarView.OUTLINE]: 'outlineButton',
+      [SidebarView.ATTACHMENTS]: 'attachmentsButton',
+      [SidebarView.LAYERS]: 'layersButton'
+    };
+
+    const totalViews = Object.keys(cycleMap).length;
+    let currView = PDFViewerApplication.pdfSidebar.active;
+    for (let i = 0; i < totalViews; ++i) {
+      currView = currView % totalViews + 1;
+      if (!PDFViewerApplication.pdfSidebar[cycleMap[currView]].disabled) {
+        break;
+      }
+    }
+    PDFViewerApplication.pdfSidebar.switchView(currView);
   };
 
   const commandMap = {
@@ -167,9 +201,12 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'even-spread': () => PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: SpreadMode.EVEN }),
     'show-document-info': () => PDFViewerApplication.eventBus.dispatch('documentproperties'),
 
+    'sidebar-document-outline': () => sidebarSwitchView(SidebarView.OUTLINE),
+
     'cycle-cursor-tool': cycleCursorTool,
     'cycle-scrolling-mode': cycleScrollingMode,
     'cycle-spread-mode': cycleSpreadMode,
+    'cycle-sidebar-view': cycleSidebarView,
 
     'load-demo-document': () => (PDFViewerApplication.open({ url: '../../demo.pdf' })),
 
