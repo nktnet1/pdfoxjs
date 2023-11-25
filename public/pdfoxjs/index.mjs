@@ -49,10 +49,13 @@ window.onload = async () => {
   }
 
   const closeAnnotationEditor = () => {
-    PDFViewerApplication.eventBus.dispatch(
-      'switchannotationeditormode',
-      { mode: globalThis.pdfjsLib.AnnotationEditorType.NONE }
-    );
+    const NONE_MODE = globalThis.pdfjsLib.AnnotationEditorType.NONE;
+    if (PDFViewerApplication.pdfViewer.annotationEditorMode > NONE_MODE) {
+      PDFViewerApplication.eventBus.dispatch(
+        'switchannotationeditormode',
+        { mode: globalThis.pdfjsLib.AnnotationEditorType.NONE }
+      );
+    }
   };
 
   const { toggleHelp } = createAllCustomElements({ closeAnnotationEditor });

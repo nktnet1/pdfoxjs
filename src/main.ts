@@ -1,10 +1,7 @@
 import path from 'path';
-import { AddressInfo } from 'net';
-import { app, shell, BrowserWindow } from 'electron';
-import contextMenu from 'electron-context-menu';
+import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import createExpressApp from './app';
-import { APP_NAME, viewerPath } from './config';
+import { createBrowserWindow, createPdfPath, exitHelp, startServer } from './e-utils';
 
 interface WindowSettings {
   isMainInstance: boolean;
@@ -12,99 +9,45 @@ interface WindowSettings {
 }
 
 let appUrl: string | null = null;
+const setAppUrl = (newUrl: string) => (appUrl = newUrl);
 
 const fileArgumentIndex = is.dev ? 2 : 1;
 const fileArgument = process.argv[fileArgumentIndex];
 
 if (process.argv.length > fileArgumentIndex + 1) {
-  console.log(`
-    Usage:
-      ${APP_NAME} [PATH_TO_PDF]
-    Example:
-      ${APP_NAME}
-      ${APP_NAME} current.pdf
-      ${APP_NAME} ../../relative.pdf
-      ${APP_NAME} /path/to/your/absolute.pdf
-  `);
-  process.exit(1);
+  exitHelp();
 }
 
 if (!app.requestSingleInstanceLock({ pdfPath: fileArgument })) {
   app.quit();
-  const filePrint = fileArgument ? `'${fileArgument}' ` : '';
-  console.log(`[${APP_NAME}]: Opening ${filePrint}in a separate window.`);
   process.exit(0);
 }
 
-const createPdfPath = (filepath = '') => {
-  if (filepath) {
-    const absoluteFilePath = path.resolve(filepath);
-    filepath = encodeURIComponent(path.join('/pdf?filepath=', absoluteFilePath));
-  }
-  return `/${viewerPath}?file=${filepath}`;
-};
-
-function createWindow({ isMainInstance, pdfPath }: WindowSettings): BrowserWindow {
-  contextMenu({
-    showSaveImageAs: true
-  });
-
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    show: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      sandbox: false,
-      webSecurity: true,
-    },
-  });
-
-  // Always open links externally in the user's browser
-  mainWindow.webContents.on('will-navigate', (event, linkUrl) => {
-    if (!linkUrl.startsWith(mainWindow.webContents.getURL())) {
-      event.preventDefault();
-      shell.openExternal(linkUrl);
-    }
-  });
-
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show();
-  });
-
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url);
-    return { action: 'deny' };
-  });
-
+const createWindow = ({ isMainInstance, pdfPath }: WindowSettings): BrowserWindow => {
+  const browserWindow = createBrowserWindow();
   if (isMainInstance) {
-    const startServer = (port: number, resourcesPath: string, callback: () => void) => {
-      const expressApp = createExpressApp({ resourcesPath });
-      const server = expressApp.listen(port, () => {
-        const addresses = server.address() as AddressInfo;
-        appUrl = `http://localhost:${addresses.port}`;
-        mainWindow.loadURL(path.join(appUrl, pdfPath));
-        callback();
-      });
-    };
-
     if (is.dev) {
-      startServer(3000, 'public', () => {
-        mainWindow.webContents.openDevTools();
-        console.log(`Dev server: ${appUrl}`);
+      startServer(3000, 'public', (serverUrl) => {
+        browserWindow.loadURL(path.join(serverUrl, pdfPath));
+        browserWindow.webContents.openDevTools();
+        setAppUrl(serverUrl);
+        console.log(`Development: ${appUrl}`);
       });
     } else {
-      startServer(0, path.join(process.resourcesPath, 'public'), () => { console.log(appUrl); });
+      startServer(0, path.join(process.resourcesPath, 'public'), (serverUrl) => {
+        browserWindow.loadURL(path.join(serverUrl, pdfPath));
+        setAppUrl(serverUrl);
+        console.log(`Production: ${appUrl}`);
+      });
     }
   } else {
     if (appUrl === null) {
       throw new Error('Error: please close all instances of the application and try again.');
     }
-    mainWindow.loadURL(path.join(appUrl, pdfPath));
+    browserWindow.loadURL(path.join(appUrl, pdfPath));
   }
-  return mainWindow;
-}
+  return browserWindow;
+};
 
 app.whenReady().then(() => {
   // Set app user model id for windows

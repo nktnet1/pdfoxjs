@@ -1,6 +1,7 @@
 import url from 'url';
 import express, { Request, Response } from 'express';
 import { viewerPath } from './config';
+import path from 'path';
 
 export interface Options {
   resourcesPath: string;
