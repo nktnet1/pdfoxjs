@@ -30,6 +30,13 @@ const SidebarView = {
   LAYERS: 4
 };
 
+const SidebarViewButtonMap = {
+  [SidebarView.THUMBS]: 'thumbnailButton',
+  [SidebarView.OUTLINE]: 'outlineButton',
+  [SidebarView.ATTACHMENTS]: 'attachmentsButton',
+  [SidebarView.LAYERS]: 'layersButton'
+};
+
 const getCommandKey = (inputKeys, commandKeys, separator) => {
   for (const commandKey of commandKeys) {
     if (inputKeys[inputKeys.length - 1] === commandKey) {
@@ -92,7 +99,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
         ? PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode })
         : closeAnnotationEditor();
     } else {
-      addNotification('AnnotationEditor is not enabled. Please load a valid PDF document.');
+      addNotification('AnnotationEditor is not enabled. Please load a valid PDF document');
     }
   };
 
@@ -112,7 +119,12 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   };
 
   const sidebarSwitchView = (view) => {
-    PDFViewerApplication.pdfSidebar.switchView(view);
+    if (!PDFViewerApplication.pdfSidebar[SidebarViewButtonMap[view]].disabled) {
+      PDFViewerApplication.pdfSidebar.switchView(view);
+    } else {
+      const label = SidebarViewButtonMap[view].replace('Button', '');
+      addNotification(`Sidebar '${label}' view is not available for this document`);
+    }
   };
 
   const cycleCursorTool = () => {
@@ -137,18 +149,11 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     if (!PDFViewerApplication.pdfSidebar.isOpen) {
       toggleSidebar();
     }
-    const cycleMap = {
-      [SidebarView.THUMBS]: 'thumbnailButton',
-      [SidebarView.OUTLINE]: 'outlineButton',
-      [SidebarView.ATTACHMENTS]: 'attachmentsButton',
-      [SidebarView.LAYERS]: 'layersButton'
-    };
-
-    const totalViews = Object.keys(cycleMap).length;
+    const totalViews = Object.keys(SidebarViewButtonMap).length;
     let currView = PDFViewerApplication.pdfSidebar.active;
     for (let i = 0; i < totalViews; ++i) {
       currView = currView % totalViews + 1;
-      if (!PDFViewerApplication.pdfSidebar[cycleMap[currView]].disabled) {
+      if (!PDFViewerApplication.pdfSidebar[SidebarViewButtonMap[currView]].disabled) {
         break;
       }
     }
@@ -201,7 +206,10 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'even-spread': () => PDFViewerApplication.eventBus.dispatch('switchspreadmode', { mode: SpreadMode.EVEN }),
     'show-document-info': () => PDFViewerApplication.eventBus.dispatch('documentproperties'),
 
+    'sidebar-document-thumbnail': () => sidebarSwitchView(SidebarView.THUMBS),
     'sidebar-document-outline': () => sidebarSwitchView(SidebarView.OUTLINE),
+    'sidebar-document-attachments': () => sidebarSwitchView(SidebarView.ATTACHMENTS),
+    'sidebar-document-layers': () => sidebarSwitchView(SidebarView.LAYERS),
 
     'cycle-cursor-tool': cycleCursorTool,
     'cycle-scrolling-mode': cycleScrollingMode,

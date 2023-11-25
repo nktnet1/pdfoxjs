@@ -82,6 +82,7 @@
 }
 
 #snackbar-container{
+  z-index: 3;
 	position: fixed;
   bottom: 0px;
   left: 50%;
@@ -89,7 +90,6 @@
 }
 
 .snackbar {
-  z-index: 1;
   display: none;
   min-width: 250px;
   background-color: #4CAF50;

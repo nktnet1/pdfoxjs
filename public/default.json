@@ -175,6 +175,19 @@
       "command": "show-document-info"
     },
 
+    ";|t": {
+      "command": "sidebar-document-thumbnail"
+    },
+    ";|o": {
+      "command": "sidebar-document-outline"
+    },
+    ";|a": {
+      "command": "sidebar-document-attachments"
+    },
+    ";|l": {
+      "command": "sidebar-document-layers"
+    },
+
     "c": {
       "command": "cycle-cursor-tool"
     },
@@ -184,7 +197,7 @@
     "Y": {
       "command": "cycle-spread-mode"
     },
-    "a": {
+    ";|c": {
       "command": "cycle-sidebar-view"
     },
 

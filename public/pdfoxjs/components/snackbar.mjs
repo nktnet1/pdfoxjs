@@ -24,6 +24,7 @@ export const addNotification = (text, duration = 3000) => {
   let timer = null;
   const removeSnackbar = () => {
     snackbar.className = snackbar.className.replace('snackbar show', 'snackbar');
+    container.removeChild(snackbar);
     clearTimeout(timer);
   };
   snackbar.addEventListener('click', removeSnackbar);
