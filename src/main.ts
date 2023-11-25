@@ -1,7 +1,9 @@
+import fs from 'fs';
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import { createBrowserWindow, createPdfPath, exitHelp, startServer } from './e-utils';
+import { DEFAULT_CONFIG_FILE_NAME, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME } from './config';
 
 interface WindowSettings {
   pdfPaths: string[];
@@ -36,6 +38,21 @@ const createSecondaryWindows = ({ pdfPaths }: WindowSettings): void => {
 const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
   const browserWindow = createBrowserWindow();
 
+  const userDataPath = app.getPath('userData');
+
+  const createConfig = (resourcesPath: string): string => {
+    const dirPath = path.join(resourcesPath, USER_CONFIG_DIRECTORY_NAME);
+
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+    const configFilePath = path.join(dirPath, USER_CONFIG_FILE_NAME);
+    if (!fs.existsSync(configFilePath)) {
+      fs.copyFileSync(path.join(resourcesPath, DEFAULT_CONFIG_FILE_NAME), configFilePath);
+    }
+    return configFilePath;
+  };
+
   const loadPDF = (serverUrl: string, pdfPath: string) => {
     browserWindow.loadURL(path.join(serverUrl, pdfPath));
     setAppUrl(serverUrl);
@@ -43,16 +60,27 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
   };
 
   if (is.dev) {
-    startServer(3000, 'public', (serverUrl: string) => {
-      loadPDF(serverUrl, pdfPaths[0] ?? '');
-      browserWindow.webContents.openDevTools();
-      console.log(`Development: ${appUrl}`);
-    });
+    const resourcesPath = 'public';
+    createConfig(resourcesPath);
+    startServer(
+      3000,
+      { resourcesPath, userDataPath },
+      (serverUrl: string) => {
+        loadPDF(serverUrl, pdfPaths[0] ?? '');
+        browserWindow.webContents.openDevTools();
+        console.log(`Development: ${appUrl}`);
+      }
+    );
   } else {
-    startServer(0, path.join(process.resourcesPath, 'public'), (serverUrl) => {
-      loadPDF(serverUrl, pdfPaths[0] ?? '');
-      console.log(`Production: ${appUrl}`);
-    });
+    const resourcesPath = path.join(process.resourcesPath, 'public');
+    startServer(
+      0,
+      { resourcesPath, userDataPath },
+      (serverUrl: string) => {
+        loadPDF(serverUrl, pdfPaths[0] ?? '');
+        console.log(`Production: ${appUrl}`);
+      }
+    );
   }
 };
 
@@ -81,6 +109,8 @@ app.whenReady().then(() => {
     const pdfPaths = (additionalData as WindowSettings).pdfPaths;
     createSecondaryWindows({ pdfPaths });
   });
+
+  console.log(app.getPath('userData'));
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

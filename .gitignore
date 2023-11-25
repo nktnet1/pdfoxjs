@@ -130,3 +130,4 @@ dist
 .pnp.*
 
 public/viewer/web/*.pdf
+public/userConfig

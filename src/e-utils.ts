@@ -4,7 +4,7 @@ import { AddressInfo } from 'net';
 import contextMenu from 'electron-context-menu';
 import { BrowserWindow, shell } from 'electron';
 import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
-import createExpressApp from './app';
+import createExpressApp, { Options } from './app';
 
 export const exitHelp = (exitStatus: number = 1) => {
   console.log(`
@@ -46,8 +46,8 @@ export const createPdfPath = (filepath: string) => {
   return `/${viewerPath}?file=${filepath}`;
 };
 
-export const startServer = (port: number, resourcesPath: string, callback: (url: string) => void) => {
-  const expressApp = createExpressApp({ resourcesPath });
+export const startServer = (port: number, options: Options, callback: (url: string) => void) => {
+  const expressApp = createExpressApp(options);
   const server = expressApp.listen(port, () => {
     const addresses = server.address() as AddressInfo;
     callback(`http://127.0.0.1:${addresses.port}`);

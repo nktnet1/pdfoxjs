@@ -1,5 +1,6 @@
 import { createAllCustomElements } from './components/allCustomElements.mjs';
 import { PDFViewerApplication } from './components/application.mjs';
+import { getConfig } from './utils/getConfig.mjs';
 import { handleShortcuts } from './utils/handleShortcuts.mjs';
 
 window.onload = async () => {
@@ -28,18 +29,6 @@ window.onload = async () => {
       // Open toolbar before sidebar
       showToolbar();
       PDFViewerApplication.pdfSidebar.open();
-    }
-  };
-
-  const getConfig = async () => {
-    try {
-      const response = await fetch('/config.json');
-      if (!response.ok) {
-        throw new Error('No config.json available. Using default.json');
-      }
-      return response.json();
-    } catch {
-      return fetch('/default.json').then(data => data.json());
     }
   };
 
