@@ -1,6 +1,6 @@
 import url from 'url';
 import express, { Request, Response } from 'express';
-import { viewerPath } from './config';
+import { PDF_FETCH_PATH, viewerPath } from './config';
 
 export interface Options {
   resourcesPath: string;
@@ -26,7 +26,7 @@ const createExpressApp = (
     }));
   });
 
-  app.get('/pdf', (req: Request, res: Response) => {
+  app.get(PDF_FETCH_PATH, (req: Request, res: Response) => {
     const absoluteFilePath = decodeURIComponent(req.query.filepath as string);
     res.sendFile(absoluteFilePath);
   });

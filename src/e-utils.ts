@@ -1,5 +1,5 @@
 import path from 'path';
-import { APP_NAME, viewerPath } from './config';
+import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
 import { AddressInfo } from 'net';
 import createExpressApp from './app';
 import contextMenu from 'electron-context-menu';
@@ -21,7 +21,7 @@ export const exitHelp = () => {
 export const createPdfPath = (filepath: string) => {
   if (filepath) {
     const absoluteFilePath = path.resolve(filepath);
-    filepath = encodeURIComponent(path.join('/pdf?filepath=', absoluteFilePath));
+    filepath = encodeURIComponent(path.join(`${PDF_FETCH_PATH}?filepath=`, absoluteFilePath));
   }
   return `/${viewerPath}?file=${filepath}`;
 };
