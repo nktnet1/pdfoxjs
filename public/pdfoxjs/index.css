@@ -96,15 +96,15 @@
   margin-bottom: 20px;
   color: black;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 20px;
   padding: 16px;
   font-size: 20px;
 }
 
 .snackbar.show {
   display: flex;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.6s;
-  animation: fadein 0.5s, fadeout 0.5s 4.6s;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.7s;
+  animation: fadein 0.5s, fadeout 0.5s 4.7s;
 }
 
 .snackbar.show:hover {

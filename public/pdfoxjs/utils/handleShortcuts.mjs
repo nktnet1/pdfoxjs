@@ -167,6 +167,10 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   const focusFirstInput = () => {
     const currentPage = PDFViewerApplication.pdfViewer.currentPageNumber;
     const pageView = PDFViewerApplication.pdfViewer.getPageView(currentPage - 1);
+    if (pageView === undefined) {
+      addNotification('Failed to focus form inputs: No pages loaded');
+      return;
+    }
     const annotationDiv = pageView.annotationLayer.div;
     const firstInput = annotationDiv.querySelector('input:not([type="hidden"])');
     if (firstInput) {
