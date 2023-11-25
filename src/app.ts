@@ -4,13 +4,11 @@ import { PDF_FETCH_PATH, viewerPath } from './config';
 
 export interface Options {
   resourcesPath: string;
-  pdfPath?: string;
 }
 
 const createExpressApp = (
   options: Options = {
     resourcesPath: 'public',
-    pdfPath: '',
   }
 ) => {
   const app = express();
