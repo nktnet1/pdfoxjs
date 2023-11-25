@@ -120,6 +120,9 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
 
   const sidebarSwitchView = (view) => {
     if (!PDFViewerApplication.pdfSidebar[SidebarViewButtonMap[view]].disabled) {
+      if (!PDFViewerApplication.pdfSidebar.isOpen) {
+        toggleSidebar();
+      }
       PDFViewerApplication.pdfSidebar.switchView(view);
     } else {
       const label = SidebarViewButtonMap[view].replace('Button', '');
