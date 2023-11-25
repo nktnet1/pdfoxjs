@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
 import { AddressInfo } from 'net';
-import createExpressApp from './app';
 import contextMenu from 'electron-context-menu';
 import { BrowserWindow, shell } from 'electron';
+import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
+import createExpressApp from './app';
 
 export const exitHelp = (exitStatus: number = 1) => {
   console.log(`
