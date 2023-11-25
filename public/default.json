@@ -204,6 +204,9 @@
     "\"": {
       "command": "load-demo-document"
     },
+    "g|i": {
+      "command": "focus-input"
+    },
 
     "|": {
       "command": "no-action"

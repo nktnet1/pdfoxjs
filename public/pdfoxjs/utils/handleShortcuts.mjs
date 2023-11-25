@@ -1,7 +1,8 @@
 import { PDFViewerApplication } from '../components/application.mjs';
 import { addNotification } from '../components/snackbar.mjs';
 
-const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
+const PDF_INTERNAL_EDITOR_INPUT_REGEX = /^pdfjs_internal_editor_[0-9]+-editor$/;
+const PDF_INTERNAL_ID_REGEX = /^pdfjs_internal_id_/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
 
 const ScrollMode = {
@@ -163,6 +164,18 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     PDFViewerApplication.pdfSidebar.switchView(currView);
   };
 
+  const focusFirstInput = () => {
+    const currentPage = PDFViewerApplication.pdfViewer.currentPageNumber;
+    const pageView = PDFViewerApplication.pdfViewer.getPageView(currentPage - 1);
+    const annotationDiv = pageView.annotationLayer.div;
+    const firstInput = annotationDiv.querySelector('input:not([type="hidden"])');
+    if (firstInput) {
+      firstInput.focus();
+    } else {
+      addNotification(`Could not locate any visible form inputs on page ${currentPage}`);
+    }
+  };
+
   const commandMap = {
     'toggle-help': toggleHelp,
 
@@ -220,6 +233,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     'cycle-sidebar-view': cycleSidebarView,
 
     'load-demo-document': () => (PDFViewerApplication.open({ url: '../../demo.pdf' })),
+    'focus-input': focusFirstInput,
 
     'no-action': () => { /* nothing to do */ },
   };
@@ -232,6 +246,11 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     if (PDF_INTERNAL_EDITOR_INPUT_REGEX.test(document.activeElement.id)) {
+      // Inside input box for editor
+      return;
+    }
+
+    if (PDF_INTERNAL_ID_REGEX.test(document.activeElement.id)) {
       // Inside input box for editor
       return;
     }
