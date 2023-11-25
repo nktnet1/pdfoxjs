@@ -40,15 +40,16 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
 
   const userDataPath = app.getPath('userData');
 
-  const createConfig = (resourcesPath: string): string => {
-    const dirPath = path.join(resourcesPath, USER_CONFIG_DIRECTORY_NAME);
+  const createConfig = (resourcesPath: string, userDataPath: string): string => {
+    const dirPath = path.join(userDataPath, USER_CONFIG_DIRECTORY_NAME);
 
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
     const configFilePath = path.join(dirPath, USER_CONFIG_FILE_NAME);
+    const defaultConfigPath = path.join(resourcesPath, DEFAULT_CONFIG_FILE_NAME);
     if (!fs.existsSync(configFilePath)) {
-      fs.copyFileSync(path.join(resourcesPath, DEFAULT_CONFIG_FILE_NAME), configFilePath);
+      fs.copyFileSync(defaultConfigPath, configFilePath);
     }
     return configFilePath;
   };
@@ -61,7 +62,7 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
 
   if (is.dev) {
     const resourcesPath = 'public';
-    createConfig(resourcesPath);
+    createConfig(resourcesPath, userDataPath);
     startServer(
       3000,
       { resourcesPath, userDataPath },
