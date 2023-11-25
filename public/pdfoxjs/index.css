@@ -57,7 +57,7 @@
   right: 0px;
   padding: 8px;
   background-color: #e74c3c;
-  border: '1px solid black';
+  border: 1px solid black;
   color: white;
   border: none;
   cursor: pointer;
@@ -79,4 +79,56 @@
 
 #viewer .page:not(:first-child) {
   border-top: 1px solid transparent;
+}
+
+#snackbar-container{
+	position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.snackbar {
+  z-index: 1;
+  display: none;
+  min-width: 250px;
+  background-color: #4CAF50;
+  margin-bottom: 20px;
+  color: black;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  bottom: 30px;
+  font-size: 20px;
+}
+
+.snackbar.show {
+  display: flex;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.snackbar.show:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }

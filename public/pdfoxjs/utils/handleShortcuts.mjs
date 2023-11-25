@@ -1,4 +1,5 @@
 import { PDFViewerApplication } from '../components/application.mjs';
+import { addNotification } from '../components/snackbar.mjs';
 
 const PDF_INTERNAL_EDITOR_INPUT_REGEX = /pdfjs_internal_editor_[0-9]+-editor/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
@@ -76,10 +77,16 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     behavior: settings.scrollBehavior ?? config.settings.globalScrollBehavior,
   });
 
-  const toggleEditorMode = (mode) =>
-    PDFViewerApplication.pdfViewer.annotationEditorMode !== mode
-      ? PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode })
-      : closeAnnotationEditor();
+  const toggleEditorMode = (mode) => {
+    const NONE_MODE = globalThis.pdfjsLib.AnnotationEditorType.NONE;
+    if (PDFViewerApplication.pdfViewer.annotationEditorMode >= NONE_MODE) {
+      PDFViewerApplication.pdfViewer.annotationEditorMode !== mode
+        ? PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode })
+        : closeAnnotationEditor();
+    } else {
+      addNotification('AnnotationEditor is not enabled. Please load a valid PDF document.');
+    }
+  };
 
   const scrollToPage = ({ behavior }, pageNumber) => {
     const pageIndex = Math.min(PDFViewerApplication.pagesCount, pageNumber) - 1;

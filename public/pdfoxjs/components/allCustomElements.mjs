@@ -3,6 +3,7 @@ import { createFloatingDiv } from './floatingDiv.mjs';
 import { createHelpButton } from './helpButton.mjs';
 import { createUploadButton } from './uploadButton.mjs';
 import { createChildElement } from '../utils/creation.mjs';
+import { createSnackbarContainer } from './snackbar.mjs';
 
 export const createAllCustomElements = ({ closeAnnotationEditor }) => {
   // stylesheet
@@ -15,6 +16,8 @@ export const createAllCustomElements = ({ closeAnnotationEditor }) => {
       href: '../../pdfoxjs/index.css',
     }
   );
+
+  createSnackbarContainer();
 
   const floatingDiv = createFloatingDiv();
   const hideFloatingDiv = () => (floatingDiv.style.display = 'none');
