@@ -24,10 +24,13 @@ export const addNotification = (text, duration = 3000) => {
   let timer = null;
   const removeSnackbar = () => {
     snackbar.className = snackbar.className.replace('snackbar show', 'snackbar');
-    container.removeChild(snackbar);
+    setTimeout(() => {
+      container.removeChild(snackbar);
+    }, 1000);
     clearTimeout(timer);
   };
   snackbar.addEventListener('click', removeSnackbar);
-  timer = setTimeout(removeSnackbar, 3000);
+  // Note: changing this timeout to a different value requires modifying .snackbar.snow css
+  timer = setTimeout(removeSnackbar, 5000);
   return snackbar;
 };
