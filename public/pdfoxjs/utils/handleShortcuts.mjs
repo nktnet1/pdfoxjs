@@ -4,6 +4,9 @@ import { addNotification } from '../components/snackbar.mjs';
 const PDF_INTERNAL_EDITOR_INPUT_REGEX = /^pdfjs_internal_editor_[0-9]+-editor$/;
 const PDF_INTERNAL_ID_REGEX = /^pdfjs_internal_id_/;
 const MODIFIER_KEYS = ['Shift', 'Control', 'Alt', 'Meta'];
+const NUMBER_PREFIX = '<NUMBER_PREFIX>';
+const ALT_MODIFIER = '<ALT>';
+const CTRL_MODIFIER = '<CTRL>';
 
 const ScrollMode = {
   VERTICAL: 0,
@@ -38,9 +41,17 @@ const SidebarViewButtonMap = {
   [SidebarView.LAYERS]: 'layersButton'
 };
 
+const keyMatch = (inputKey, commandKey) => {
+  return (
+    inputKey.altKey === commandKey.includes(ALT_MODIFIER) &&
+    inputKey.ctrlKey === commandKey.includes(CTRL_MODIFIER) &&
+    inputKey.key === commandKey.replace(ALT_MODIFIER, '').replace(CTRL_MODIFIER, '')
+  );
+};
+
 const getCommandKey = (inputKeys, commandKeys, separator) => {
   for (const commandKey of commandKeys) {
-    if (inputKeys[inputKeys.length - 1] === commandKey) {
+    if (keyMatch(inputKeys[inputKeys.length - 1], commandKey)) {
       return commandKey;
     }
     const cmdKeys = commandKey.split(separator);
@@ -48,8 +59,8 @@ const getCommandKey = (inputKeys, commandKeys, separator) => {
       continue;
     }
     for (let i = inputKeys.length - 1; i >= 0; --i) {
-      const s = cmdKeys.pop();
-      if (inputKeys[i] !== s) {
+      const expectedKey = cmdKeys.pop();
+      if (!keyMatch(inputKeys[i], expectedKey)) {
         break;
       }
       if (cmdKeys.length === 0) {
@@ -244,9 +255,6 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
 
   const inputKeys = [];
   const numberBuffer = [];
-  // Tracks only the last maxCommandkeysLength in the array
-  const append = (key) => inputKeys.push(key) > config.settings.maxCommandKeysLength && inputKeys.shift();
-
   const commandKeys = Object.keys(config.keys).sort((a, b) => b.length - a.length);
   container.addEventListener('keydown', (event) => {
     if (PDF_INTERNAL_EDITOR_INPUT_REGEX.test(document.activeElement.id)) {
@@ -268,9 +276,13 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
       return;
     }
 
-    append(event.key);
+    const { key, ctrlKey, altKey } = event;
+    const inputKey = { key, ctrlKey, altKey };
 
-    const prefix = numberBuffer.length > 0 ? config.settings.numberPrefix : '';
+    // Tracks only the last maxCommandkeysLength in the array
+    inputKeys.push(inputKey) > config.settings.maxCommandKeysLength && inputKeys.shift();
+
+    const prefix = numberBuffer.length > 0 ? NUMBER_PREFIX : '';
     const commandKey = getCommandKey(
       inputKeys,
       commandKeys.map(ck => ck.startsWith(prefix) ? ck.substring(prefix.length) : ck),
@@ -283,10 +295,10 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
       return;
     }
 
-    const { command, settings } = action;
-
     event.stopPropagation();
     event.preventDefault();
+
+    const { command, settings } = action;
     inputKeys.length = 0;
 
     if (numberBuffer.length === 0) {

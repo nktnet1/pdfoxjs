@@ -7,8 +7,7 @@
     "globalZoomAmount": 0.1,
     "keysSeparator": "|",
     "maxCommandKeysLength": 5,
-    "hideToolbar": false,
-    "numberPrefix": "<NUMBER_PREFIX>"
+    "hideToolbar": false
   },
   "keys": {
     "H": {
@@ -198,6 +197,10 @@
       "command": "cycle-spread-mode"
     },
     ";|c": {
+      "command": "cycle-sidebar-view"
+    },
+
+    "<CTRL><ALT>a": {
       "command": "cycle-sidebar-view"
     },
 
