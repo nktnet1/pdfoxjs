@@ -2,7 +2,7 @@ import path from 'path';
 import { Configuration } from 'electron-builder';
 
 const config: Configuration = {
-  icon: path.join(__dirname, 'build', 'icon.png'),
+  icon: path.join('build', 'icon.png'),
   appId: 'com.nktnet.pdfoxjs',
   productName: 'pdfoxjs',
   asar: true,
@@ -13,10 +13,10 @@ const config: Configuration = {
     'out'
   ],
   extraResources: [
-    path.join(__dirname, 'public'),
+    'public'
   ],
   extraMetadata: {
-    main: path.join(__dirname, 'out', 'main.js'),
+    main: path.join('out', 'main.js'),
   },
 
   win: {
