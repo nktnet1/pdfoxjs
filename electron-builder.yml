@@ -1,4 +1,3 @@
-icon: build/icon.png
 appId: com.nktnet.pdfoxjs
 productName: pdfoxjs
 asar: true
