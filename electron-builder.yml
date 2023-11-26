@@ -2,6 +2,12 @@ icon: build/icon.png
 appId: com.nktnet.pdfoxjs
 productName: pdfoxjs
 asar: true
+copyright: Copyright © 2023 Khiet Tam Nguyen
+fileAssociations:
+  - ext: pdf
+    name: PDF Document
+    mimeType: application/pdf
+    role: Editor
 
 directories:
   output: dist
