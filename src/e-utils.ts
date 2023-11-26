@@ -41,7 +41,7 @@ export const createPdfPath = (filepath: string) => {
       process.exit(1);
     }
     const absoluteFilePath = path.resolve(filepath);
-    filepath = encodeURIComponent(path.join(`${PDF_FETCH_PATH}?filepath=`, absoluteFilePath));
+    filepath = encodeURIComponent(`${PDF_FETCH_PATH}?filepath=${absoluteFilePath}`);
   }
   return `/${viewerPath}?file=${filepath}`;
 };
