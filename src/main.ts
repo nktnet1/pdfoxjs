@@ -18,9 +18,10 @@ if (['-h', '--help'].includes(process.argv[fileArgumentIndex])) {
   exitHelp(0);
 }
 
-const pdfPaths = process.argv.slice(fileArgumentIndex).map(createPdfPath);
+const pdfPathInputs = process.argv.slice(fileArgumentIndex).map(createPdfPath);
 
-if (!app.requestSingleInstanceLock({ pdfPaths })) {
+// If no arguments are specified, use '' to still launch the second window instance.
+if (!app.requestSingleInstanceLock({ pdfPaths: pdfPathInputs.length ? pdfPathInputs : [''] })) {
   app.quit();
   process.exit(0);
 }
@@ -79,7 +80,6 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
       { resourcesPath, userDataPath },
       (serverUrl: string) => {
         loadPDF(serverUrl, pdfPaths[0] ?? '');
-        console.log(`Production: ${appUrl}`);
       }
     );
   }
@@ -96,13 +96,13 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  createMainWindow({ pdfPaths });
+  createMainWindow({ pdfPaths: pdfPathInputs });
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
-      createMainWindow({ pdfPaths });
+      createMainWindow({ pdfPaths: pdfPathInputs });
     }
   });
 
