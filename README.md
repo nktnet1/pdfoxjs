@@ -77,14 +77,26 @@ By default, you can use the double quotation marks key (`"`, i.e. `SHIFT` + `'`)
 
 ### Configuration
 
-See [public/default.json](public/default.json) for an example configuration file.
+See [public/default.json](public/default.json) for an example configuration file. This will contain all defined functions and corresponding settings.
 
-Upon launch, the default configuration will be copied to the directory `userConfig/config.json`, which will be within [Electron app's userData directory](https://www.electronjs.org/docs/latest/api/app#appgetpathname). On Linux, for a `username`, this could be one of:
+On the initial launch, the default configuration will be copied to the directory `userConfig/config.json`, which will be within [Electron app's userData directory](https://www.electronjs.org/docs/latest/api/app#appgetpathname).
+
+On Linux, for a particular `username`, this could be one of:
 ```
-/home/username/.pdfoxjs/userConfig/config.json
 /home/username/.config/pdfoxjs/userConfig/config.json
+/home/username/.pdfoxjs/userConfig/config.json
 ```
 depending on how your [XDG_CONFIG_HOME](https://wiki.archlinux.org/title/XDG_Base_Directory#User_directories) is defined.
+
+On MacOS, it will be
+```
+~/Library/Application Support/pdfoxjs/userConfig/config.json
+```
+
+On Windows, it will be
+```
+%APPDATA%\pdfoxjs\userConfig\config.json
+```
 
 ## Project Setup (Development)
 
