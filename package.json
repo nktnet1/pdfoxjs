@@ -10,9 +10,9 @@
     "dev": "ts-node-dev -T src/server",
     "lint": "eslint --fix './**/*.{js,ts,cjs,mjs}'",
     "build": "tsc",
-    "build:win": "yarn build && electron-builder --config econfig.ts --win",
-    "build:mac": "yarn build && electron-builder --config econfig.ts --mac",
-    "build:linux": "yarn build && electron-builder --config econfig.ts --linux"
+    "build:win": "yarn build && electron-builder --win",
+    "build:mac": "yarn build && electron-builder --mac",
+    "build:linux": "yarn build && electron-builder --linux"
   },
   "dependencies": {
     "@electron-toolkit/utils": "^2.0.1",
