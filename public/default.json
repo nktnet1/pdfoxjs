@@ -188,20 +188,16 @@
     },
 
     "c": {
+      "command": "cycle-sidebar-view"
+    },
+    "<CTRL>c": {
       "command": "cycle-cursor-tool"
     },
-    "C": {
+    "<CTRL>C": {
       "command": "cycle-scrolling-mode"
     },
-    "Y": {
+    "<CTRL><ALT>c": {
       "command": "cycle-spread-mode"
-    },
-    ";|c": {
-      "command": "cycle-sidebar-view"
-    },
-
-    "<CTRL><ALT>a": {
-      "command": "cycle-sidebar-view"
     },
 
     "\"": {
