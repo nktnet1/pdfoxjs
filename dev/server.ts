@@ -1,7 +1,7 @@
 import path from 'path';
 import { AddressInfo } from 'net';
-import createExpressApp from './app';
-import { APP_NAME } from './config';
+import createExpressApp from '../src/app';
+import { APP_NAME } from '../src/config';
 
 // Assume Linux environment with $HOME defined.
 const userDataPath = path.join(process.env.HOME ?? '/', '.config', APP_NAME);
