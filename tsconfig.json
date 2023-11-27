@@ -13,6 +13,6 @@
     "src/**/*",
   ],
   "exclude": [
-    "src/server.ts"
+    "dev/server.ts"
   ]
 }

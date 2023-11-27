@@ -4,6 +4,7 @@ import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import { createBrowserWindow, createPdfPath, exitHelp, startServer } from './e-utils';
 import { DEFAULT_CONFIG_FILE_NAME, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME } from './config';
+import { autoUpdater } from 'electron-updater';
 
 interface WindowSettings {
   pdfPaths: string[];
@@ -36,7 +37,7 @@ const createSecondaryWindows = ({ pdfPaths }: WindowSettings): void => {
   });
 };
 
-const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
+const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
   const browserWindow = createBrowserWindow();
 
   const userDataPath = app.getPath('userData');
@@ -83,6 +84,8 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): void => {
       }
     );
   }
+
+  return browserWindow;
 };
 
 app.whenReady().then(() => {
@@ -96,7 +99,11 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  createMainWindow({ pdfPaths: pdfPathInputs });
+  const mainWindow = createMainWindow({ pdfPaths: pdfPathInputs });
+
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

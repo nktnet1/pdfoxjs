@@ -17,11 +17,10 @@ files:
 extraResources:
   - public
 
-extraMetadata:
-  main: out/main.js
-
 win:
   target: nsis
+  nsis:
+    allowToChangeInstallationDirectory: true
   publish:
     - provider: github
       protocol: https
