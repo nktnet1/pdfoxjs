@@ -6,6 +6,19 @@ Cross-platform electron wrapper around Mozilla's [pdf.js](https://mozilla.github
 
 Support features present in the [pdf.js v4.0.189](https://github.com/mozilla/pdf.js/releases/tag/v4.0.189) release.
 
+## Installation
+
+See the latest release at
+- https://github.com/nktnet1/pdfoxjs/releases/latest
+
+| Operating System | File Extension | Example (vX.X.X) |
+|-|-|-|
+| Linux  | AppImage | pdfoxjs-X.X.X.AppImage |
+| MacOS  | dmg  | pdfoxjs-X.X.X.dmg  |
+| Windows  | exe  | pdfoxjs-Setup-X.X.X.exe  |
+
+
+
 ## Features
 
 Please refer to the original documentation of [pdf.js](https://github.com/mozilla/pdf.js). There is also a demo for modern browsers released by Mozilla [here](https://mozilla.github.io/pdf.js/web/viewer.html). 
@@ -27,21 +40,16 @@ Please refer to the original documentation of [pdf.js](https://github.com/mozill
 - Add/Edit Images
 - Tools
     - Presentation Mode
-    ---
     - Go to First Page
     - Go to Last Page
-    ---
     - Rotate Clockwise
     - Rotate Counterclockwise
-    ---
     - Text Selection Tool
     - Hand Selection Tool
-    ---
     - Page Scrolling
     - Vertically Scrolling
     - Horizontal Scrolling
     - Wrapped Scrolling
-    ---
     - No Spread
     - Odd Spread
     - Even Spread
@@ -100,7 +108,7 @@ On Windows, it will be
 
 ## Project Setup (Development)
 
-### Installalation
+### Setup
 
 ```bash
 $ yarn install
