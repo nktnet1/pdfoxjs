@@ -5,6 +5,10 @@
   "version": "0.0.2",
   "description": "Standalone desktop app for Mozilla's pdfjs with extendable vim keybindings",
   "main": "./out/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nktnet1/pdfoxjs"
+  },
   "scripts": {
     "start": "yarn build && electron .",
     "dev": "ts-node-dev -T dev/server",
