@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog, MessageBoxOptions } from 'electron';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import { createBrowserWindow, createPdfPath, exitHelp, startServer } from './e-utils';
-import { DEFAULT_CONFIG_FILE_NAME, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME } from './config';
+import { APP_NAME, DEFAULT_CONFIG_FILE_NAME, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME } from './config';
 import { autoUpdater } from 'electron-updater';
 
 interface WindowSettings {
@@ -101,10 +101,6 @@ app.whenReady().then(() => {
 
   const mainWindow = createMainWindow({ pdfPaths: pdfPathInputs });
 
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
-
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -118,7 +114,44 @@ app.whenReady().then(() => {
     createSecondaryWindows({ pdfPaths });
   });
 
-  console.log(app.getPath('userData'));
+  // ======================================================================= //
+  // AUTO-UPDATES
+  // ======================================================================= //
+
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.autoDownload = false;
+    autoUpdater.checkForUpdates();
+  });
+
+  autoUpdater.on('update-available', (event) => {
+    const dialogOpts: MessageBoxOptions = {
+      type: 'info',
+      buttons: ['No', 'Yes'],
+      title: `${APP_NAME} has a new update Available`,
+      message: process.platform === 'win32' ? event.releaseNotes as string : event.releaseName,
+      detail: `A new version (${event.version}) is available. Would you like to download it?`
+    };
+    dialog.showMessageBox(mainWindow, dialogOpts).then((returnValue) => {
+      if (returnValue.response === 1) {
+        autoUpdater.downloadUpdate();
+      }
+    });
+  });
+
+  autoUpdater.on('update-downloaded', (event) => {
+    const dialogOpts: MessageBoxOptions = {
+      type: 'info',
+      buttons: ['Later', 'Restart'],
+      title: `${APP_NAME} has been updated`,
+      message: process.platform === 'win32' ? event.releaseNotes as string : event.releaseName,
+      detail: `Version ${event.version} has been downloaded. Would you like to restart the application to apply the new updates?`
+    };
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 1) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
