@@ -7,9 +7,6 @@ fileAssociations:
     name: PDF Document
     mimeType: application/pdf
     role: Editor
-publish:
-  - provider: github
-    protocol: https
 
 directories:
   output: dist
@@ -22,14 +19,21 @@ extraResources:
 
 win:
   target: nsis
-nsis:
-  allowToChangeInstallationDirectory: true
+  publish:
+    - provider: github
+      protocol: https
 
 mac:
   target: dmg
+  publish:
+    - provider: github
+      protocol: https
 
 linux:
   target: AppImage
   category: Office
+  publish:
+    - provider: github
+      protocol: https
 
 extends: null
