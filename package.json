@@ -23,7 +23,7 @@
     "@electron-toolkit/utils": "^2.0.1",
     "electron-context-menu": "^3.6.1",
     "electron-updater": "^6.1.7",
-    "express": "^4.18.2"
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
