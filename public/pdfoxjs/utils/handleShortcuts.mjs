@@ -320,5 +320,7 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     for (let i = 0; i < commandRepeat; ++i) {
       commandMap[command](settings ?? {});
     }
+
+    container.focus({ preventScroll: true });
   });
 };
