@@ -2,7 +2,7 @@
   "name": "pdfoxjs",
   "author": "Khiet Tam Nguyen",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Standalone desktop app for Mozilla's pdfjs with extendable vim keybindings",
   "main": "./out/main.js",
   "repository": {
