@@ -3,8 +3,10 @@ import path from 'path';
 import { AddressInfo } from 'net';
 import contextMenu from 'electron-context-menu';
 import { BrowserWindow, shell } from 'electron';
+import urlJoin from 'url-join';
 import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
 import createExpressApp, { Options } from './app';
+import { toHex } from './utils';
 
 export const exitHelp = (exitStatus: number = 1) => {
   console.log(`
@@ -41,7 +43,7 @@ export const createPdfPath = (filepath: string) => {
       process.exit(1);
     }
     const absoluteFilePath = path.resolve(filepath);
-    filepath = encodeURIComponent(`${PDF_FETCH_PATH}?filepath=${absoluteFilePath}`);
+    filepath = urlJoin(PDF_FETCH_PATH, toHex(absoluteFilePath));
   }
   return `/${viewerPath}?file=${filepath}`;
 };

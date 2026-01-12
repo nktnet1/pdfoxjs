@@ -7,6 +7,8 @@ import {
   USER_CONFIG_FILE_NAME,
   viewerPath,
 } from './config';
+import urlJoin from 'url-join';
+import { fromHex } from './utils';
 
 export interface Options {
   resourcesPath: string;
@@ -19,13 +21,13 @@ const createExpressApp = (options: Options) => {
     USER_CONFIG_DIRECTORY_NAME,
     USER_CONFIG_FILE_NAME
   );
-  console.log({ configPath });
+  console.log('Initialising server:', { configPath });
 
   const app = express();
   app.disable('x-powered-by');
   app.use(express.static(options.resourcesPath));
 
-  app.get('/config', (req: Request, res: Response) => {
+  app.get('/config', (_: Request, res: Response) => {
     res.sendFile(configPath, { dotfiles: 'allow' });
   });
 
@@ -40,9 +42,10 @@ const createExpressApp = (options: Options) => {
     );
   });
 
-  app.get(PDF_FETCH_PATH, (req: Request, res: Response) => {
-    const absoluteFilePath = decodeURIComponent(req.query.filepath as string);
-    res.sendFile(absoluteFilePath);
+  app.get(urlJoin(PDF_FETCH_PATH, ':filepath'), (req: Request, res: Response) => {
+    const filePath = path.resolve(fromHex(req.params.filepath as string));
+    console.log('Retrieving PDF:', { filePath });
+    res.sendFile(filePath);
   });
 
   return app;
