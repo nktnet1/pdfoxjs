@@ -17,8 +17,6 @@ See the latest release at
 | MacOS  | dmg  | pdfoxjs-X.X.X.dmg  |
 | Windows  | exe  | pdfoxjs-Setup-X.X.X.exe  |
 
-
-
 ## Features
 
 Please refer to the original documentation of [pdf.js](https://github.com/mozilla/pdf.js). There is also a demo for modern browsers released by Mozilla [here](https://mozilla.github.io/pdf.js/web/viewer.html). 
@@ -81,7 +79,6 @@ It is a merged PDF from the following sources:
 - Attachment: https://demos.devexpress.com/OfficeFileAPI/ASP/ContentManipulation/PdfFileAttachment.aspx
 
 By default, you can use the double quotation marks key (`"`, i.e. `SHIFT` + `'`) to load this document.
-
 
 ### Configuration
 
