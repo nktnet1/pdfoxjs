@@ -25,13 +25,16 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Install Node.js, NPM and Yarn
+      - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 20
+          node-version: 24
+      
+      - name: Enable pnpm via Corepack
+        run: corepack enable pnpm
 
       - name: Build/release
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: paneron/action-electron-builder@v1.8.1
         with:
           args: |
             --publish=onTag
@@ -39,6 +42,8 @@ jobs:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
+
+          package_manager: pnpm
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building

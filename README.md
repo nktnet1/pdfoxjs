@@ -108,28 +108,28 @@ On Windows, it will be
 ### Setup
 
 ```bash
-$ yarn install
+$ pnpm install
 ```
 
 ### Development
 
 ```bash
 # Transpile and run an electron app
-$ yarn start
+$ pnpm start
 
 # Simple express server on localhost
-$ yarn dev
+$ pnpm dev
 ```
 
 ### Build
 
 ```bash
 # For Windows
-$ yarn build:win
+$ pnpm build:win
 
 # For MacOS
-$ yarn build:mac
+$ pnpm build:mac
 
 # For Linux
-$ yarn build:linux
+$ pnpm build:linux
 ```
