@@ -1,7 +1,12 @@
 import path from 'path';
 import url from 'url';
 import express, { Request, Response } from 'express';
-import { PDF_FETCH_PATH, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME, viewerPath } from './config';
+import {
+  PDF_FETCH_PATH,
+  USER_CONFIG_DIRECTORY_NAME,
+  USER_CONFIG_FILE_NAME,
+  viewerPath,
+} from './config';
 
 export interface Options {
   resourcesPath: string;
@@ -9,21 +14,30 @@ export interface Options {
 }
 
 const createExpressApp = (options: Options) => {
+  const configPath = path.join(
+    options.userDataPath,
+    USER_CONFIG_DIRECTORY_NAME,
+    USER_CONFIG_FILE_NAME
+  );
+  console.log({ configPath });
+
   const app = express();
   app.disable('x-powered-by');
   app.use(express.static(options.resourcesPath));
 
   app.get('/config', (req: Request, res: Response) => {
-    res.sendFile(path.join(options.userDataPath, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME));
+    res.sendFile(configPath, { dotfiles: 'allow' });
   });
 
   app.get('/', (_: Request, res: Response) => {
-    res.redirect(url.format({
-      pathname: viewerPath,
-      query: {
-        file: '',
-      }
-    }));
+    res.redirect(
+      url.format({
+        pathname: viewerPath,
+        query: {
+          file: '',
+        },
+      })
+    );
   });
 
   app.get(PDF_FETCH_PATH, (req: Request, res: Response) => {
