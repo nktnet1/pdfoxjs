@@ -10,34 +10,36 @@
     "url": "https://github.com/nktnet1/pdfoxjs"
   },
   "scripts": {
-    "start": "yarn build && electron .",
+    "start": "pnpm build && electron .",
     "dev": "ts-node-dev -T dev/server",
     "lint": "eslint --fix './**/*.{js,ts,cjs,mjs}'",
     "build": "tsc",
-    "build:win": "yarn build && electron-builder --win",
-    "build:mac": "yarn build && electron-builder --mac",
-    "build:linux": "yarn build && electron-builder --linux",
-    "prepare": "husky install"
+    "build:win": "pnpm build && electron-builder --win",
+    "build:mac": "pnpm build && electron-builder --mac",
+    "build:linux": "pnpm build && electron-builder --linux",
+    "prepare": "husky"
   },
   "dependencies": {
-    "@electron-toolkit/utils": "^2.0.1",
-    "electron-context-menu": "^3.6.1",
-    "electron-updater": "^6.1.7",
-    "express": "^4.19.2"
+    "@electron-toolkit/utils": "^4.0.0",
+    "electron-context-menu": "^4.1.1",
+    "electron-updater": "^6.7.3",
+    "express": "^5.2.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.10.0",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
-    "electron": "^27.1.2",
-    "electron-builder": "^24.9.1",
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "22.7.7",
+    "@types/semver": "^7.7.1",
+    "@typescript-eslint/eslint-plugin": "^8.52.0",
+    "@typescript-eslint/parser": "^8.52.0",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.4.0",
     "eslint": "^8.54.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.2.2"
-  }
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.28.0"
 }

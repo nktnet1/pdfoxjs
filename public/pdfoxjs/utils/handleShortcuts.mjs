@@ -107,9 +107,11 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
   const toggleEditorMode = (mode) => {
     const NONE_MODE = globalThis.pdfjsLib.AnnotationEditorType.NONE;
     if (PDFViewerApplication.pdfViewer.annotationEditorMode >= NONE_MODE) {
-      PDFViewerApplication.pdfViewer.annotationEditorMode !== mode
-        ? PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode })
-        : closeAnnotationEditor();
+      if (PDFViewerApplication.pdfViewer.annotationEditorMode !== mode) {
+        PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', { mode });
+      } else {
+        closeAnnotationEditor();
+      }
     } else {
       addNotification('AnnotationEditor is not enabled. Please load a valid PDF document');
     }
@@ -280,7 +282,10 @@ export const handleShortcuts = (config, { toggleHelp, toggleToolbar, toggleSideb
     const inputKey = { key, ctrlKey, altKey };
 
     // Tracks only the last maxCommandkeysLength in the array
-    inputKeys.push(inputKey) > config.settings.maxCommandKeysLength && inputKeys.shift();
+    const newLen = inputKeys.push(inputKey);
+    if (newLen > config.settings.maxCommandKeysLength) {
+      inputKeys.shift();
+    }
 
     const prefix = numberBuffer.length > 0 ? NUMBER_PREFIX : '';
     const commandKey = getCommandKey(

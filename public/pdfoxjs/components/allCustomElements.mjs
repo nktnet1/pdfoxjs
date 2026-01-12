@@ -26,7 +26,9 @@ export const createAllCustomElements = ({ closeAnnotationEditor }) => {
   } else {
     setTimeout(() => {
     // In case the button loads before the PDF not hidden
-      PDFViewerApplication.url !== '' && hideFloatingDiv();
+      if (PDFViewerApplication.url !== '') {
+        hideFloatingDiv();
+      }
     }, 1000);
   }
 
@@ -35,7 +37,9 @@ export const createAllCustomElements = ({ closeAnnotationEditor }) => {
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      isOpen() && closePopup();
+      if (isOpen()) {
+        closePopup();
+      }
       closeAnnotationEditor();
       PDFViewerApplication.pdfViewer.focus();
     }
