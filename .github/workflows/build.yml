@@ -33,6 +33,9 @@ jobs:
       - name: Enable pnpm via Corepack
         run: corepack enable pnpm
 
+      - name: Install packages
+        run: pnpm install
+
       - name: Build/release
         uses: paneron/action-electron-builder@v1.8.1
         with:
