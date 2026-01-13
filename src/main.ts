@@ -21,6 +21,7 @@ interface WindowSettings {
 }
 
 let appUrl: string | null = null;
+let pendingPdfPaths: string[] = [];
 const setAppUrl = (newUrl: string) => (appUrl = newUrl);
 
 const fileArgumentIndex = is.dev ? 2 : 1;
@@ -102,6 +103,15 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
   return browserWindow;
 };
 
+app.on('open-file', (event, filePath) => {
+  event.preventDefault();
+  pendingPdfPaths.push(createPdfPath(filePath));
+  if (app.isReady()) {
+    createSecondaryWindows({ pdfPaths: pendingPdfPaths });
+    pendingPdfPaths = [];
+  }
+});
+
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('org.nktnet.pdfoxjs');
@@ -113,7 +123,10 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  const mainWindow = createMainWindow({ pdfPaths: pdfPathInputs });
+  const mainWindow = createMainWindow({
+    pdfPaths: [...pendingPdfPaths, ...pdfPathInputs]
+  });
+  pendingPdfPaths = [];
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
