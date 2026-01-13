@@ -4,7 +4,7 @@
 
 Cross-platform electron wrapper around Mozilla's [pdf.js](https://mozilla.github.io/pdf.js).
 
-Support features present in the [pdf.js v4.0.189](https://github.com/mozilla/pdf.js/releases/tag/v4.0.189) release.
+Support features present in the [pdf.js v5.4.530](https://github.com/mozilla/pdf.js/releases/tag/v5.4.530) release.
 
 ## Installation
 
