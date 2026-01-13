@@ -1,4 +1,4 @@
-# pdfoxjs 
+# pdfoxjs
 
 > View and edit PDF documents with customisable VIM keyboard shortcuts
 
@@ -19,7 +19,7 @@ See the latest release at
 
 ## Features
 
-Please refer to the original documentation of [pdf.js](https://github.com/mozilla/pdf.js). There is also a demo for modern browsers released by Mozilla [here](https://mozilla.github.io/pdf.js/web/viewer.html). 
+Please refer to the original documentation of [pdf.js](https://github.com/mozilla/pdf.js). There is also a demo for modern browsers released by Mozilla [here](https://mozilla.github.io/pdf.js/web/viewer.html).
 
 ![Tools View](public/help.png)
 

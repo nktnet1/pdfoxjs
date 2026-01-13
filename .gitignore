@@ -131,3 +131,5 @@ dist
 
 public/viewer/web/*.pdf
 public/userConfig
+
+.DS_Store

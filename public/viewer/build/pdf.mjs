@@ -26,7 +26,7 @@
  */
 /******/ // The require scope
 /******/ var __webpack_require__ = {};
-/******/ 
+/******/
 /************************************************************************/
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
@@ -39,12 +39,12 @@
 /******/ 		}
 /******/ 	};
 /******/ })();
-/******/ 
+/******/
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
 /******/ (() => {
 /******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ })();
-/******/ 
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 
@@ -1184,7 +1184,6 @@ class XfaLayer {
 
 ;// ./src/display/display_utils.js
 
-
 const SVG_NS = "http://www.w3.org/2000/svg";
 class PixelsPerInch {
   static CSS = 96.0;
@@ -2181,8 +2180,6 @@ class FloatingToolbar {
 }
 
 ;// ./src/display/editor/tools.js
-
-
 
 function bindEvents(obj, element, names) {
   for (const name of names) {
@@ -4940,12 +4937,6 @@ class TouchManager {
 
 ;// ./src/display/editor/editor.js
 
-
-
-
-
-
-
 class AnnotationEditor {
   #accessibilityData = null;
   #allResizerDivs = null;
@@ -6686,8 +6677,6 @@ class MurmurHash3_64 {
 
 ;// ./src/display/annotation_storage.js
 
-
-
 const SerializableEmpty = Object.freeze({
   map: null,
   hash: "",
@@ -6943,7 +6932,6 @@ class PrintAnnotationStorage extends AnnotationStorage {
 }
 
 ;// ./src/display/font_loader.js
-
 
 class FontLoader {
   #systemFonts = new Set();
@@ -8525,7 +8513,6 @@ class DOMCanvasFactory extends BaseCanvasFactory {
 
 ;// ./src/display/cmap_reader_factory.js
 
-
 class BaseCMapReaderFactory {
   constructor({
     baseUrl = null,
@@ -8563,7 +8550,6 @@ class DOMCMapReaderFactory extends BaseCMapReaderFactory {
 }
 
 ;// ./src/display/filter_factory.js
-
 
 class BaseFilterFactory {
   addFilter(maps) {
@@ -8900,7 +8886,6 @@ class DOMFilterFactory extends BaseFilterFactory {
 
 ;// ./src/display/standard_fontdata_factory.js
 
-
 class BaseStandardFontDataFactory {
   constructor({
     baseUrl = null
@@ -8934,7 +8919,6 @@ class DOMStandardFontDataFactory extends BaseStandardFontDataFactory {
 
 ;// ./src/display/wasm_factory.js
 
-
 class BaseWasmFactory {
   constructor({
     baseUrl = null
@@ -8967,11 +8951,6 @@ class DOMWasmFactory extends BaseWasmFactory {
 }
 
 ;// ./src/display/node_utils.js
-
-
-
-
-
 
 if (isNodeJS) {
   warn("Please use the `legacy` build in Node.js environments.");
@@ -9573,7 +9552,6 @@ const Dependencies = {
 };
 
 ;// ./src/display/pattern_helper.js
-
 
 const PathType = {
   FILL: "Fill",
@@ -10214,10 +10192,6 @@ function grayToRGBA(src, dest) {
 }
 
 ;// ./src/display/canvas.js
-
-
-
-
 
 const MIN_FONT_SIZE = 16;
 const MAX_FONT_SIZE = 100;
@@ -12382,7 +12356,6 @@ class Metadata {
 
 ;// ./src/display/optional_content_config.js
 
-
 const INTERNAL = Symbol("INTERNAL");
 class OptionalContentGroup {
   #isDisplay = false;
@@ -12644,7 +12617,6 @@ class OptionalContentConfig {
 }
 
 ;// ./src/display/transport_stream.js
-
 
 class PDFDataTransportStream {
   constructor(pdfDataRangeTransport, {
@@ -13044,8 +13016,6 @@ function getFilenameFromContentDispositionHeader(contentDisposition) {
 
 ;// ./src/display/network_utils.js
 
-
-
 function createHeaders(isHttp, httpHeaders) {
   const headers = new Headers();
   if (!isHttp || !httpHeaders || typeof httpHeaders !== "object") {
@@ -13116,7 +13086,6 @@ function validateResponseStatus(status) {
 }
 
 ;// ./src/display/fetch_stream.js
-
 
 function createFetchOptions(headers, withCredentials, abortController) {
   return {
@@ -13315,7 +13284,6 @@ class PDFFetchStreamRangeReader {
 }
 
 ;// ./src/display/network.js
-
 
 const OK_RESPONSE = 200;
 const PARTIAL_CONTENT_RESPONSE = 206;
@@ -13725,7 +13693,6 @@ class PDFNetworkStreamRangeRequestReader {
 
 ;// ./src/display/node_stream.js
 
-
 const urlRegex = /^[a-z][a-z0-9\-+.]+:/i;
 function parseUrlOrPath(sourceUrl) {
   if (urlRegex.test(sourceUrl)) {
@@ -14010,7 +13977,6 @@ class PDFObjects {
 }
 
 ;// ./src/display/text_layer.js
-
 
 const MAX_TEXT_DIVS_TO_RENDER = 100000;
 const DEFAULT_FONT_SIZE = 30;
@@ -14363,30 +14329,6 @@ class TextLayer {
 }
 
 ;// ./src/display/api.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const RENDERING_CANCELLED_TIMEOUT = 100;
 function getDocument(src = {}) {
@@ -16145,8 +16087,6 @@ const build = "50cc4adac";
 
 ;// ./src/display/editor/color_picker.js
 
-
-
 class ColorPicker {
   #button = null;
   #buttonSwatch = null;
@@ -16488,7 +16428,6 @@ const TimeFormats = (/* unused pure expression or super */ null && (["HH:MM", "h
 
 ;// ./src/display/svg_factory.js
 
-
 class BaseSVGFactory {
   create(width, height, skipDimensions = false) {
     if (width <= 0 || height <= 0) {
@@ -16521,10 +16460,6 @@ class DOMSVGFactory extends BaseSVGFactory {
 }
 
 ;// ./src/display/annotation_layer.js
-
-
-
-
 
 const annotation_layer_DEFAULT_FONT_SIZE = 9;
 const GetElementsByNameSet = new WeakSet();
@@ -19917,10 +19852,6 @@ class AnnotationLayer {
 
 ;// ./src/display/editor/freetext.js
 
-
-
-
-
 const EOL_PATTERN = /\r\n?|\n/g;
 class FreeTextEditor extends AnnotationEditor {
   #content = "";
@@ -20628,7 +20559,6 @@ class Outline {
 
 ;// ./src/display/editor/drawers/freedraw.js
 
-
 class FreeDrawOutliner {
   #box;
   #bottom = [];
@@ -20993,8 +20923,6 @@ class FreeDrawOutline extends Outline {
 
 ;// ./src/display/editor/drawers/highlight.js
 
-
-
 class HighlightOutliner {
   #box;
   #firstPoint;
@@ -21255,12 +21183,6 @@ class FreeHighlightOutline extends FreeDrawOutline {
 }
 
 ;// ./src/display/editor/highlight.js
-
-
-
-
-
-
 
 class HighlightEditor extends AnnotationEditor {
   #anchorNode = null;
@@ -22126,9 +22048,6 @@ class HighlightEditor extends AnnotationEditor {
 
 ;// ./src/display/editor/draw.js
 
-
-
-
 class DrawingOptions {
   #svgProperties = Object.create(null);
   updateProperty(name, value) {
@@ -22759,7 +22678,6 @@ class DrawingEditor extends AnnotationEditor {
 }
 
 ;// ./src/display/editor/drawers/inkdraw.js
-
 
 class InkDrawOutliner {
   #last = new Float64Array(6);
@@ -23421,11 +23339,6 @@ class InkDrawOutline extends Outline {
 
 ;// ./src/display/editor/ink.js
 
-
-
-
-
-
 class InkDrawingOptions extends DrawingOptions {
   constructor(viewerParameters) {
     super();
@@ -23666,9 +23579,6 @@ class ContourDrawOutline extends InkDrawOutline {
 }
 
 ;// ./src/display/editor/drawers/signaturedraw.js
-
-
-
 
 const BASE_HEADER_LENGTH = 8;
 const POINTS_PROPERTIES_NUMBER = 3;
@@ -24285,12 +24195,6 @@ class SignatureExtractor {
 
 ;// ./src/display/editor/signature.js
 
-
-
-
-
-
-
 class SignatureOptions extends DrawingOptions {
   constructor() {
     super();
@@ -24651,9 +24555,6 @@ class SignatureEditor extends DrawingEditor {
 }
 
 ;// ./src/display/editor/stamp.js
-
-
-
 
 class StampEditor extends AnnotationEditor {
   #bitmap = null;
@@ -25345,13 +25246,6 @@ class StampEditor extends AnnotationEditor {
 }
 
 ;// ./src/display/editor/annotation_editor_layer.js
-
-
-
-
-
-
-
 
 class AnnotationEditorLayer {
   #accessibilityManager;
@@ -26104,7 +25998,6 @@ class AnnotationEditorLayer {
 
 ;// ./src/display/draw_layer.js
 
-
 class DrawLayer {
   #parent = null;
   #mapping = new Map();
@@ -26306,21 +26199,6 @@ class DrawLayer {
 }
 
 ;// ./src/pdf.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {
   globalThis._pdfjsTestingUtils = {

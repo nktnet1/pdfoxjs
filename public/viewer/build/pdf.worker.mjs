@@ -26,7 +26,7 @@
  */
 /******/ // The require scope
 /******/ var __webpack_require__ = {};
-/******/ 
+/******/
 /************************************************************************/
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
@@ -39,12 +39,12 @@
 /******/ 		}
 /******/ 	};
 /******/ })();
-/******/ 
+/******/
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
 /******/ (() => {
 /******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ })();
-/******/ 
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 
@@ -1325,8 +1325,6 @@ class BaseStream {
 
 ;// ./src/core/core_utils.js
 
-
-
 const PDF_VERSION_REGEXP = /^[1-9]\.\d$/;
 const MAX_INT_32 = 2 ** 31 - 1;
 const MIN_INT_32 = -(2 ** 31);
@@ -2033,7 +2031,6 @@ async function __wbg_init(module_or_path) {
 /* harmony default export */ const qcms = ((/* unused pure expression or super */ null && (__wbg_init)));
 ;// ./src/core/colorspace.js
 
-
 function resizeRgbImage(src, dest, w1, h1, w2, h2, alpha01) {
   const COMPONENTS = 3;
   alpha01 = alpha01 !== 1 ? 0 : alpha01;
@@ -2721,9 +2718,6 @@ class LabCS extends ColorSpace {
 
 ;// ./src/core/icc_colorspace.js
 
-
-
-
 function fetchSync(url) {
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, false);
@@ -2857,7 +2851,6 @@ class CmykICCBasedCS extends IccColorSpace {
 
 ;// ./src/core/stream.js
 
-
 class Stream extends BaseStream {
   constructor(arrayBuffer, start, length, dict) {
     super();
@@ -2927,8 +2920,6 @@ class NullStream extends Stream {
 }
 
 ;// ./src/core/chunked_stream.js
-
-
 
 class ChunkedStream extends Stream {
   constructor(length, chunkSize, manager) {
@@ -3461,8 +3452,6 @@ function grayToRGBA(src, dest) {
 
 ;// ./src/core/image_resizer.js
 
-
-
 const MIN_IMAGE_DIM = 2048;
 const MAX_IMAGE_DIM = 65537;
 const MAX_ERROR = 128;
@@ -3834,7 +3823,6 @@ class ImageResizer {
 
 ;// ./src/core/decode_stream.js
 
-
 const emptyBuffer = new Uint8Array(0);
 class DecodeStream extends BaseStream {
   constructor(maybeMinBufferLength) {
@@ -3985,10 +3973,6 @@ class StreamsSequenceStream extends DecodeStream {
 }
 
 ;// ./src/core/colorspace_utils.js
-
-
-
-
 
 class ColorSpaceUtils {
   static parse({
@@ -4220,10 +4204,6 @@ class ColorSpaceUtils {
 }
 
 ;// ./src/core/jpg.js
-
-
-
-
 
 class JpegError extends BaseException {
   constructor(msg) {
@@ -5335,9 +5315,6 @@ class JpegImage {
 
 ;// ./src/core/jpeg_stream.js
 
-
-
-
 class JpegStream extends DecodeStream {
   static #isImageDecoderSupported = FeatureTest.isImageDecoderSupported;
   constructor(stream, maybeLength, params) {
@@ -6004,9 +5981,6 @@ async function OpenJPEG(moduleArg = {}) {
 }
 /* harmony default export */ const openjpeg = (OpenJPEG);
 ;// ./src/core/jpx.js
-
-
-
 
 class JpxError extends BaseException {
   constructor(msg) {
@@ -7009,7 +6983,6 @@ class BinaryCMapReader {
 
 ;// ./src/core/ascii_85_stream.js
 
-
 class Ascii85Stream extends DecodeStream {
   constructor(str, maybeLength) {
     if (maybeLength) {
@@ -7637,8 +7610,6 @@ class CCITTFaxDecoder {
 
 ;// ./src/core/ccitt_stream.js
 
-
-
 class CCITTFaxStream extends DecodeStream {
   constructor(str, maybeLength, params) {
     super(maybeLength);
@@ -7676,8 +7647,6 @@ class CCITTFaxStream extends DecodeStream {
 }
 
 ;// ./src/core/flate_stream.js
-
-
 
 const codeLenCodeMap = new Int32Array([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
 const lengthDecode = new Int32Array([0x00003, 0x00004, 0x00005, 0x00006, 0x00007, 0x00008, 0x00009, 0x0000a, 0x1000b, 0x1000d, 0x1000f, 0x10011, 0x20013, 0x20017, 0x2001b, 0x2001f, 0x30023, 0x3002b, 0x30033, 0x3003b, 0x40043, 0x40053, 0x40063, 0x40073, 0x50083, 0x500a3, 0x500c3, 0x500e3, 0x00102, 0x00102, 0x00102]);
@@ -8300,9 +8269,6 @@ class ArithmeticDecoder {
 }
 
 ;// ./src/core/jbig2.js
-
-
-
 
 class Jbig2Error extends BaseException {
   constructor(msg) {
@@ -10041,10 +10007,6 @@ class Jbig2Image {
 
 ;// ./src/core/jbig2_stream.js
 
-
-
-
-
 class Jbig2Stream extends DecodeStream {
   constructor(stream, maybeLength, params) {
     super(maybeLength);
@@ -10099,8 +10061,6 @@ class Jbig2Stream extends DecodeStream {
 }
 
 ;// ./src/core/jpx_stream.js
-
-
 
 class JpxStream extends DecodeStream {
   constructor(stream, maybeLength, params) {
@@ -10253,8 +10213,6 @@ class LZWStream extends DecodeStream {
 }
 
 ;// ./src/core/predictor_stream.js
-
-
 
 class PredictorStream extends DecodeStream {
   constructor(str, maybeLength, params) {
@@ -10475,19 +10433,6 @@ class RunLengthStream extends DecodeStream {
 }
 
 ;// ./src/core/parser.js
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const MAX_LENGTH_TO_CACHE = 1000;
 function getInlineImageCacheKey(bytes) {
@@ -11543,12 +11488,6 @@ class Linearization {
 }
 
 ;// ./src/core/cmap.js
-
-
-
-
-
-
 
 const BUILT_IN_CMAPS = ["Adobe-GB1-UCS2", "Adobe-CNS1-UCS2", "Adobe-Japan1-UCS2", "Adobe-Korea1-UCS2", "78-EUC-H", "78-EUC-V", "78-H", "78-RKSJ-H", "78-RKSJ-V", "78-V", "78ms-RKSJ-H", "78ms-RKSJ-V", "83pv-RKSJ-H", "90ms-RKSJ-H", "90ms-RKSJ-V", "90msp-RKSJ-H", "90msp-RKSJ-V", "90pv-RKSJ-H", "90pv-RKSJ-V", "Add-H", "Add-RKSJ-H", "Add-RKSJ-V", "Add-V", "Adobe-CNS1-0", "Adobe-CNS1-1", "Adobe-CNS1-2", "Adobe-CNS1-3", "Adobe-CNS1-4", "Adobe-CNS1-5", "Adobe-CNS1-6", "Adobe-GB1-0", "Adobe-GB1-1", "Adobe-GB1-2", "Adobe-GB1-3", "Adobe-GB1-4", "Adobe-GB1-5", "Adobe-Japan1-0", "Adobe-Japan1-1", "Adobe-Japan1-2", "Adobe-Japan1-3", "Adobe-Japan1-4", "Adobe-Japan1-5", "Adobe-Japan1-6", "Adobe-Korea1-0", "Adobe-Korea1-1", "Adobe-Korea1-2", "B5-H", "B5-V", "B5pc-H", "B5pc-V", "CNS-EUC-H", "CNS-EUC-V", "CNS1-H", "CNS1-V", "CNS2-H", "CNS2-V", "ETHK-B5-H", "ETHK-B5-V", "ETen-B5-H", "ETen-B5-V", "ETenms-B5-H", "ETenms-B5-V", "EUC-H", "EUC-V", "Ext-H", "Ext-RKSJ-H", "Ext-RKSJ-V", "Ext-V", "GB-EUC-H", "GB-EUC-V", "GB-H", "GB-V", "GBK-EUC-H", "GBK-EUC-V", "GBK2K-H", "GBK2K-V", "GBKp-EUC-H", "GBKp-EUC-V", "GBT-EUC-H", "GBT-EUC-V", "GBT-H", "GBT-V", "GBTpc-EUC-H", "GBTpc-EUC-V", "GBpc-EUC-H", "GBpc-EUC-V", "H", "HKdla-B5-H", "HKdla-B5-V", "HKdlb-B5-H", "HKdlb-B5-V", "HKgccs-B5-H", "HKgccs-B5-V", "HKm314-B5-H", "HKm314-B5-V", "HKm471-B5-H", "HKm471-B5-V", "HKscs-B5-H", "HKscs-B5-V", "Hankaku", "Hiragana", "KSC-EUC-H", "KSC-EUC-V", "KSC-H", "KSC-Johab-H", "KSC-Johab-V", "KSC-V", "KSCms-UHC-H", "KSCms-UHC-HW-H", "KSCms-UHC-HW-V", "KSCms-UHC-V", "KSCpc-EUC-H", "KSCpc-EUC-V", "Katakana", "NWP-H", "NWP-V", "RKSJ-H", "RKSJ-V", "Roman", "UniCNS-UCS2-H", "UniCNS-UCS2-V", "UniCNS-UTF16-H", "UniCNS-UTF16-V", "UniCNS-UTF32-H", "UniCNS-UTF32-V", "UniCNS-UTF8-H", "UniCNS-UTF8-V", "UniGB-UCS2-H", "UniGB-UCS2-V", "UniGB-UTF16-H", "UniGB-UTF16-V", "UniGB-UTF32-H", "UniGB-UTF32-V", "UniGB-UTF8-H", "UniGB-UTF8-V", "UniJIS-UCS2-H", "UniJIS-UCS2-HW-H", "UniJIS-UCS2-HW-V", "UniJIS-UCS2-V", "UniJIS-UTF16-H", "UniJIS-UTF16-V", "UniJIS-UTF32-H", "UniJIS-UTF32-V", "UniJIS-UTF8-H", "UniJIS-UTF8-V", "UniJIS2004-UTF16-H", "UniJIS2004-UTF16-V", "UniJIS2004-UTF32-H", "UniJIS2004-UTF32-V", "UniJIS2004-UTF8-H", "UniJIS2004-UTF8-V", "UniJISPro-UCS2-HW-V", "UniJISPro-UCS2-V", "UniJISPro-UTF8-V", "UniJISX0213-UTF32-H", "UniJISX0213-UTF32-V", "UniJISX02132004-UTF32-H", "UniJISX02132004-UTF32-V", "UniKS-UCS2-H", "UniKS-UCS2-V", "UniKS-UTF16-H", "UniKS-UTF16-V", "UniKS-UTF32-H", "UniKS-UTF32-V", "UniKS-UTF8-H", "UniKS-UTF8-V", "V", "WP-Symbol"];
 const MAX_MAP_RANGE = 2 ** 24 - 1;
@@ -16661,10 +16600,6 @@ function clearUnicodeCaches() {
 
 ;// ./src/core/fonts_utils.js
 
-
-
-
-
 const SEAC_ANALYSIS_ENABLED = true;
 const FontFlags = {
   FixedPitch: 1,
@@ -16918,9 +16853,6 @@ const ExpertCharset = [".notdef", "space", "exclamsmall", "Hungarumlautsmall", "
 const ExpertSubsetCharset = [".notdef", "space", "dollaroldstyle", "dollarsuperior", "parenleftsuperior", "parenrightsuperior", "twodotenleader", "onedotenleader", "comma", "hyphen", "period", "fraction", "zerooldstyle", "oneoldstyle", "twooldstyle", "threeoldstyle", "fouroldstyle", "fiveoldstyle", "sixoldstyle", "sevenoldstyle", "eightoldstyle", "nineoldstyle", "colon", "semicolon", "commasuperior", "threequartersemdash", "periodsuperior", "asuperior", "bsuperior", "centsuperior", "dsuperior", "esuperior", "isuperior", "lsuperior", "msuperior", "nsuperior", "osuperior", "rsuperior", "ssuperior", "tsuperior", "ff", "fi", "fl", "ffi", "ffl", "parenleftinferior", "parenrightinferior", "hyphensuperior", "colonmonetary", "onefitted", "rupiah", "centoldstyle", "figuredash", "hypheninferior", "onequarter", "onehalf", "threequarters", "oneeighth", "threeeighths", "fiveeighths", "seveneighths", "onethird", "twothirds", "zerosuperior", "onesuperior", "twosuperior", "threesuperior", "foursuperior", "fivesuperior", "sixsuperior", "sevensuperior", "eightsuperior", "ninesuperior", "zeroinferior", "oneinferior", "twoinferior", "threeinferior", "fourinferior", "fiveinferior", "sixinferior", "seveninferior", "eightinferior", "nineinferior", "centinferior", "dollarinferior", "periodinferior", "commainferior"];
 
 ;// ./src/core/cff_parser.js
-
-
-
 
 const MAX_SUBR_NESTING = 10;
 const CFFStandardStrings = [".notdef", "space", "exclam", "quotedbl", "numbersign", "dollar", "percent", "ampersand", "quoteright", "parenleft", "parenright", "asterisk", "plus", "comma", "hyphen", "period", "slash", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "colon", "semicolon", "less", "equal", "greater", "question", "at", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "bracketleft", "backslash", "bracketright", "asciicircum", "underscore", "quoteleft", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "braceleft", "bar", "braceright", "asciitilde", "exclamdown", "cent", "sterling", "fraction", "yen", "florin", "section", "currency", "quotesingle", "quotedblleft", "guillemotleft", "guilsinglleft", "guilsinglright", "fi", "fl", "endash", "dagger", "daggerdbl", "periodcentered", "paragraph", "bullet", "quotesinglbase", "quotedblbase", "quotedblright", "guillemotright", "ellipsis", "perthousand", "questiondown", "grave", "acute", "circumflex", "tilde", "macron", "breve", "dotaccent", "dieresis", "ring", "cedilla", "hungarumlaut", "ogonek", "caron", "emdash", "AE", "ordfeminine", "Lslash", "Oslash", "OE", "ordmasculine", "ae", "dotlessi", "lslash", "oslash", "oe", "germandbls", "onesuperior", "logicalnot", "mu", "trademark", "Eth", "onehalf", "plusminus", "Thorn", "onequarter", "divide", "brokenbar", "degree", "thorn", "threequarters", "twosuperior", "registered", "minus", "eth", "multiply", "threesuperior", "copyright", "Aacute", "Acircumflex", "Adieresis", "Agrave", "Aring", "Atilde", "Ccedilla", "Eacute", "Ecircumflex", "Edieresis", "Egrave", "Iacute", "Icircumflex", "Idieresis", "Igrave", "Ntilde", "Oacute", "Ocircumflex", "Odieresis", "Ograve", "Otilde", "Scaron", "Uacute", "Ucircumflex", "Udieresis", "Ugrave", "Yacute", "Ydieresis", "Zcaron", "aacute", "acircumflex", "adieresis", "agrave", "aring", "atilde", "ccedilla", "eacute", "ecircumflex", "edieresis", "egrave", "iacute", "icircumflex", "idieresis", "igrave", "ntilde", "oacute", "ocircumflex", "odieresis", "ograve", "otilde", "scaron", "uacute", "ucircumflex", "udieresis", "ugrave", "yacute", "ydieresis", "zcaron", "exclamsmall", "Hungarumlautsmall", "dollaroldstyle", "dollarsuperior", "ampersandsmall", "Acutesmall", "parenleftsuperior", "parenrightsuperior", "twodotenleader", "onedotenleader", "zerooldstyle", "oneoldstyle", "twooldstyle", "threeoldstyle", "fouroldstyle", "fiveoldstyle", "sixoldstyle", "sevenoldstyle", "eightoldstyle", "nineoldstyle", "commasuperior", "threequartersemdash", "periodsuperior", "questionsmall", "asuperior", "bsuperior", "centsuperior", "dsuperior", "esuperior", "isuperior", "lsuperior", "msuperior", "nsuperior", "osuperior", "rsuperior", "ssuperior", "tsuperior", "ff", "ffi", "ffl", "parenleftinferior", "parenrightinferior", "Circumflexsmall", "hyphensuperior", "Gravesmall", "Asmall", "Bsmall", "Csmall", "Dsmall", "Esmall", "Fsmall", "Gsmall", "Hsmall", "Ismall", "Jsmall", "Ksmall", "Lsmall", "Msmall", "Nsmall", "Osmall", "Psmall", "Qsmall", "Rsmall", "Ssmall", "Tsmall", "Usmall", "Vsmall", "Wsmall", "Xsmall", "Ysmall", "Zsmall", "colonmonetary", "onefitted", "rupiah", "Tildesmall", "exclamdownsmall", "centoldstyle", "Lslashsmall", "Scaronsmall", "Zcaronsmall", "Dieresissmall", "Brevesmall", "Caronsmall", "Dotaccentsmall", "Macronsmall", "figuredash", "hypheninferior", "Ogoneksmall", "Ringsmall", "Cedillasmall", "questiondownsmall", "oneeighth", "threeeighths", "fiveeighths", "seveneighths", "onethird", "twothirds", "zerosuperior", "foursuperior", "fivesuperior", "sixsuperior", "sevensuperior", "eightsuperior", "ninesuperior", "zeroinferior", "oneinferior", "twoinferior", "threeinferior", "fourinferior", "fiveinferior", "sixinferior", "seveninferior", "eightinferior", "nineinferior", "centinferior", "dollarinferior", "periodinferior", "commainferior", "Agravesmall", "Aacutesmall", "Acircumflexsmall", "Atildesmall", "Adieresissmall", "Aringsmall", "AEsmall", "Ccedillasmall", "Egravesmall", "Eacutesmall", "Ecircumflexsmall", "Edieresissmall", "Igravesmall", "Iacutesmall", "Icircumflexsmall", "Idieresissmall", "Ethsmall", "Ntildesmall", "Ogravesmall", "Oacutesmall", "Ocircumflexsmall", "Otildesmall", "Odieresissmall", "OEsmall", "Oslashsmall", "Ugravesmall", "Uacutesmall", "Ucircumflexsmall", "Udieresissmall", "Yacutesmall", "Thornsmall", "Ydieresissmall", "001.000", "001.001", "001.002", "001.003", "Black", "Bold", "Book", "Light", "Medium", "Regular", "Roman", "Semibold"];
@@ -18379,7 +18311,6 @@ class CFFCompiler {
 
 ;// ./src/core/standard_fonts.js
 
-
 const getStdFontMap = getLookupTableFactory(function (t) {
   t["Times-Roman"] = "Times-Roman";
   t.Helvetica = "Helvetica";
@@ -19368,8 +19299,6 @@ class IdentityToUnicodeMap {
 
 ;// ./src/core/cff_font.js
 
-
-
 class CFFFont {
   constructor(file, properties) {
     this.properties = properties;
@@ -19469,11 +19398,6 @@ class CFFFont {
 }
 
 ;// ./src/core/font_renderer.js
-
-
-
-
-
 
 function getFloat214(data, offset) {
   return readInt16(data, offset) / 16384;
@@ -23820,7 +23744,6 @@ class CompositeGlyph {
 
 ;// ./src/core/opentype_file_builder.js
 
-
 function writeInt16(dest, offset, num) {
   dest[offset] = num >> 8 & 0xff;
   dest[offset + 1] = num & 0xff;
@@ -23925,9 +23848,6 @@ class OpenTypeFileBuilder {
 }
 
 ;// ./src/core/type1_parser.js
-
-
-
 
 const HINTING_ENABLED = false;
 const COMMAND_MAP = {
@@ -24491,11 +24411,6 @@ class Type1Parser {
 
 ;// ./src/core/type1_font.js
 
-
-
-
-
-
 function findBlock(streamBytes, signature, startIndex) {
   const streamBytesLength = streamBytes.length;
   const signatureLength = signature.length;
@@ -24766,21 +24681,6 @@ class Type1Font {
 }
 
 ;// ./src/core/fonts.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const PRIVATE_USE_AREAS = [[0xe000, 0xf8ff], [0x100000, 0x10fffd]];
 const PDF_GLYPH_SPACE_UNITS = 1000;
@@ -27939,9 +27839,6 @@ class FontPathInfo {
 
 ;// ./src/core/pattern.js
 
-
-
-
 const ShadingType = {
   FUNCTION_BASED: 1,
   AXIAL: 2,
@@ -28865,13 +28762,6 @@ const SegoeuiRegularMetrics = {
 
 ;// ./src/core/xfa_fonts.js
 
-
-
-
-
-
-
-
 const getXFAFontMap = getLookupTableFactory(function (t) {
   t["MyriadPro-Regular"] = t["PdfJS-Fallback-Regular"] = {
     name: "LiberationSans-Regular",
@@ -29063,8 +28953,6 @@ function getXfaFontDict(name) {
 
 ;// ./src/core/ps_parser.js
 
-
-
 class PostScriptParser {
   constructor(lexer) {
     this.lexer = lexer;
@@ -29251,7 +29139,6 @@ class PostScriptLexer {
 }
 
 ;// ./src/core/image_utils.js
-
 
 class BaseLocalCache {
   constructor(options) {
@@ -29499,11 +29386,6 @@ class GlobalImageCache {
 }
 
 ;// ./src/core/function.js
-
-
-
-
-
 
 class PDFFunctionFactory {
   constructor({
@@ -30667,8 +30549,6 @@ function bidi(str, startLevel = -1, vertical = false) {
 
 ;// ./src/core/font_substitutions.js
 
-
-
 const NORMAL = {
   style: "normal",
   weight: "normal"
@@ -31050,15 +30930,6 @@ class MurmurHash3_64 {
 }
 
 ;// ./src/core/image.js
-
-
-
-
-
-
-
-
-
 
 function resizeImageMask(src, bpc, w1, h1, w2, h2) {
   const length = w2 * h2;
@@ -31847,32 +31718,6 @@ class PDFImage {
 }
 
 ;// ./src/core/evaluator.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const DefaultPartialEvaluatorOptions = Object.freeze({
   maxImageSize: -1,
@@ -36006,13 +35851,6 @@ class EvaluatorPreprocessor {
 
 ;// ./src/core/default_appearance.js
 
-
-
-
-
-
-
-
 class DefaultAppearanceEvaluator extends EvaluatorPreprocessor {
   constructor(str) {
     super(new StringStream(str));
@@ -36458,7 +36296,6 @@ const TimeFormats = ["HH:MM", "h:MM tt", "HH:MM:ss", "h:MM:ss tt"];
 
 ;// ./src/core/name_number_tree.js
 
-
 class NameOrNumberTree {
   constructor(root, xref, type) {
     this.root = root;
@@ -36575,9 +36412,6 @@ class NumberTree extends NameOrNumberTree {
 
 ;// ./src/core/cleanup_helper.js
 
-
-
-
 function clearGlobalCaches() {
   clearPatternCaches();
   clearPrimitiveCaches();
@@ -36586,8 +36420,6 @@ function clearGlobalCaches() {
 }
 
 ;// ./src/core/file_spec.js
-
-
 
 function pickPlatformItem(dict) {
   if (!(dict instanceof Dict)) {
@@ -37190,10 +37022,6 @@ class MetadataParser {
 }
 
 ;// ./src/core/struct_tree.js
-
-
-
-
 
 const MAX_DEPTH = 40;
 const StructElementType = {
@@ -38040,16 +37868,6 @@ class StructTreePage {
 }
 
 ;// ./src/core/catalog.js
-
-
-
-
-
-
-
-
-
-
 
 const isRef = v => v instanceof Ref;
 const isValidExplicitDest = _isValidExplicitDest.bind(null, isRef, isName);
@@ -39447,9 +39265,6 @@ class Catalog {
 
 ;// ./src/core/object_loader.js
 
-
-
-
 function mayHaveChildren(value) {
   return value instanceof Ref || value instanceof Dict || value instanceof BaseStream || Array.isArray(value);
 }
@@ -39888,8 +39703,6 @@ class HTMLResult {
 
 ;// ./src/core/xfa/fonts.js
 
-
-
 class FontFinder {
   constructor(pdfFonts) {
     this.fonts = new Map();
@@ -40251,7 +40064,6 @@ class TextMeasure {
 
 ;// ./src/core/xfa/som.js
 
-
 const namePattern = /^[^.[]+/;
 const indexPattern = /^[^\]]+/;
 const operators = {
@@ -40483,11 +40295,6 @@ function createDataNode(root, container, expr) {
 }
 
 ;// ./src/core/xfa/xfa_object.js
-
-
-
-
-
 
 const _applyPrototype = Symbol();
 const _attributes = Symbol();
@@ -41291,11 +41098,6 @@ class Option10 extends IntegerObject {
 
 ;// ./src/core/xfa/html_utils.js
 
-
-
-
-
-
 function measureToString(m) {
   if (typeof m === "string") {
     return "0px";
@@ -41795,8 +41597,6 @@ function fixURL(str) {
 
 ;// ./src/core/xfa/layout.js
 
-
-
 function createLine(node, children) {
   return {
     name: "div",
@@ -42063,15 +41863,6 @@ function checkDimensions(node, space) {
 }
 
 ;// ./src/core/xfa/template.js
-
-
-
-
-
-
-
-
-
 
 const TEMPLATE_NS_ID = NamespaceIds.template.id;
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -46917,11 +46708,6 @@ class TemplateNamespace {
 
 ;// ./src/core/xfa/bind.js
 
-
-
-
-
-
 const bind_NS_DATASETS = NamespaceIds.datasets.id;
 function createText(content) {
   const node = new Text({});
@@ -47386,10 +47172,6 @@ class DataHandler {
 }
 
 ;// ./src/core/xfa/config.js
-
-
-
-
 
 const CONFIG_NS_ID = NamespaceIds.config.id;
 class Acrobat extends XFAObject {
@@ -48814,7 +48596,6 @@ class ConfigNamespace {
 
 ;// ./src/core/xfa/connection_set.js
 
-
 const CONNECTION_SET_NS_ID = NamespaceIds.connectionSet.id;
 class ConnectionSet extends XFAObject {
   constructor(attributes) {
@@ -48975,8 +48756,6 @@ class ConnectionSetNamespace {
 
 ;// ./src/core/xfa/datasets.js
 
-
-
 const DATASETS_NS_ID = NamespaceIds.datasets.id;
 class datasets_Data extends XmlObject {
   constructor(attributes) {
@@ -49016,8 +48795,6 @@ class DatasetsNamespace {
 }
 
 ;// ./src/core/xfa/locale_set.js
-
-
 
 const LOCALE_SET_NS_ID = NamespaceIds.localeSet.id;
 class CalendarSymbols extends XFAObject {
@@ -49265,7 +49042,6 @@ class LocaleSetNamespace {
 
 ;// ./src/core/xfa/signature.js
 
-
 const SIGNATURE_NS_ID = NamespaceIds.signature.id;
 class signature_Signature extends XFAObject {
   constructor(attributes) {
@@ -49286,7 +49062,6 @@ class SignatureNamespace {
 
 ;// ./src/core/xfa/stylesheet.js
 
-
 const STYLESHEET_NS_ID = NamespaceIds.stylesheet.id;
 class Stylesheet extends XFAObject {
   constructor(attributes) {
@@ -49306,8 +49081,6 @@ class StylesheetNamespace {
 }
 
 ;// ./src/core/xfa/xdp.js
-
-
 
 const XDP_NS_ID = NamespaceIds.xdp.id;
 class xdp_Xdp extends XFAObject {
@@ -49340,10 +49113,6 @@ class XdpNamespace {
 }
 
 ;// ./src/core/xfa/xhtml.js
-
-
-
-
 
 const XHTML_NS_ID = NamespaceIds.xhtml.id;
 const $richText = Symbol();
@@ -49740,14 +49509,6 @@ class XhtmlNamespace {
 
 ;// ./src/core/xfa/setup.js
 
-
-
-
-
-
-
-
-
 const NamespaceSetUp = {
   config: ConfigNamespace,
   connection: ConnectionSetNamespace,
@@ -49762,7 +49523,6 @@ const NamespaceSetUp = {
 
 ;// ./src/core/xfa/unknown.js
 
-
 class UnknownNamespace {
   constructor(nsId) {
     this.namespaceId = nsId;
@@ -49773,12 +49533,6 @@ class UnknownNamespace {
 }
 
 ;// ./src/core/xfa/builder.js
-
-
-
-
-
-
 
 class Root extends XFAObject {
   constructor(ids) {
@@ -49942,9 +49696,6 @@ class Builder {
 
 ;// ./src/core/xfa/parser.js
 
-
-
-
 class XFAParser extends XMLParserBase {
   constructor(rootNameSpace = null, richText = false) {
     super();
@@ -50068,13 +49819,6 @@ class XFAParser extends XMLParserBase {
 }
 
 ;// ./src/core/xfa/factory.js
-
-
-
-
-
-
-
 
 class XFAFactory {
   constructor(data) {
@@ -50209,20 +49953,6 @@ class XFAFactory {
 }
 
 ;// ./src/core/annotation.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class AnnotationFactory {
   static createGlobals(pdfManager) {
@@ -53900,8 +53630,6 @@ function calculateMD5(data, offset, length) {
 
 ;// ./src/core/dataset_reader.js
 
-
-
 function decodeString(str) {
   try {
     return stringToUTF8String(str);
@@ -54523,11 +54251,6 @@ class DecryptStream extends DecodeStream {
 }
 
 ;// ./src/core/crypto.js
-
-
-
-
-
 
 class ARCFourCipher {
   constructor(key) {
@@ -55303,11 +55026,6 @@ class CipherTransformFactory {
 
 ;// ./src/core/xref.js
 
-
-
-
-
-
 class XRef {
   constructor(stream, pdfManager) {
     this.stream = stream;
@@ -56047,25 +55765,6 @@ class XRef {
 }
 
 ;// ./src/core/document.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const LETTER_SIZE_MEDIABOX = [0, 0, 612, 792];
 class Page {
@@ -57459,15 +57158,6 @@ class PDFDocument {
 
 ;// ./src/core/pdf_manager.js
 
-
-
-
-
-
-
-
-
-
 function parseDocBaseUrl(url) {
   if (url) {
     const absoluteUrl = createValidAbsoluteUrl(url);
@@ -58020,12 +57710,6 @@ class MessageHandler {
 
 ;// ./src/core/writer.js
 
-
-
-
-
-
-
 async function writeObject(ref, obj, buffer, {
   encrypt = null,
   encryptRef = null
@@ -58430,12 +58114,6 @@ async function incrementalUpdate({
 }
 
 ;// ./src/core/editor/pdf_editor.js
-
-
-
-
-
-
 
 const MAX_LEAVES_PER_PAGES_NODE = 16;
 const MAX_IN_NAME_TREE_NODE = 64;
@@ -59841,16 +59519,6 @@ class PDFWorkerStreamRangeReader {
 }
 
 ;// ./src/core/worker.js
-
-
-
-
-
-
-
-
-
-
 
 class WorkerTask {
   constructor(name) {

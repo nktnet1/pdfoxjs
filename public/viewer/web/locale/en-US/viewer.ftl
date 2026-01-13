@@ -619,7 +619,6 @@ pdfjs-editor-add-signature-description-input =
     .title = Description (alt text)
 pdfjs-editor-add-signature-description-default-when-drawing = Signature
 
-
 pdfjs-editor-add-signature-clear-button-label = Clear signature
 pdfjs-editor-add-signature-clear-button =
     .title = Clear signature

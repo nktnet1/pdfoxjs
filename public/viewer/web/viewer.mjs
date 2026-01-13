@@ -26,7 +26,7 @@
  */
 /******/ // The require scope
 /******/ var __webpack_require__ = {};
-/******/ 
+/******/
 /************************************************************************/
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
@@ -39,12 +39,12 @@
 /******/ 		}
 /******/ 	};
 /******/ })();
-/******/ 
+/******/
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
 /******/ (() => {
 /******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ })();
-/******/ 
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 
@@ -1052,7 +1052,6 @@ class AppOptions {
 
 ;// ./web/pdf_link_service.js
 
-
 const DEFAULT_LINK_REL = "noopener noreferrer nofollow";
 const LinkTarget = {
   NONE: 0,
@@ -2001,10 +2000,6 @@ function getMemoizerForLocale(locales) {
 }
 ;// ./node_modules/@fluent/bundle/esm/bundle.js
 
-
-
-
-
 class FluentBundle {
   constructor(locales, {
     functions,
@@ -2449,8 +2444,6 @@ class Indent {
 }
 ;// ./node_modules/@fluent/bundle/esm/index.js
 
-
-
 ;// ./node_modules/@fluent/dom/esm/overlay.js
 const reOverlay = /<|&#?\w+;/;
 const TEXT_LEVEL_ELEMENTS = {
@@ -2685,7 +2678,6 @@ class CachedAsyncIterable extends CachedIterable {
 }
 ;// ./node_modules/cached-iterable/src/index.mjs
 
-
 ;// ./node_modules/@fluent/dom/esm/localization.js
 
 class Localization {
@@ -2802,7 +2794,6 @@ function keysFromBundle(method, bundle, keys, translations) {
   return missingIds;
 }
 ;// ./node_modules/@fluent/dom/esm/dom_localization.js
-
 
 const L10NID_ATTR_NAME = "data-l10n-id";
 const L10NARGS_ATTR_NAME = "data-l10n-args";
@@ -2966,7 +2957,6 @@ class DOMLocalization extends Localization {
 }
 ;// ./node_modules/@fluent/dom/esm/index.js
 
-
 ;// ./web/l10n.js
 class L10n {
   #dir;
@@ -3062,9 +3052,6 @@ class L10n {
 const GenericL10n = null;
 
 ;// ./web/genericl10n.js
-
-
-
 
 function PLATFORM() {
   const {
@@ -3281,11 +3268,6 @@ class SignatureStorage {
 }
 
 ;// ./web/genericcom.js
-
-
-
-
-
 
 function initCom(app) {}
 class Preferences extends BasePreferences {
@@ -4595,8 +4577,6 @@ class Sidebar {
 
 ;// ./web/comment_manager.js
 
-
-
 class CommentManager {
   #dialog;
   #popup;
@@ -5847,7 +5827,6 @@ class PasswordPrompt {
 
 ;// ./web/base_tree_viewer.js
 
-
 const TREEITEM_OFFSET_TOP = -100;
 const TREEITEM_SELECTED_CLASS = "selected";
 class BaseTreeViewer {
@@ -5949,7 +5928,6 @@ class BaseTreeViewer {
 }
 
 ;// ./web/pdf_attachment_viewer.js
-
 
 class PDFAttachmentViewer extends BaseTreeViewer {
   constructor(options) {
@@ -6152,8 +6130,6 @@ class GrabToPan {
 
 ;// ./web/pdf_cursor_tools.js
 
-
-
 class PDFCursorTools {
   #active = CursorTool.SELECT;
   #prevActive = null;
@@ -6270,7 +6246,6 @@ class PDFCursorTools {
 }
 
 ;// ./web/pdf_document_properties.js
-
 
 const NON_METRIC_LOCALES = ["en-us", "en-lr", "my"];
 const US_PAGE_NAMES = {
@@ -6531,7 +6506,6 @@ function getNormalizeWithNFKC() {
 }
 
 ;// ./web/pdf_find_controller.js
-
 
 const FindState = {
   FOUND: 0,
@@ -7305,7 +7279,6 @@ class PDFFindController {
 
 ;// ./web/pdf_find_bar.js
 
-
 const MATCHES_COUNT_LIMIT = 1000;
 class PDFFindBar {
   #mainContainer;
@@ -7472,8 +7445,6 @@ class PDFFindBar {
 }
 
 ;// ./web/pdf_history.js
-
-
 
 const HASH_CHANGE_TIMEOUT = 1000;
 const POSITION_UPDATED_THRESHOLD = 50;
@@ -8113,7 +8084,6 @@ class PDFLayerViewer extends BaseTreeViewer {
 
 ;// ./web/pdf_outline_viewer.js
 
-
 class PDFOutlineViewer extends BaseTreeViewer {
   constructor(options) {
     super(options);
@@ -8374,7 +8344,6 @@ class PDFOutlineViewer extends BaseTreeViewer {
 }
 
 ;// ./web/pdf_presentation_mode.js
-
 
 const DELAY_BEFORE_HIDING_CONTROLS = 3000;
 const ACTIVE_SELECTOR = "pdfPresentationMode";
@@ -8737,8 +8706,6 @@ class XfaLayerBuilder {
 
 ;// ./web/print_utils.js
 
-
-
 function getXfaHtmlForPrinting(printContainer, pdfDocument) {
   const xfaHtml = pdfDocument.allXfaHtml;
   const linkService = new SimpleLinkService();
@@ -8765,7 +8732,6 @@ function getXfaHtmlForPrinting(printContainer, pdfDocument) {
 }
 
 ;// ./web/pdf_print_service.js
-
 
 let activeService = null;
 let dialog = null;
@@ -9023,7 +8989,6 @@ class PDFPrintServiceFactory {
 
 ;// ./web/pdf_rendering_queue.js
 
-
 const CLEANUP_TIMEOUT = 30000;
 class PDFRenderingQueue {
   constructor() {
@@ -9147,7 +9112,6 @@ class PDFRenderingQueue {
 }
 
 ;// ./web/pdf_scripting_manager.js
-
 
 class PDFScriptingManager {
   #closeCapability = null;
@@ -9558,8 +9522,6 @@ class PdfTextExtractor {
 
 ;// ./web/pdf_thumbnail_view.js
 
-
-
 const DRAW_UPSCALE_FACTOR = 2;
 const MAX_NUM_SCALING_STEPS = 3;
 const THUMBNAIL_WIDTH = 126;
@@ -9865,8 +9827,6 @@ class PDFThumbnailView {
 }
 
 ;// ./web/pdf_thumbnail_viewer.js
-
-
 
 const SCROLL_OPTIONS = {
   behavior: "instant",
@@ -10175,7 +10135,6 @@ class PDFThumbnailViewer {
 
 ;// ./web/annotation_editor_layer_builder.js
 
-
 class AnnotationEditorLayerBuilder {
   #annotationLayer = null;
   #drawLayer = null;
@@ -10268,7 +10227,6 @@ class AnnotationEditorLayerBuilder {
 }
 
 ;// ./web/annotation_layer_builder.js
-
 
 class AnnotationLayerBuilder {
   #annotations = null;
@@ -10495,7 +10453,6 @@ class AnnotationLayerBuilder {
 
 ;// ./web/autolinker.js
 
-
 function DOMRectToPDF({
   width,
   height,
@@ -10629,7 +10586,6 @@ class Autolinker {
 }
 
 ;// ./web/base_pdf_page_view.js
-
 
 class BasePDFPageView {
   #loadingId = null;
@@ -10868,8 +10824,6 @@ class DrawLayerBuilder {
 
 ;// ./web/pdf_page_detail_view.js
 
-
-
 class PDFPageDetailView extends BasePDFPageView {
   #detailArea = null;
   renderingCancelled = false;
@@ -11077,7 +11031,6 @@ class PDFPageDetailView extends BasePDFPageView {
 }
 
 ;// ./web/struct_tree_layer_builder.js
-
 
 const PDF_ROLE_TO_HTML_ROLE = {
   Document: null,
@@ -11722,7 +11675,6 @@ class TextHighlighter {
 
 ;// ./web/text_layer_builder.js
 
-
 class TextLayerBuilder {
   #enablePermissions = false;
   #onAppend = null;
@@ -11922,21 +11874,6 @@ class TextLayerBuilder {
 }
 
 ;// ./web/pdf_page_view.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const DEFAULT_LAYER_PROPERTIES = null;
 const LAYERS_ORDER = new Map([["canvasWrapper", 0], ["textLayer", 1], ["annotationLayer", 2], ["annotationEditorLayer", 3], ["xfaLayer", 3]]);
@@ -12715,11 +12652,6 @@ class PDFPageView extends BasePDFPageView {
 }
 
 ;// ./web/pdf_viewer.js
-
-
-
-
-
 
 const DEFAULT_CACHE_SIZE = 10;
 const PagesCountLimit = {
@@ -14420,7 +14352,6 @@ class PDFViewer {
 
 ;// ./web/secondary_toolbar.js
 
-
 class SecondaryToolbar {
   #opts;
   constructor(options, eventBus) {
@@ -15592,7 +15523,6 @@ class EditDescriptionDialog {
 
 ;// ./web/toolbar.js
 
-
 class Toolbar {
   #colorPicker = null;
   #opts;
@@ -16124,8 +16054,6 @@ class Menu {
 
 ;// ./web/views_manager.js
 
-
-
 const SIDEBAR_WIDTH_VAR = "--viewsManager-width";
 const SIDEBAR_RESIZING_CLASS = "viewsManagerResizing";
 const UI_NOTIFICATION_CLASS = "pdfSidebarNotification";
@@ -16421,41 +16349,6 @@ class ViewsManager extends Sidebar {
 }
 
 ;// ./web/app.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const FORCE_PAGES_LOADED_TIMEOUT = 10000;
 const ViewOnLoad = {
@@ -18538,9 +18431,6 @@ function beforeUnload(evt) {
 }
 
 ;// ./web/viewer.js
-
-
-
 
 const AppConstants = {
   LinkTarget: LinkTarget,
