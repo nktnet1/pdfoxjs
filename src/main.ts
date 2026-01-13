@@ -2,8 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import { app, BrowserWindow, dialog, MessageBoxOptions } from 'electron';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import { createBrowserWindow, createPdfPath, exitHelp, startServer } from './e-utils';
-import { APP_NAME, DEFAULT_CONFIG_FILE_NAME, USER_CONFIG_DIRECTORY_NAME, USER_CONFIG_FILE_NAME } from './config';
+import {
+  createBrowserWindow,
+  createPdfPath,
+  exitHelp,
+  startServer,
+} from './e-utils';
+import {
+  APP_NAME,
+  DEFAULT_CONFIG_FILE_NAME,
+  USER_CONFIG_DIRECTORY_NAME,
+  USER_CONFIG_FILE_NAME,
+} from './config';
 import { autoUpdater } from 'electron-updater';
 
 interface WindowSettings {
@@ -22,14 +32,20 @@ if (['-h', '--help'].includes(process.argv[fileArgumentIndex])) {
 const pdfPathInputs = process.argv.slice(fileArgumentIndex).map(createPdfPath);
 
 // If no arguments are specified, use '' to still launch the second window instance.
-if (!app.requestSingleInstanceLock({ pdfPaths: pdfPathInputs.length ? pdfPathInputs : [''] })) {
+if (
+  !app.requestSingleInstanceLock({
+    pdfPaths: pdfPathInputs.length ? pdfPathInputs : [''],
+  })
+) {
   app.quit();
   process.exit(0);
 }
 
 const createSecondaryWindows = ({ pdfPaths }: WindowSettings): void => {
   if (appUrl === null) {
-    throw new Error('Error: please close all instances of the application and try again.');
+    throw new Error(
+      'Error: please close all instances of the application and try again.'
+    );
   }
   pdfPaths.forEach((pdfPath) => {
     const browserWindow = createBrowserWindow();
@@ -42,14 +58,20 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
 
   const userDataPath = app.getPath('userData');
 
-  const createConfig = (resourcesPath: string, userDataPath: string): string => {
+  const createConfig = (
+    resourcesPath: string,
+    userDataPath: string
+  ): string => {
     const dirPath = path.join(userDataPath, USER_CONFIG_DIRECTORY_NAME);
 
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
     const configFilePath = path.join(dirPath, USER_CONFIG_FILE_NAME);
-    const defaultConfigPath = path.join(resourcesPath, DEFAULT_CONFIG_FILE_NAME);
+    const defaultConfigPath = path.join(
+      resourcesPath,
+      DEFAULT_CONFIG_FILE_NAME
+    );
     if (!fs.existsSync(configFilePath)) {
       fs.copyFileSync(defaultConfigPath, configFilePath);
     }
@@ -65,24 +87,16 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
   if (is.dev) {
     const resourcesPath = 'public';
     createConfig(resourcesPath, userDataPath);
-    startServer(
-      3000,
-      { resourcesPath, userDataPath },
-      (serverUrl: string) => {
-        loadPDF(serverUrl, pdfPaths[0] ?? '');
-        browserWindow.webContents.openDevTools();
-        console.log(`Development: ${appUrl}`);
-      }
-    );
+    startServer(3000, { resourcesPath, userDataPath }, (serverUrl: string) => {
+      loadPDF(serverUrl, pdfPaths[0] ?? '');
+      browserWindow.webContents.openDevTools();
+      console.log(`Development: ${appUrl}`);
+    });
   } else {
     const resourcesPath = path.join(process.resourcesPath, 'public');
-    startServer(
-      0,
-      { resourcesPath, userDataPath },
-      (serverUrl: string) => {
-        loadPDF(serverUrl, pdfPaths[0] ?? '');
-      }
-    );
+    startServer(0, { resourcesPath, userDataPath }, (serverUrl: string) => {
+      loadPDF(serverUrl, pdfPaths[0] ?? '');
+    });
   }
 
   return browserWindow;
@@ -90,7 +104,7 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
 
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron');
+  electronApp.setAppUserModelId('org.nktnet.pdfoxjs');
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -109,10 +123,13 @@ app.whenReady().then(() => {
     }
   });
 
-  app.on('second-instance', (_event, _commandLine, _workingDirectory, additionalData) => {
-    const pdfPaths = (additionalData as WindowSettings).pdfPaths;
-    createSecondaryWindows({ pdfPaths });
-  });
+  app.on(
+    'second-instance',
+    (_event, _commandLine, _workingDirectory, additionalData) => {
+      const pdfPaths = (additionalData as WindowSettings).pdfPaths;
+      createSecondaryWindows({ pdfPaths });
+    }
+  );
 
   // ======================================================================= //
   // AUTO-UPDATES
@@ -128,8 +145,11 @@ app.whenReady().then(() => {
       type: 'info',
       buttons: ['No', 'Yes'],
       title: `${APP_NAME} has a new update Available`,
-      message: process.platform === 'win32' ? event.releaseNotes as string : event.releaseName,
-      detail: `A new version (${event.version}) is available. Would you like to download it?`
+      message:
+        process.platform === 'win32'
+          ? (event.releaseNotes as string)
+          : event.releaseName,
+      detail: `A new version (${event.version}) is available. Would you like to download it?`,
     };
     dialog.showMessageBox(mainWindow, dialogOpts).then((returnValue) => {
       if (returnValue.response === 1) {
@@ -143,8 +163,11 @@ app.whenReady().then(() => {
       type: 'info',
       buttons: ['Later', 'Restart'],
       title: `${APP_NAME} has been updated`,
-      message: process.platform === 'win32' ? event.releaseNotes as string : event.releaseName,
-      detail: `Version ${event.version} has been downloaded. Would you like to restart the application to apply the new updates?`
+      message:
+        process.platform === 'win32'
+          ? (event.releaseNotes as string)
+          : event.releaseName,
+      detail: `Version ${event.version} has been downloaded. Would you like to restart the application to apply the new updates?`,
     };
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
       if (returnValue.response === 1) {
