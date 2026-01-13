@@ -89,7 +89,7 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
     createConfig(resourcesPath, userDataPath);
     startServer(3000, { resourcesPath, userDataPath }, (serverUrl: string) => {
       loadPDF(serverUrl, pdfPaths[0] ?? '');
-      browserWindow.webContents.openDevTools();
+      // browserWindow.webContents.openDevTools();
       console.log(`Development: ${appUrl}`);
     });
   } else {
