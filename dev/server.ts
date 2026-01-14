@@ -10,6 +10,7 @@ const app = createExpressApp({
   resourcesPath: 'public',
   userDataPath,
 });
+
 const server = app.listen(3000, () => {
   const addresses = server.address() as AddressInfo;
   const port = addresses.port;
