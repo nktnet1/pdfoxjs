@@ -28,7 +28,7 @@ const createExpressApp = (options: Options) => {
   app.use(express.static(options.resourcesPath));
 
   app.get('/config', (_: Request, res: Response) => {
-    res.sendFile(configPath, { dotfiles: 'allow' });
+    res.sendFile(path.resolve(configPath), { dotfiles: 'allow' });
   });
 
   app.get('/', (_: Request, res: Response) => {
