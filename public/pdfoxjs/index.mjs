@@ -1,7 +1,13 @@
 import { createAllCustomElements } from './components/allCustomElements.mjs';
-import { PDFViewerApplication } from './components/application.mjs';
+import {
+  PDFViewerApplication,
+  PDFViewerApplicationOptions,
+} from './components/application.mjs';
 import { getConfig } from './utils/getConfig.mjs';
 import { handleShortcuts } from './utils/handleShortcuts.mjs';
+
+PDFViewerApplicationOptions.set('enableSignatureEditor', true);
+PDFViewerApplicationOptions.set('enableComment', true);
 
 window.onload = async () => {
   const toolbar = document.getElementById('toolbarContainer');
@@ -20,7 +26,8 @@ window.onload = async () => {
 
   const isToolbarVisible = () => !toolbar.classList.contains('hidden');
 
-  const toggleToolbar = () => isToolbarVisible() ? hideToolbar() : showToolbar();
+  const toggleToolbar = () =>
+    isToolbarVisible() ? hideToolbar() : showToolbar();
 
   const toggleSidebar = () => {
     if (isToolbarVisible()) {
@@ -40,15 +47,19 @@ window.onload = async () => {
   const closeAnnotationEditor = () => {
     const NONE_MODE = globalThis.pdfjsLib.AnnotationEditorType.NONE;
     if (PDFViewerApplication.pdfViewer.annotationEditorMode > NONE_MODE) {
-      PDFViewerApplication.eventBus.dispatch(
-        'switchannotationeditormode',
-        { mode: globalThis.pdfjsLib.AnnotationEditorType.NONE }
-      );
+      PDFViewerApplication.eventBus.dispatch('switchannotationeditormode', {
+        mode: globalThis.pdfjsLib.AnnotationEditorType.NONE,
+      });
     }
   };
 
   const { toggleHelp } = createAllCustomElements({ closeAnnotationEditor });
   if (config.settings.enableCustomShortcutKeys) {
-    handleShortcuts(config, { toggleHelp, toggleToolbar, toggleSidebar, closeAnnotationEditor });
+    handleShortcuts(config, {
+      toggleHelp,
+      toggleToolbar,
+      toggleSidebar,
+      closeAnnotationEditor,
+    });
   }
 };
