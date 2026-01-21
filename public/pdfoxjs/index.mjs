@@ -1,13 +1,16 @@
-import { createAllCustomElements } from './components/allCustomElements.mjs';
 import {
   PDFViewerApplication,
   PDFViewerApplicationOptions,
 } from './components/application.mjs';
-import { getConfig } from './utils/getConfig.mjs';
-import { handleShortcuts } from './utils/handleShortcuts.mjs';
 
 PDFViewerApplicationOptions.set('enableSignatureEditor', true);
 PDFViewerApplicationOptions.set('enableComment', true);
+PDFViewerApplicationOptions.set('enableUpdatedAddImage', true);
+PDFViewerApplicationOptions.set('enableHighlightFloatingButton', true);
+
+import { createAllCustomElements } from './components/allCustomElements.mjs';
+import { getConfig } from './utils/getConfig.mjs';
+import { handleShortcuts } from './utils/handleShortcuts.mjs';
 
 window.onload = async () => {
   const toolbar = document.getElementById('toolbarContainer');
