@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
 ## Main toolbar buttons (tooltips and alt text for images)
 
 pdfjs-previous-button =
@@ -626,6 +627,11 @@ pdfjs-editor-edit-comment-dialog-save-button-when-adding = Zonte
 pdfjs-editor-edit-comment-dialog-text-input =
     .placeholder = Scomence a scrivi…
 pdfjs-editor-edit-comment-dialog-cancel-button = Anule
+
+## Edit a comment button in the editor toolbar
+
+pdfjs-editor-add-comment-button =
+    .title = Zonte coment
 
 ## Main menu for adding/removing signatures
 

@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
 ## Main toolbar buttons (tooltips and alt text for images)
 
 pdfjs-previous-button =
@@ -308,6 +309,10 @@ pdfjs-editor-signature-add-signature-button-label = പുതിയ ഒപ്പ
 #   $description (String) - a string describing/labeling the signature.
 pdfjs-editor-add-saved-signature-button =
     .title = കരുതിവച്ച ഒപ്പു് : { $description }
+pdfjs-editor-comments-sidebar-close-button =
+    .title = അണിവക്കം അടയ്ക്കുക
+    .aria-label = അണിവക്കം അടയ്ക്കുക
+pdfjs-editor-comments-sidebar-close-button-label = അണിവക്കം അടയ്ക്കുക
 
 ## Alt-text dialog
 
