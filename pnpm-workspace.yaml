@@ -1,5 +1,8 @@
-ignoredBuiltDependencies:
-  - esbuild
+allowBuilds:
+  electron: true
+  electron-winstaller: true
+  esbuild: false
 
-onlyBuiltDependencies:
-  - electron
+minimumReleaseAgeExclude:
+  - tinyexec@1.2.4
+  - tsx@4.22.4

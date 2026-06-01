@@ -1,12 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-import { AddressInfo } from 'net';
-import contextMenu from 'electron-context-menu';
-import { BrowserWindow, shell } from 'electron';
-import urlJoin from 'url-join';
-import { APP_NAME, PDF_FETCH_PATH, viewerPath } from './config';
-import createExpressApp, { Options } from './app';
-import { toHex } from './utils';
+import { BrowserWindow, shell } from "electron";
+import contextMenu from "electron-context-menu";
+import fs from "fs";
+import type { AddressInfo } from "net";
+import path from "path";
+import urlJoin from "url-join";
+import createExpressApp, { type Options } from "./app";
+import { APP_NAME, PDF_FETCH_PATH, viewerPath } from "./config";
+import { toHex } from "./utils";
 
 export const exitHelp = (exitStatus: number = 1) => {
   console.log(`
@@ -26,10 +26,12 @@ const checkPDF = (filepath: string) => {
   if (!Buffer.isBuffer(buffer)) {
     throw new Error(`Failed to read '${filepath}' - invalid buffer`);
   }
-  if (buffer.lastIndexOf('%PDF-') !== 0) {
-    throw new Error(`File '${filepath}' does not have the bytes '%PDF-' as the first and only occurence`);
+  if (buffer.lastIndexOf("%PDF-") !== 0) {
+    throw new Error(
+      `File '${filepath}' does not have the bytes '%PDF-' as the first and only occurence`,
+    );
   }
-  if (buffer.lastIndexOf('%%EOF') === -1) {
+  if (buffer.lastIndexOf("%%EOF") === -1) {
     throw new Error(`File '${filepath}' does contain the bytes '%%EOF'`);
   }
 };
@@ -38,8 +40,9 @@ export const createPdfPath = (filepath: string) => {
   if (filepath) {
     try {
       checkPDF(filepath);
-    } catch (error: any) {
-      console.error(`[${APP_NAME}]: ${error.message}.`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(`[${APP_NAME}]: ${message}.`);
       process.exit(1);
     }
     const absoluteFilePath = path.resolve(filepath);
@@ -48,7 +51,11 @@ export const createPdfPath = (filepath: string) => {
   return `/${viewerPath}?file=${filepath}`;
 };
 
-export const startServer = (port: number, options: Options, callback: (url: string) => void) => {
+export const startServer = (
+  port: number,
+  options: Options,
+  callback: (url: string) => void,
+) => {
   const expressApp = createExpressApp(options);
   const server = expressApp.listen(port, () => {
     const addresses = server.address() as AddressInfo;
@@ -68,20 +75,20 @@ export const createBrowserWindow = () => {
   });
 
   // Always open links externally in the user's browser
-  browserWindow.webContents.on('will-navigate', (event, linkUrl) => {
+  browserWindow.webContents.on("will-navigate", (event, linkUrl) => {
     if (!linkUrl.startsWith(browserWindow.webContents.getURL())) {
       event.preventDefault();
       shell.openExternal(linkUrl);
     }
   });
 
-  browserWindow.on('ready-to-show', () => {
+  browserWindow.on("ready-to-show", () => {
     browserWindow.show();
   });
 
   browserWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url);
-    return { action: 'deny' };
+    return { action: "deny" };
   });
 
   return browserWindow;

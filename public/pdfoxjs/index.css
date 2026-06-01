@@ -26,11 +26,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0.7
+  opacity: 0.7;
 }
 
 #popup-container:hover {
-  opacity: 1
+  opacity: 1;
 }
 
 #help-button {
@@ -57,7 +57,6 @@
   right: 0px;
   padding: 8px;
   background-color: #e74c3c;
-  border: 1px solid black;
   color: white;
   border: none;
   cursor: pointer;
@@ -69,21 +68,21 @@
 }
 
 .noInset {
-  inset: 0!important;
-  inset-block: 0!important;
+  inset: 0 !important;
+  inset-block: 0 !important;
 }
 
 #viewer .page:first-child {
-  border-top: 0!important;
+  border-top: 0 !important;
 }
 
 #viewer .page:not(:first-child) {
   border-top: 1px solid transparent;
 }
 
-#snackbar-container{
+#snackbar-container {
   z-index: 3;
-	position: fixed;
+  position: fixed;
   bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
@@ -92,7 +91,7 @@
 .snackbar {
   display: none;
   min-width: 250px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   margin-bottom: 20px;
   color: black;
   text-align: center;
@@ -103,8 +102,12 @@
 
 .snackbar.show {
   display: flex;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.7s;
-  animation: fadein 0.5s, fadeout 0.5s 4.7s;
+  -webkit-animation:
+    fadein 0.5s,
+    fadeout 0.5s 4.7s;
+  animation:
+    fadein 0.5s,
+    fadeout 0.5s 4.7s;
 }
 
 .snackbar.show:hover {
@@ -113,21 +116,37 @@
 }
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeout {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @-webkit-keyframes fadein {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
