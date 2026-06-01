@@ -1,20 +1,20 @@
-import fs from 'fs';
-import path from 'path';
-import { app, BrowserWindow, dialog, MessageBoxOptions } from 'electron';
-import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import {
-  createBrowserWindow,
-  createPdfPath,
-  exitHelp,
-  startServer,
-} from './e-utils';
+import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+import { app, BrowserWindow, dialog, type MessageBoxOptions } from "electron";
+import { autoUpdater, type UpdateInfo } from "electron-updater";
+import fs from "fs";
+import path from "path";
 import {
   APP_NAME,
   DEFAULT_CONFIG_FILE_NAME,
   USER_CONFIG_DIRECTORY_NAME,
   USER_CONFIG_FILE_NAME,
-} from './config';
-import { autoUpdater } from 'electron-updater';
+} from "./config";
+import {
+  createBrowserWindow,
+  createPdfPath,
+  exitHelp,
+  startServer,
+} from "./e-utils";
 
 interface WindowSettings {
   pdfPaths: string[];
@@ -26,7 +26,7 @@ const setAppUrl = (newUrl: string) => (appUrl = newUrl);
 
 const fileArgumentIndex = is.dev ? 2 : 1;
 
-if (['-h', '--help'].includes(process.argv[fileArgumentIndex])) {
+if (["-h", "--help"].includes(process.argv[fileArgumentIndex])) {
   exitHelp(0);
 }
 
@@ -35,7 +35,7 @@ const pdfPathInputs = process.argv.slice(fileArgumentIndex).map(createPdfPath);
 // If no arguments are specified, use '' to still launch the second window instance.
 if (
   !app.requestSingleInstanceLock({
-    pdfPaths: pdfPathInputs.length ? pdfPathInputs : [''],
+    pdfPaths: pdfPathInputs.length ? pdfPathInputs : [""],
   })
 ) {
   app.quit();
@@ -43,25 +43,26 @@ if (
 }
 
 const createSecondaryWindows = ({ pdfPaths }: WindowSettings): void => {
-  if (appUrl === null) {
+  const localAppUrl = appUrl;
+  if (localAppUrl === null) {
     throw new Error(
-      'Error: please close all instances of the application and try again.'
+      "Error: please close all instances of the application and try again.",
     );
   }
   pdfPaths.forEach((pdfPath) => {
     const browserWindow = createBrowserWindow();
-    browserWindow.loadURL(path.join(appUrl, pdfPath));
+    browserWindow.loadURL(path.join(localAppUrl, pdfPath));
   });
 };
 
 const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
   const browserWindow = createBrowserWindow();
 
-  const userDataPath = app.getPath('userData');
+  const userDataPath = app.getPath("userData");
 
   const createConfig = (
     resourcesPath: string,
-    userDataPath: string
+    userDataPath: string,
   ): string => {
     const dirPath = path.join(userDataPath, USER_CONFIG_DIRECTORY_NAME);
 
@@ -71,7 +72,7 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
     const configFilePath = path.join(dirPath, USER_CONFIG_FILE_NAME);
     const defaultConfigPath = path.join(
       resourcesPath,
-      DEFAULT_CONFIG_FILE_NAME
+      DEFAULT_CONFIG_FILE_NAME,
     );
     if (!fs.existsSync(configFilePath)) {
       fs.copyFileSync(defaultConfigPath, configFilePath);
@@ -86,24 +87,24 @@ const createMainWindow = ({ pdfPaths }: WindowSettings): BrowserWindow => {
   };
 
   if (is.dev) {
-    const resourcesPath = 'public';
+    const resourcesPath = "public";
     createConfig(resourcesPath, userDataPath);
     startServer(3000, { resourcesPath, userDataPath }, (serverUrl: string) => {
-      loadPDF(serverUrl, pdfPaths[0] ?? '');
+      loadPDF(serverUrl, pdfPaths[0] ?? "");
       // browserWindow.webContents.openDevTools();
       console.log(`Development: ${appUrl}`);
     });
   } else {
-    const resourcesPath = path.join(process.resourcesPath, 'public');
+    const resourcesPath = path.join(process.resourcesPath, "public");
     startServer(0, { resourcesPath, userDataPath }, (serverUrl: string) => {
-      loadPDF(serverUrl, pdfPaths[0] ?? '');
+      loadPDF(serverUrl, pdfPaths[0] ?? "");
     });
   }
 
   return browserWindow;
 };
 
-app.on('open-file', (event, filePath) => {
+app.on("open-file", (event, filePath) => {
   event.preventDefault();
   pendingPdfPaths.push(createPdfPath(filePath));
   if (app.isReady()) {
@@ -114,21 +115,21 @@ app.on('open-file', (event, filePath) => {
 
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('org.nktnet.pdfoxjs');
+  electronApp.setAppUserModelId("org.nktnet.pdfoxjs");
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
-  app.on('browser-window-created', (_, window) => {
+  app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);
   });
 
   const mainWindow = createMainWindow({
-    pdfPaths: [...pendingPdfPaths, ...pdfPathInputs]
+    pdfPaths: [...pendingPdfPaths, ...pdfPathInputs],
   });
   pendingPdfPaths = [];
 
-  app.on('activate', function () {
+  app.on("activate", () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -137,33 +138,39 @@ app.whenReady().then(() => {
   });
 
   app.on(
-    'second-instance',
+    "second-instance",
     (_event, _commandLine, _workingDirectory, additionalData) => {
       const pdfPaths = (additionalData as WindowSettings).pdfPaths;
       createSecondaryWindows({ pdfPaths });
-    }
+    },
   );
 
   // ======================================================================= //
   // AUTO-UPDATES
   // ======================================================================= //
 
-  mainWindow.once('ready-to-show', () => {
+  mainWindow.once("ready-to-show", () => {
     autoUpdater.autoDownload = false;
     autoUpdater.checkForUpdates();
   });
 
-  autoUpdater.on('update-available', (event) => {
+  const generateMessage = (event: UpdateInfo) => {
+    return process.platform === "win32"
+      ? Array.isArray(event.releaseNotes)
+        ? event.releaseNotes.join("\n")
+        : (event.releaseNotes ?? "No release notes.")
+      : (event.releaseName ?? "No release notes.");
+  };
+
+  autoUpdater.on("update-available", (event) => {
     const dialogOpts: MessageBoxOptions = {
-      type: 'info',
-      buttons: ['No', 'Yes'],
+      type: "info",
+      buttons: ["No", "Yes"],
       title: `${APP_NAME} has a new update Available`,
-      message:
-        process.platform === 'win32'
-          ? (event.releaseNotes as string)
-          : event.releaseName,
+      message: generateMessage(event),
       detail: `A new version (${event.version}) is available. Would you like to download it?`,
     };
+
     dialog.showMessageBox(mainWindow, dialogOpts).then((returnValue) => {
       if (returnValue.response === 1) {
         autoUpdater.downloadUpdate();
@@ -171,17 +178,15 @@ app.whenReady().then(() => {
     });
   });
 
-  autoUpdater.on('update-downloaded', (event) => {
+  autoUpdater.on("update-downloaded", (event) => {
     const dialogOpts: MessageBoxOptions = {
-      type: 'info',
-      buttons: ['Later', 'Restart'],
+      type: "info",
+      buttons: ["Later", "Restart"],
       title: `${APP_NAME} has been updated`,
-      message:
-        process.platform === 'win32'
-          ? (event.releaseNotes as string)
-          : event.releaseName,
+      message: generateMessage(event),
       detail: `Version ${event.version} has been downloaded. Would you like to restart the application to apply the new updates?`,
     };
+
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
       if (returnValue.response === 1) {
         autoUpdater.quitAndInstall();
@@ -193,8 +198,8 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });

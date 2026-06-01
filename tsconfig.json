@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
     "sourceMap": true,
-    "outDir": "out",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "rootDir": "./src",
+    "outDir": "./out"
   },
-  "include": [
-    "src/**/*",
-  ],
-  "exclude": [
-    "dev/server.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["dev/server.ts"]
 }
