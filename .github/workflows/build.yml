@@ -26,10 +26,10 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v6
 
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v6
         with:
           node-version: 24
 
@@ -38,6 +38,9 @@ jobs:
 
       - name: Install packages
         run: pnpm install
+
+      - name: Check lint and format
+        run: pnpm check
 
       - name: Build/release
         uses: paneron/action-electron-builder@v1.8.1
