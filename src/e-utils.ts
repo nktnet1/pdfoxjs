@@ -58,7 +58,7 @@ export const startServer = (
 ) => {
   const honoApp = createHonoApp(options);
 
-  serve(
+  const server = serve(
     {
       fetch: honoApp.fetch,
       port: port,
@@ -67,6 +67,20 @@ export const startServer = (
       callback(`http://127.0.0.1:${info.port}`);
     },
   );
+
+  const shutdown = () => {
+    server.close((error) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log("\nServer has stopped gracefully.");
+      }
+      process.exit(0);
+    });
+  };
+
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 };
 
 export const createBrowserWindow = () => {
