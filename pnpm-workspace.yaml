@@ -6,3 +6,4 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - tinyexec@1.2.4
   - tsx@4.22.4
+  - electron@42.3.2

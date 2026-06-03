@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
 ## Main toolbar buttons (tooltips and alt text for images)
 
 pdfjs-previous-button =
@@ -101,7 +102,7 @@ pdfjs-spread-even-button-label = Jafnatöludreifing
 pdfjs-document-properties-button =
     .title = Eiginleikar skjals…
 pdfjs-document-properties-button-label = Eiginleikar skjals…
-pdfjs-document-properties-file-name = Skráarnafn:
+pdfjs-document-properties-file-name = Skráarheiti:
 pdfjs-document-properties-file-size = Skrárstærð:
 # Variables:
 #   $kb (Number) - the PDF file size in kilobytes

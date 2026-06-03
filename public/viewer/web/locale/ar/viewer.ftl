@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
 ## Main toolbar buttons (tooltips and alt text for images)
 
 pdfjs-previous-button =
@@ -200,6 +201,15 @@ pdfjs-thumb-page-title =
 #   $page (Number) - the page number
 pdfjs-thumb-page-canvas =
     .aria-label = مصغّرة صفحة { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-checkbox1 =
+    .title = حدّد الصفحة { $page }
+# Variables:
+#   $page (Number) - the page number
+#   $total (Number) - the number of pages
+pdfjs-thumb-page-title1 =
+    .title = الصفحة { $page } من { $total }
 
 ## Find panel button title and messages
 
@@ -285,7 +295,7 @@ pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", tim
 
 pdfjs-password-label = أدخل لكلمة السر لفتح هذا الملف.
 pdfjs-password-invalid = كلمة سر خطأ. من فضلك أعد المحاولة.
-pdfjs-password-ok-button = حسنا
+pdfjs-password-ok-button = حسنًا
 pdfjs-password-cancel-button = ألغِ
 pdfjs-web-fonts-disabled = خطوط الوب مُعطّلة: تعذّر استخدام خطوط PDF المُضمّنة.
 
@@ -293,9 +303,13 @@ pdfjs-web-fonts-disabled = خطوط الوب مُعطّلة: تعذّر استخ
 
 pdfjs-editor-free-text-button =
     .title = نص
+pdfjs-editor-color-picker-free-text-input =
+    .title = غيِّر لون النص
 pdfjs-editor-free-text-button-label = نص
 pdfjs-editor-ink-button =
     .title = ارسم
+pdfjs-editor-color-picker-ink-input =
+    .title = غيِّر لون الرسم
 pdfjs-editor-ink-button-label = ارسم
 pdfjs-editor-stamp-button =
     .title = أضِف أو حرّر الصور
@@ -307,6 +321,14 @@ pdfjs-highlight-floating-button1 =
     .title = أبرِز
     .aria-label = أبرِز
 pdfjs-highlight-floating-button-label = أبرِز
+pdfjs-comment-floating-button =
+    .title = علق
+    .aria-label = علق
+pdfjs-comment-floating-button-label = علق
+pdfjs-editor-comment-button =
+    .title = علق
+    .aria-label = علق
+pdfjs-editor-comment-button-label = التعليق
 pdfjs-editor-signature-button =
     .title = أضِف توقيع
 pdfjs-editor-signature-button-label = أضِف توقيع
@@ -369,6 +391,25 @@ pdfjs-editor-add-saved-signature-button =
 pdfjs-free-text2 =
     .aria-label = محرِّر النص
     .default-content = ابدأ في كتابة…
+# Used to show how many comments are present in the pdf file.
+# Variables:
+#   $count (Number) - the number of comments.
+pdfjs-editor-comments-sidebar-title =
+    { $count ->
+        [zero] تعليق
+        [one] تعليق
+        [two] تعليقات
+        [few] تعليقات
+        [many] تعليقات
+       *[other] تعليقات
+    }
+pdfjs-editor-comments-sidebar-close-button =
+    .title = أغلِق الشريط الجانبي
+    .aria-label = أغلِق الشريط الجانبي
+pdfjs-editor-comments-sidebar-close-button-label = أغلِق الشريط الجانبي
+# Instructional copy to add a comment by selecting text or an annotations.
+pdfjs-editor-comments-sidebar-no-comments1 = هل رأيت شيئاً جديرًا بالملاحظة؟ ابرزه واترك تعليقًا.
+pdfjs-editor-comments-sidebar-no-comments-link = اطّلع على المزيد
 
 ## Alt-text dialog
 
@@ -499,6 +540,14 @@ pdfjs-editor-alt-text-settings-show-dialog-button-label = أظهِر مُحرّ�
 pdfjs-editor-alt-text-settings-show-dialog-description = يساعدك على التأكد من أن جميع صورك تحتوي على نص بديل.
 pdfjs-editor-alt-text-settings-close-button = أغلق
 
+## Accessibility labels (announced by screen readers) for objects added to the editor.
+
+pdfjs-editor-highlight-added-alert = أُضيف إبراز
+pdfjs-editor-freetext-added-alert = أُضيف النص
+pdfjs-editor-ink-added-alert = أُضيف رسم
+pdfjs-editor-stamp-added-alert = أُضيف صورة
+pdfjs-editor-signature-added-alert = أُضيف توقيع
+
 ## "Annotations removed" bar
 
 pdfjs-editor-undo-bar-message-highlight = أُزِيل البرز
@@ -506,6 +555,7 @@ pdfjs-editor-undo-bar-message-freetext = أُزيل النص
 pdfjs-editor-undo-bar-message-ink = أُزِيلت الرسمة
 pdfjs-editor-undo-bar-message-stamp = أُزيلت الصورة
 pdfjs-editor-undo-bar-message-signature = أُزيل التوقيع
+pdfjs-editor-undo-bar-message-comment = أُزيل التعليق
 # Variables:
 #   $count (Number) - the number of removed annotations.
 pdfjs-editor-undo-bar-message-multiple =
@@ -527,7 +577,7 @@ pdfjs-editor-undo-bar-close-button-label = أغلق
 ## Add a signature dialog
 
 pdfjs-editor-add-signature-dialog-label = يتيح هذا النموذج للمستخدم إنشاء توقيع لإضافته إلى مستند PDF. ويمكن للمستخدم تحرير الاسم (الذي يعمل أيضًا كنص بديل)، وحفظ التوقيع بشكل اختياري للاستخدام المتكرر.
-pdfjs-editor-add-signature-dialog-title = أضِف توقيعا
+pdfjs-editor-add-signature-dialog-title = أضِف توقيعًا
 
 ## Tab names
 
@@ -571,6 +621,8 @@ pdfjs-editor-add-signature-save-checkbox = احفظ التوقيع
 pdfjs-editor-add-signature-save-warning-message = لقد وصلت إلى الحد الأقصى وهو 5 توقيعات محفوظة. أزِل توقيع واحد لحفظ المزيد.
 pdfjs-editor-add-signature-image-upload-error-title = تعذر رفع الصورة.
 pdfjs-editor-add-signature-image-upload-error-description = تحقق من اتصال الشبكة لديك أو جرّب صورة أخرى.
+pdfjs-editor-add-signature-image-no-data-error-title = لا يمكن تحويل هذه الصورة إلى توقيع
+pdfjs-editor-add-signature-image-no-data-error-description = من فضلك حاول رفع صورة أخرى.
 pdfjs-editor-add-signature-error-close-button = أغلق
 
 ## Dialog buttons
@@ -578,6 +630,139 @@ pdfjs-editor-add-signature-error-close-button = أغلق
 pdfjs-editor-add-signature-cancel-button = ألغِ
 pdfjs-editor-add-signature-add-button = أضِف
 pdfjs-editor-edit-signature-update-button = حدّث
+
+## Comment popup
+
+pdfjs-editor-edit-comment-popup-button-label = حرّر التعليق
+pdfjs-editor-edit-comment-popup-button =
+    .title = حرّر التعليق
+pdfjs-editor-delete-comment-popup-button-label = أزِل التعليق
+pdfjs-editor-delete-comment-popup-button =
+    .title = أزِل التعليق
+pdfjs-show-comment-button =
+    .title = أظهر التعليق
+
+##  Edit a comment dialog
+
+# An existing comment is edited
+pdfjs-editor-edit-comment-dialog-title-when-editing = حرّر التعليق
+pdfjs-editor-edit-comment-dialog-save-button-when-editing = حدّث
+# No existing comment
+pdfjs-editor-edit-comment-dialog-title-when-adding = أضِف تعليقًا
+pdfjs-editor-edit-comment-dialog-save-button-when-adding = أضف
+pdfjs-editor-edit-comment-dialog-text-input =
+    .placeholder = ابدأ الكتابة…
+pdfjs-editor-edit-comment-dialog-cancel-button = ألغِ
+
+## Edit a comment button in the editor toolbar
+
+pdfjs-editor-add-comment-button =
+    .title = أضف التعليق
+
+## The view manager is a sidebar displaying different views:
+##  - thumbnails;
+##  - outline;
+##  - attachments;
+##  - layers.
+## The thumbnails view is used to edit the pdf: remove/insert pages, ...
+
+pdfjs-toggle-views-manager-notification-button =
+    .title = تبديل الشريط الجانبي (يحتوي المستند على صور مصغرة/مخطط تفصيلي/مرفقات/طبقات)
+pdfjs-toggle-views-manager-button1-label = أدِر الصفحات
+pdfjs-views-manager-sidebar =
+    .aria-label = الشريط الجانبي
+pdfjs-views-manager-sidebar-resizer =
+    .aria-label = أداة تغيير حجم الشريط الجانبي
+pdfjs-views-manager-view-selector-button =
+    .title = المناظير
+pdfjs-views-manager-view-selector-button-label = المناظير
+pdfjs-views-manager-pages-title = الصفحات
+pdfjs-views-manager-outlines-title1 = مخطط المستند
+    .title = مخطط المستند (انقر نقرًا مزدوجًا لتوسيع/طي كافة العناصر)
+pdfjs-views-manager-attachments-title = المرفقات
+pdfjs-views-manager-layers-title1 = ‏‏طبقات
+    .title = الطبقات (انقر نقرًا مزدوجًا لإعادة تعيين كافة الطبقات إلى الحالة المبدئية)
+pdfjs-views-manager-pages-option-label = الصفحات
+pdfjs-views-manager-outlines-option-label = مخطط المستند
+pdfjs-views-manager-attachments-option-label = المرفقات
+pdfjs-views-manager-layers-option-label = ‏‏الطبقات
+pdfjs-views-manager-add-file-button =
+    .title = أضف ملف
+pdfjs-views-manager-add-file-button-label = أضف ملف
+# Variables:
+#   $count (Number) - the number of selected pages.
+pdfjs-views-manager-pages-status-action-label =
+    { $count ->
+        [zero] { $count } محدّد
+        [one] { $count } محدّد
+        [two] { $count } محدّدان
+        [few] { $count } محدّد
+        [many] { $count } محدّد
+       *[other] { $count } محدّد
+    }
+pdfjs-views-manager-pages-status-none-action-label = حدّد الصفحات
+pdfjs-views-manager-pages-status-action-button-label = أدِر
+pdfjs-views-manager-pages-status-copy-button-label = انسخ
+pdfjs-views-manager-pages-status-cut-button-label = قصّ
+pdfjs-views-manager-pages-status-delete-button-label = احذف
+pdfjs-views-manager-pages-status-export-selected-button-label = حُدِّد التصدير…
+# Variables:
+#   $count (Number) - the number of selected pages to be cut.
+pdfjs-views-manager-status-undo-cut-label =
+    { $count ->
+        [zero] لا صفحات قُصت
+        [one] صفحة قُصت
+        [two] { $count } صفحتان قُصت
+        [few] { $count } صفحات قُصت
+        [many] { $count } صفحةً قُصت
+       *[other] { $count } صفحة قُصت
+    }
+# Variables:
+#   $count (Number) - the number of selected pages to be copied.
+pdfjs-views-manager-pages-status-undo-copy-label =
+    { $count ->
+        [zero] لا صفحة منسوخة
+        [one] صفحة منسوخة
+        [two] صفحتان منسوختان
+        [few] { $count } صفحات منسوخة
+        [many] { $count } صفحةً منسوخةً
+       *[other] { $count } صفحة منسوخة
+    }
+# Variables:
+#   $count (Number) - the number of selected pages to be deleted.
+pdfjs-views-manager-pages-status-undo-delete-label =
+    { $count ->
+        [zero] لا صفحات محذوفة
+        [one] حُذف صفحة
+        [two] حُذف صفحتان
+        [few] حُذف { $count } صفحات
+        [many] حُذف { $count } صفحةً
+       *[other] حُذف { $count } صفحة
+    }
+pdfjs-views-manager-pages-status-waiting-ready-label = يجهز ملفك…
+pdfjs-views-manager-pages-status-waiting-uploading-label = يرفع ملف…
+pdfjs-views-manager-status-warning-cut-label = تعذّر القص. أنعش الصفحة وحاول مجددًا.
+pdfjs-views-manager-status-warning-copy-label = تعذّر النسخ. أنعش الصفحة وحاول مجددًا.
+pdfjs-views-manager-status-warning-delete-label = تعذّر الحذف. حدِّث الصفحة وحاول مجددًا.
+pdfjs-views-manager-status-warning-save-label = تعذّر الحفظ. أنعش الصفحة وحاول مجددًا.
+pdfjs-views-manager-status-undo-button-label = تراجع
+pdfjs-views-manager-status-done-button-label = تمّ
+pdfjs-views-manager-status-close-button =
+    .title = أغلق
+pdfjs-views-manager-status-close-button-label = أغلق
+pdfjs-views-manager-paste-button-label = ألصق
+pdfjs-views-manager-paste-button-before =
+    .title = ألصق قبل الصفحة الأولى
+# Variables:
+#   $page (Number) - the page number after which the paste button is.
+pdfjs-views-manager-paste-button-after =
+    .title = ألصق بعد الصفحة { $page }
+# Badge used to promote a new feature in the UI, keep it as short as possible.
+# It's spelled uppercase for English, but it can be translated as usual.
+pdfjs-new-badge-content = جديد
+pdfjs-views-manager-waiting-for-file = يرفع ملف…
+pdfjs-toggle-views-manager-button1 =
+    .title = أدِر الصفحات
 
 ## Main menu for adding/removing signatures
 
