@@ -13,19 +13,26 @@ export const addNotification = (text) => {
     innerHTML: text,
   });
 
-  let timer = null;
+  let autoHideTimer = null;
+  let domRemovalTimer = null;
+
   const removeSnackbar = () => {
-    snackbar.className = snackbar.className.replace(
-      "snackbar show",
-      "snackbar",
-    );
-    setTimeout(() => {
-      container.removeChild(snackbar);
-    }, 1000);
-    clearTimeout(timer);
+    snackbar.removeEventListener("click", removeSnackbar);
+    clearTimeout(autoHideTimer);
+    clearTimeout(domRemovalTimer);
+
+    snackbar.className = "snackbar";
+
+    domRemovalTimer = setTimeout(() => {
+      if (snackbar.parentNode === container) {
+        container.removeChild(snackbar);
+      }
+    }, 500);
   };
+
   snackbar.addEventListener("click", removeSnackbar);
   // Note: changing this timeout to a different value requires modifying .snackbar.snow css
-  timer = setTimeout(removeSnackbar, 5000);
+  autoHideTimer = setTimeout(removeSnackbar, 5000);
+
   return snackbar;
 };

@@ -1,0 +1,78 @@
+.pdfoxjs-drag-overlay {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.pdfoxjs-drag-overlay.active {
+  opacity: 1;
+}
+
+.pdfoxjs-drag-message {
+  background-color: #ffffff;
+  padding: 24px 40px;
+  border-radius: 12px;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.2),
+    0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  border: 2px dashed #0078d4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform: scale(0.95);
+  transition: transform 0.2s ease-in-out;
+}
+
+.pdfoxjs-drag-overlay.active .pdfoxjs-drag-message {
+  transform: scale(1);
+}
+
+.pdfoxjs-drag-message svg {
+  color: #0078d4;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.pdfoxjs-drag-message span {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #242424;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pdfoxjs-drag-message {
+    background-color: #1f1f1f;
+    border-color: #2899f5;
+  }
+  .pdfoxjs-drag-message span {
+    color: #f5f5f5;
+  }
+  .pdfoxjs-drag-message svg {
+    color: #2899f5;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}

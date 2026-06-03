@@ -1,3 +1,5 @@
+@import "./styles/dragOverlay.css";
+
 .centered-element {
   z-index: 1;
   position: absolute;
