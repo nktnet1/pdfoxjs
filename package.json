@@ -24,9 +24,10 @@
   },
   "dependencies": {
     "@electron-toolkit/utils": "^4.0.0",
+    "@hono/node-server": "^2.0.4",
     "electron-context-menu": "^4.1.2",
     "electron-updater": "^6.8.3",
-    "express": "^5.2.1",
+    "hono": "^4.12.23",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
@@ -34,7 +35,6 @@
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
     "@commitlint/types": "^21.0.1",
-    "@types/express": "^5.0.6",
     "@types/node": "25.9.1",
     "electron": "^42.3.2",
     "electron-builder": "^26.8.1",
