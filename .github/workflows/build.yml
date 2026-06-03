@@ -41,6 +41,7 @@ jobs:
         run: pnpm install
 
       - name: Check lint and format
+        if: runner.os != 'Windows'
         run: pnpm check
 
       - name: Build/release
