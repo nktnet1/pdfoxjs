@@ -1,10 +1,10 @@
+import { serve } from "@hono/node-server";
 import { BrowserWindow, shell } from "electron";
 import contextMenu from "electron-context-menu";
 import fs from "fs";
-import type { AddressInfo } from "net";
 import path from "path";
 import urlJoin from "url-join";
-import createExpressApp, { type Options } from "./app";
+import createHonoApp, { type Options } from "./app";
 import { APP_NAME, PDF_FETCH_PATH, viewerPath } from "./config";
 import { toHex } from "./utils";
 
@@ -56,11 +56,17 @@ export const startServer = (
   options: Options,
   callback: (url: string) => void,
 ) => {
-  const expressApp = createExpressApp(options);
-  const server = expressApp.listen(port, () => {
-    const addresses = server.address() as AddressInfo;
-    callback(`http://127.0.0.1:${addresses.port}`);
-  });
+  const honoApp = createHonoApp(options);
+
+  serve(
+    {
+      fetch: honoApp.fetch,
+      port: port,
+    },
+    (info) => {
+      callback(`http://127.0.0.1:${info.port}`);
+    },
+  );
 };
 
 export const createBrowserWindow = () => {

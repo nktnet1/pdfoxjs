@@ -1,7 +1,7 @@
+import { serve } from "@hono/node-server";
 import fs from "fs";
-import type { AddressInfo } from "net";
 import path from "path";
-import createExpressApp from "../src/app";
+import createHonoApp from "../src/app";
 import {
   DEFAULT_CONFIG_FILE_NAME,
   USER_CONFIG_DIRECTORY_NAME,
@@ -16,19 +16,36 @@ const DEV_CONFIG_FILE_PATH = path.join(
   USER_CONFIG_FILE_NAME,
 );
 
-const app = createExpressApp({
+const app = createHonoApp({
   resourcesPath: "public",
   userDataPath: path.resolve(DEV_CONFIG_DIR),
 });
 
-const server = app.listen(3000, () => {
-  const addresses = server.address() as AddressInfo;
-  const port = addresses.port;
+const server = serve(
+  {
+    fetch: app.fetch,
+    port: 3000,
+  },
+  (info) => {
+    if (!fs.existsSync(DEV_CONFIG_FILE_PATH)) {
+      fs.mkdirSync(path.dirname(DEV_CONFIG_FILE_PATH), { recursive: true });
+      fs.copyFileSync(DEFAULT_CONFIG_PATH, DEV_CONFIG_FILE_PATH);
+    }
 
-  if (!fs.existsSync(DEV_CONFIG_FILE_PATH)) {
-    fs.mkdirSync(path.dirname(DEV_CONFIG_FILE_PATH), { recursive: true });
-    fs.copyFileSync(DEFAULT_CONFIG_PATH, DEV_CONFIG_FILE_PATH);
-  }
+    console.log(`Server is listening at http://127.0.0.1:${info.port}`);
+  },
+);
 
-  console.log(`Server is listening at http://127.0.0.1:${port}`);
-});
+const shutdown = () => {
+  server.close((error) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("\nServer has stopped gracefully.");
+    }
+    process.exit(0);
+  });
+};
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
