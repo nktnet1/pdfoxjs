@@ -57,6 +57,7 @@ window.onload = async () => {
   };
 
   const { toggleHelp } = createAllCustomElements({ closeAnnotationEditor });
+
   if (config.settings.enableCustomShortcutKeys) {
     handleShortcuts(config, {
       toggleHelp,
