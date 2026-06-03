@@ -117,7 +117,7 @@ $ pnpm install
 # Transpile and run an electron app
 $ pnpm start
 
-# Simple express server on localhost
+# Simple backend server on localhost
 $ pnpm dev
 ```
 
