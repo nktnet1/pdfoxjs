@@ -8,6 +8,8 @@ const defaultConfig: UserConfig = {
   clean: true,
   minify: true,
   sourcemap: false,
+  unbundle: false,
+  dts: false,
   deps: {
     neverBundle: ["electron"],
   },

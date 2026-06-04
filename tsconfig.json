@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "rootDir": "./src",
     "outDir": "./out"
   },
