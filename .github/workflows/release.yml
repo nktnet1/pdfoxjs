@@ -1,6 +1,9 @@
 # https://github.com/samuelmeuli/action-electron-builder
 name: Build/release
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
